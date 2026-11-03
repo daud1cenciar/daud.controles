@@ -1,6 +1,6 @@
 // Configuração do Google para o Controle de Auditorias (ver passo a passo).
-// googleClientId: ID do cliente OAuth (tipo "Aplicativo da Web"); Origens JavaScript autorizadas: https://SEU-USUARIO.github.io
-// googleApiKey:   Chave de API (restrinja ao site https://SEU-USUARIO.github.io/* e à "Google Picker API")
+// googleClientId: ID do cliente OAuth (tipo "Aplicativo da Web"); Origens JavaScript autorizadas: https://daudcenciar.github.io
+// googleApiKey:   Chave de API (restrinja ao site https://daudcenciar.github.io/* e à "Google Picker API")
 // googleAppId:    Número do projeto do Google Cloud (Painel do projeto > "Número do projeto")
 // emailPrincipal: Gmail onde fica a base única (só ele cria a base; os demais abrem a que ele compartilhou)
 window.CF_CONFIG = {
