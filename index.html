@@ -261,6 +261,7 @@ legend.lg-id .chk{padding:0;font-size:13px;color:var(--tx);font-weight:600;displ
 .ct-docs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px 16px;margin:6px 0 4px}
 .ct-docs .ct-f{grid-column:1/-1;font-weight:800;font-size:12.5px;color:var(--g);margin-top:6px}
 .ct-docs .chk{flex-direction:row!important;display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx);padding:0}
+.st-em{color:var(--mu);font-size:13px}
 @media print{#siteNav,#stBar{display:none!important}body{padding:0}}
 </style>
 </head>
@@ -370,7 +371,7 @@ legend.lg-id .chk{padding:0;font-size:13px;color:var(--tx);font-weight:600;displ
 
 <script>
 /* ===== Identidade do app ===== */
-const APP={id:'controle-auditorias',nome:'Divisão de Auditoria - Controle de Datas e Prazos',arquivo:'controle-auditorias.json',versao:'Versão 2.0 - 03/11/2026'};
+const APP={id:'controle-auditorias',nome:'Divisão de Auditoria - Controle de Datas e Prazos',arquivo:'controle-auditorias.json',versao:'Versão 2.1 - 04/11/2026'};
 document.title=APP.nome;document.getElementById('appNome').textContent=APP.nome;document.getElementById('stVer').textContent=APP.versao;
 
 /* ===== Regras dos avisos por e-mail (o mesmo código roda na página e no Google Apps Script) =====
@@ -494,6 +495,12 @@ function mesclar(L,R){
  return Object.assign({},R,L,{auditorias:aud,excluidas:exc,prazosPadrao:pp.prazosPadrao||{},prazosPadraoEm:pp.prazosPadraoEm||'',contatos:ct,avisos:av,hhPadrao:hp.hhPadrao||{},hhPadraoEm:hp.hhPadraoEm||''});
 }
 const $=id=>document.getElementById(id);
+/* Rodapé: data e hora da última gravação da base (por qualquer usuário) */
+(()=>{const e=document.createElement('span');e.id='stBaseEm';e.className='st-em';$('stMsg').after(e)})();
+function pintaBaseEm(){const v=window.BASE_EM,d=v?new Date(v):null,e=$('stBaseEm');if(!e)return;
+ if(!d||isNaN(d)){e.textContent='';return}
+ e.textContent='Base atualizada em '+d.toLocaleDateString('pt-BR')+' às '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});e.title='Última gravação da base de dados (por qualquer usuário)'}
+window.pintaBaseEm=pintaBaseEm;
 /* Botão Sair no cabeçalho (o mesmo do rodapé) */
 (()=>{const b=document.createElement('button');b.type='button';b.id='navSair';b.className='nv-sair';b.textContent='Sair';b.title='Sair da conta Google';b.hidden=true;
  b.onclick=()=>$('stOut').click();const av=document.querySelector('#siteNav .nv-av');av.parentNode.insertBefore(b,av.nextSibling);
@@ -678,7 +685,7 @@ function render(){
  if(!DADOS.prazosPadraoV2){const pp=DADOS.prazosPadrao||{};delete pp.of_sace;delete pp.of_daag;DADOS.prazosPadraoV2=1}
  if(!DADOS.prazosPadraoV3){const pp=DADOS.prazosPadrao||{};delete pp.debrief;DADOS.prazosPadraoV3=1}
  const A=DADOS.auditorias;A.forEach(recalcular);
- DADOS.meta={docs:DOCS.map(d=>({k:d.k,nome:d.nome,fase:d.fase}))};pintaCtBtn();
+ DADOS.meta={docs:DOCS.map(d=>({k:d.k,nome:d.nome,fase:d.fase}))};pintaCtBtn();pintaBaseEm();
  const anos=[...new Set(A.map(a=>String(a.ano||'')).filter(Boolean))].sort((a,b)=>b-a);
  if(FILTRO.ano&&!anos.includes(FILTRO.ano))anos.unshift(FILTRO.ano);
  $('fAno').innerHTML='<option value="">Todos os anos</option>'+anos.map(y=>`<option>${esc(y)}</option>`).join('');$('fAno').value=FILTRO.ano;
@@ -902,7 +909,7 @@ const Store=(()=>{
  const hhmm=()=>new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
  const valid=d=>d&&d.v===1&&d.app===APP.id&&d.dados&&typeof d.dados==='object';
  const collect=()=>({v:1,app:APP.id,saved:new Date().toISOString(),dados:DADOS});
- const apply=d=>{DADOS=Object.assign({auditorias:[],excluidas:{},prazosPadrao:{}},d.dados);render()};
+ const apply=d=>{DADOS=Object.assign({auditorias:[],excluidas:{},prazosPadrao:{}},d.dados);window.BASE_EM=d.saved||'';render()};
  const S={
   use(a){ad=a},
   async boot(){
@@ -917,7 +924,7 @@ const Store=(()=>{
   async flush(){
    if(!ready)return;clearTimeout(tm);tm=0;
    const c=collect(),j=JSON.stringify({...c,saved:0});if(j===last){msg('Salvo '+ad.name+' às '+hhmm());return}
-   try{const m=await ad.save(c);if(m&&m.dados){apply(m);last=JSON.stringify({...collect(),saved:0});msg('Salvo '+ad.name+' às '+hhmm()+' (junto com alterações de outro usuário)')}else{last=j;msg('Salvo '+ad.name+' às '+hhmm())}}catch(e){msg(e&&e.partial?e.message:'Não foi possível salvar automaticamente. Exporte um backup.',true)}
+   try{const m=await ad.save(c);if(m&&m.dados){apply(m);last=JSON.stringify({...collect(),saved:0});msg('Salvo '+ad.name+' às '+hhmm()+' (junto com alterações de outro usuário)')}else{last=j;window.BASE_EM=c.saved;window.pintaBaseEm&&pintaBaseEm();msg('Salvo '+ad.name+' às '+hhmm())}}catch(e){msg(e&&e.partial?e.message:'Não foi possível salvar automaticamente. Exporte um backup.',true)}
   },
   exportar(){
    const d=new Date(),p=n=>String(n).padStart(2,'0'),nome=APP.arquivo.replace(/\.json$/,'')+`-${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}.json`;
