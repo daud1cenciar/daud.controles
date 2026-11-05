@@ -305,6 +305,73 @@ legend.lg-id .chk{padding:0;font-size:13px;color:var(--tx);font-weight:600;displ
 .dlg-larga{max-width:1320px}
 .mtab td{vertical-align:top}.mtab textarea.in{font-size:13px;min-width:220px}.mtab input[type=number]{width:70px}.mtab select.in{min-width:210px}
 .mtab .sugs{margin-top:6px;font-size:12px;color:var(--mu);display:flex;flex-wrap:wrap;gap:4px;align-items:center}.mtab .sugs .chip{font-size:11.5px;padding:3px 8px;cursor:pointer;border:1px solid transparent;font-family:inherit}.mtab .sugs .chip:hover{border-color:var(--g)}
+
+/* ===== Dashboard ===== */
+#pgDash{max-width:1500px}
+.ds-h{display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
+.ds-fb{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0 8px;padding:8px 0}
+.ds-fb select{font:inherit;font-size:13.5px;padding:7px 10px;border:1px solid var(--ln);border-radius:8px;background:var(--sf);color:var(--tx);max-width:230px}
+.ds-chips{display:flex;flex-wrap:wrap;gap:6px;min-height:4px;margin-bottom:10px}
+.ds-chip{border:1px solid var(--g);background:var(--gs);color:var(--g);border-radius:99px;padding:4px 10px;font:inherit;font-size:12.5px;font-weight:700;cursor:pointer}
+.ds-ks-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:14px}
+.ds-k{display:flex;flex-direction:column;gap:2px;text-align:left;border:1px solid var(--ln);border-top:4px solid var(--k,var(--g));background:var(--sf);border-radius:10px;padding:10px 12px;font:inherit;color:var(--tx);box-shadow:var(--sh)}
+.ds-k b{font-size:26px;line-height:1.15;font-variant-numeric:tabular-nums}
+.ds-kl{font-size:12.5px;font-weight:700;color:var(--mu)}
+.ds-ks{font-size:11.5px;color:var(--mu)}
+.ds-k.ds-cl{cursor:pointer}.ds-k.ds-cl:hover{border-color:var(--k)}
+.ds-k.ds-sel{outline:2px solid var(--k);outline-offset:1px}
+.ds-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(460px,1fr));gap:14px;margin-bottom:14px}
+.ds-p{background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:14px 16px;box-shadow:var(--sh);min-width:0}
+.ds-ph{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px}
+.ds-ph h3{margin:0;font-size:15px}.ds-ph p{margin:2px 0 0;font-size:12.5px;color:var(--mu)}
+.ds-lg{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px 12px;font-size:12px;color:var(--mu);max-width:48%}
+.ds-lg>span{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.ds-lg i{display:inline-block;width:10px;height:10px;border-radius:3px}
+.ds-svg{display:block;overflow:visible}
+.ds-svg text{font:12px system-ui,-apple-system,Segoe UI,Roboto,sans-serif;fill:var(--tx)}
+.ds-svg .ds-lb{fill:var(--tx)}.ds-svg .ds-vl{fill:var(--mu);font-variant-numeric:tabular-nums}.ds-svg .ds-vl.ds-ac{fill:var(--r);font-weight:700}
+.ds-svg .ds-ax{fill:var(--mu);font-size:11px}
+.ds-hit{fill:transparent}
+.ds-row.ds-cl{cursor:pointer}
+.ds-row:hover .ds-hit{fill:var(--n)}
+.ds-row.ds-sel .ds-hit{fill:var(--gs)}.ds-row.ds-sel .ds-lb{font-weight:700}
+.ds-zero{stroke:var(--mu);stroke-width:1}
+.ds-gr{stroke:var(--ln);stroke-width:1}
+.ds-hoje{stroke:#C0392B;stroke-width:1.5;stroke-dasharray:4 3}
+.ds-vz{color:var(--mu);font-size:13px;margin:18px 0}
+.ds-tip{position:fixed;z-index:60;max-width:340px;white-space:pre-line;background:#1B1F27;color:#fff;font-size:12.5px;line-height:1.45;padding:8px 10px;border-radius:8px;pointer-events:none;box-shadow:0 4px 14px rgba(0,0,0,.2)}
+.ds-tw{overflow:auto;max-height:520px}
+.ds-t{width:100%;border-collapse:collapse;font-size:13px}
+.ds-t th{position:sticky;top:0;background:var(--sf);text-align:left;font-size:12px;color:var(--mu);padding:6px 8px;border-bottom:1px solid var(--ln)}
+.ds-t td{padding:7px 8px;border-bottom:1px solid var(--ln);vertical-align:top}
+.ds-t td span:not(.ds-st){display:block;font-size:12px;color:var(--mu)}
+.ds-t tbody tr{cursor:pointer}.ds-t tbody tr:hover{background:var(--n)}
+.ds-st{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.ds-st:before{content:"";width:9px;height:9px;border-radius:50%;background:var(--k)}
+.ds-pa{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.ds-pa .ds-lg{max-width:none}
+.ds-todas{font-size:12.5px;padding:5px 10px;white-space:nowrap}
+.ds-full{margin-bottom:14px}
+.ds-exp{cursor:pointer}.ds-chev{fill:none;stroke:var(--mu);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;opacity:.35;transition:opacity .15s}
+.ds-row:hover .ds-chev{opacity:.75}.ds-exp:hover .ds-chev{opacity:1;stroke:var(--g)}.ds-row.ds-ab .ds-chev{opacity:.9;stroke:var(--g)}
+.ds-svg .ds-sub .ds-lb{fill:var(--mu);font-size:11.5px}
+.ds-row.ds-ab .ds-hit{fill:var(--gs)}.ds-row.ds-ab .ds-lb{font-weight:700}
+.ds-g{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:980px){.ds-g{grid-template-columns:1fr}}
+.ds-esp{fill:rgba(11,61,145,.10);stroke:#0b3d91;stroke-width:1;stroke-dasharray:3 2}
+:root[data-theme="dark"] .ds-esp{fill:rgba(126,170,242,.14);stroke:#7eaaf2}
+.ds-lg i.ds-esp-i{background:rgba(11,61,145,.10);border:1px dashed #0b3d91;box-sizing:border-box}
+.ds-svg .ds-sub .ds-vl{font-size:11px}
+.sl-h>div{flex:1}.sl-bt{display:flex;gap:8px;flex-wrap:wrap}
+
+#ptd .ed-h{gap:14px}.pt-topo{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-right:auto;margin-left:18px}.pt-topo label{display:flex;gap:6px;align-items:center;font-size:13px;color:var(--mu)}.pt-topo select{width:auto;min-width:90px}
+.pt-exc{color:#b3261e}.pt-h{font-size:15px;margin:18px 0 2px}#ptd .aviso{margin:8px 0 12px}#ptd .dica{margin:0 0 6px}
+.pt-tab{width:100%}.pt-tab td{padding:4px 4px;vertical-align:top}.pt-tab .in{width:100%;min-width:0}.pt-tab textarea.in{min-height:38px;resize:vertical}.pt-tab .pt-n{text-align:right}
+.pt-ac{white-space:nowrap;width:1%}.pt-b{border:0;background:none;color:var(--mu);font-size:16px;cursor:pointer;padding:4px 6px;border-radius:6px}.pt-b:hover{background:var(--gs);color:var(--tx)}
+.pt-mais{margin-top:6px;font-size:13px;padding:5px 10px}.pt-grs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 26px}.pt-gr h3{font-size:15px;margin:14px 0 2px}
+[data-ppane="obj"] td:nth-child(1){width:15%}[data-ppane="obj"] td:nth-child(2){width:11%}[data-ppane="obj"] td:nth-child(3){width:17%}[data-ppane="obj"] td:nth-child(4),[data-ppane="obj"] td:nth-child(5){width:10%}
+[data-ppane="pro"] td:nth-child(1){width:24%}[data-ppane="pro"] td:nth-child(2){width:13%}
+.pt-nv{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--gs);border-radius:10px;padding:10px 12px;margin:8px 0 12px}.pt-nv label{display:flex;gap:6px;align-items:center;font-size:13px}.pt-nv input[type=number]{width:96px}.pt-ck{color:var(--mu)}.pt-msg{font-weight:600}.pt-msg.err{background:#fde7e7;color:#b3261e}
 @media print{#siteNav,#stBar{display:none!important}body{padding:0}}
 </style>
 </head>
@@ -321,6 +388,7 @@ legend.lg-id .chk{padding:0;font-size:13px;color:var(--tx);font-weight:600;displ
 <nav class="pg-tabs" aria-label="Páginas">
  <button type="button" data-page="auditorias" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9.5h18M8 3v3M16 3v3"/></svg>Datas e Prazos</button>
  <button type="button" data-page="achados"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"/><path d="m15 15 5.5 5.5M8 10.5h5M10.5 8v5"/></svg>Catalogação de Achados</button>
+ <button type="button" data-page="dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Dashboard</button>
  <button type="button" data-page="slides"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v4M8 20h8M7 12l3-3 2 2 4-4"/></svg>Slides</button>
 </nav>
 <main id="pgAud" data-pg="auditorias">
@@ -367,9 +435,21 @@ legend.lg-id .chk{padding:0;font-size:13px;color:var(--tx);font-weight:600;displ
  </div>
 </main>
 
+<main id="pgDash" data-pg="dashboard" hidden>
+ <div class="ds-h"><div><h1>Dashboard</h1><p class="lead" id="dsInfo"></p></div></div>
+ <div class="ds-fb" role="group" aria-label="Filtros do dashboard">
+  <select id="dsAno" aria-label="Ano"></select><select id="dsCoord" aria-label="Coordenador"></select><select id="dsAux" aria-label="Auxiliar técnico"></select>
+  <select id="dsAud" aria-label="Auditoria"></select><select id="dsTipo" aria-label="Tipo"></select><select id="dsEtapa" aria-label="Etapa"></select><select id="dsSt" aria-label="Status do prazo"></select>
+  <button type="button" class="btn" id="dsLimpa" hidden>Limpar filtros</button>
+ </div>
+ <div class="ds-chips" id="dsChips"></div>
+ <div id="dsCorpo"></div>
+</main>
+
 <main id="pgSlides" data-pg="slides" hidden>
  <div class="sl-h"><div><h1>Slides</h1><p class="lead" id="pnInfo">Painel PAINT montado com os dados atuais da base.</p></div>
-  <button type="button" class="btn" id="pnNova" title="Abrir os slides numa aba separada (melhor para apresentar em tela cheia)">Abrir em nova aba</button></div>
+  <span class="sl-bt"><button type="button" class="btn" id="pnPaint" title="Números, gráficos, objetivos e cronograma de elaboração de cada PAINT (ficam na base do Drive)">PAINT do ano…</button>
+  <button type="button" class="btn" id="pnNova" title="Abrir os slides numa aba separada (melhor para apresentar em tela cheia)">Abrir em nova aba</button></span></div>
  <iframe id="pnF" title="Painel PAINT" allow="fullscreen" allowfullscreen></iframe>
 </main>
 
@@ -400,6 +480,34 @@ legend.lg-id .chk{padding:0;font-size:13px;color:var(--tx);font-weight:600;displ
    </div></fieldset>
   </div>
   <div class="ed-f"><button type="button" class="del" id="achDel">Excluir achado</button><button type="button" class="btn" data-fecha>Cancelar</button><button type="submit" class="btn pri">Salvar</button></div>
+ </form>
+</dialog>
+
+<dialog id="ptd" class="dlg2 dlg-larga" aria-labelledby="ptdT">
+ <form id="ptF" method="dialog" autocomplete="off" novalidate>
+  <div class="ed-h"><h2 id="ptdT">PAINT do ano</h2>
+   <div class="pt-topo"><label>Ano <select class="in" id="ptAno"></select></label><button type="button" class="btn" id="ptNovo">+ Novo ano</button><button type="button" class="btn" id="ptArq" title="Carregar PAINT de um arquivo .json (ex.: dados-fixos-paint-2026.json)">Importar arquivo…</button><input type="file" id="ptArqF" accept=".json,application/json" hidden><button type="button" class="btn pt-exc" id="ptExc">Excluir este ano</button></div>
+   <button type="button" class="ed-x" data-fecha aria-label="Fechar">×</button></div>
+  <div class="cfg-tabs" role="tablist"><button type="button" role="tab" data-ptab="ger" aria-selected="true">Números e textos</button><button type="button" role="tab" data-ptab="gra" aria-selected="false">Gráficos</button><button type="button" role="tab" data-ptab="obj" aria-selected="false">Objetivos das auditorias</button><button type="button" role="tab" data-ptab="pro" aria-selected="false">Elaboração do PAINT seguinte</button></div>
+  <div class="ed-c">
+   <div class="pt-nv" id="ptNovoBar" hidden><label>Ano do novo PAINT <input class="in" id="ptNovoAno" type="number" min="2000" max="2100" step="1"></label><label class="pt-ck" id="ptNovoCpL"><input type="checkbox" id="ptNovoCp" checked> Começar com os nomes dos indicadores e das linhas dos gráficos do PAINT <span id="ptNovoUlt"></span> (números em branco)</label><button type="button" class="btn pri" id="ptNovoOk">Criar</button><button type="button" class="btn" id="ptNovoX">Cancelar</button></div>
+   <p class="aviso pt-msg" id="ptMsg" hidden></p>
+   <p class="aviso" id="ptVaz">Nenhum PAINT cadastrado. Use <b>+ Novo ano</b> para cadastrar ou <b>Importar arquivo…</b> para carregar o <b>dados-fixos-paint-2026.json</b>.</p>
+   <div class="pt-corpo">
+    <div data-ppane="ger">
+     <p class="aviso">Dados fixos do PAINT <span class="pt-ano"></span>, usados nas telas "PAINT em números" e "Homem-hora" dos slides. Os slides mostram o PAINT do ano das auditorias da base.</p>
+     <div class="gr"><label class="s4">Aprovado por<input class="in" id="ptPor" placeholder="Ex.: Portaria nº …, de … de dezembro de …"></label></div>
+     <h3 class="pt-h">PAINT em números</h3><p class="dica">Os quadros do topo da tela, na ordem (até 6).</p><table class="dtab pt-tab"><thead><tr><th>Indicador</th><th>Valor</th><th>Complemento</th><th></th></tr></thead><tbody data-t="kpis"></tbody></table><button type="button" class="btn pt-mais" data-mais="kpis">+ Linha</button>
+     <h3 class="pt-h">Notas das telas</h3>
+     <div class="gr"><label class="s4">Consultorias<input class="in" id="ptNC"></label><label class="s4">Universo auditável<input class="in" id="ptNU"></label><label class="s4">Diárias e passagens<input class="in" id="ptNO"></label></div>
+     <h3 class="pt-h">Homem-hora</h3><p class="dica">Quadros fixos da tela Homem-hora (ex.: auditores e carga anual por auditor).</p><table class="dtab pt-tab"><thead><tr><th>Indicador</th><th>Valor</th><th>Complemento</th><th></th></tr></thead><tbody data-t="hhKpis"></tbody></table><button type="button" class="btn pt-mais" data-mais="hhKpis">+ Linha</button>
+    </div>
+    <div data-ppane="gra" hidden><div class="pt-grs"><div class="pt-gr"><h3>Avaliações de <span class="pt-ano"></span> por tipo e carteira</h3><p class="dica">Quantas avaliações de cada tipo, em cada carteira.</p><table class="dtab pt-tab"><thead><tr><th>Tipo de avaliação</th><th>Estratégica</th><th>Institucional</th><th>Obrigatória</th><th></th></tr></thead><tbody data-t="aval"></tbody></table><button type="button" class="btn pt-mais" data-mais="aval">+ Linha</button></div><div class="pt-gr"><h3>Consultorias de <span class="pt-ano"></span></h3><p class="dica">Quantas consultorias de cada tipo.</p><table class="dtab pt-tab"><thead><tr><th>Tipo de consultoria</th><th>Quantidade</th><th></th></tr></thead><tbody data-t="cons"></tbody></table><button type="button" class="btn pt-mais" data-mais="cons">+ Linha</button></div><div class="pt-gr"><h3>Auditores por posto</h3><p class="dica">Quantos auditores em cada posto ou cargo.</p><table class="dtab pt-tab"><thead><tr><th>Posto ou cargo</th><th>Auditores</th><th></th></tr></thead><tbody data-t="aud"></tbody></table><button type="button" class="btn pt-mais" data-mais="aud">+ Linha</button></div><div class="pt-gr"><h3>Previsão de diárias e passagens por tipo de serviço</h3><p class="dica">Valor previsto em reais (aceita 387.377,44).</p><table class="dtab pt-tab"><thead><tr><th>Serviço</th><th>Valor (R$)</th><th></th></tr></thead><tbody data-t="orc"></tbody></table><button type="button" class="btn pt-mais" data-mais="orc">+ Linha</button></div><div class="pt-gr"><h3>Homem-hora por auditoria, por tipo e fase</h3><p class="dica">Horas de cada fase por auditoria. No tipo, ponha entre parênteses quantas auditorias foram planejadas, ex.: Conformidade (13).</p><table class="dtab pt-tab"><thead><tr><th>Tipo (quantidade)</th><th>Planejamento</th><th>Execução</th><th>Comunicação</th><th>Monitoramento</th><th></th></tr></thead><tbody data-t="hhFase"></tbody></table><button type="button" class="btn pt-mais" data-mais="hhFase">+ Linha</button></div></div></div>
+    <div data-ppane="obj" hidden><p class="aviso">Objetivo de cada auditoria no PAINT <span class="pt-ano"></span>. Aparece na ficha da auditoria nos slides.</p><table class="dtab pt-tab"><thead><tr><th>Auditoria</th><th>Carteira</th><th>Origem</th><th>Início</th><th>Término</th><th>Objetivo</th><th></th></tr></thead><tbody data-t="objetivos"></tbody></table><button type="button" class="btn pt-mais" data-mais="objetivos">+ Linha</button></div>
+    <div data-ppane="pro" hidden><p class="aviso">Cronograma de elaboração do PAINT <span class="pt-ano1"></span> previsto no PAINT <span class="pt-ano"></span>. Linhas com a mesma etapa ficam juntas; a ordem é pela data.</p><table class="dtab pt-tab"><thead><tr><th>Etapa</th><th>Data</th><th>Atividade</th><th></th></tr></thead><tbody data-t="proximo"></tbody></table><button type="button" class="btn pt-mais" data-mais="proximo">+ Linha</button></div>
+   </div>
+  </div>
+  <div class="ed-f"><button type="button" class="btn" data-fecha>Cancelar</button><button type="submit" class="btn pri">Salvar</button></div>
  </form>
 </dialog>
 
@@ -439,7 +547,8 @@ legend.lg-id .chk{padding:0;font-size:13px;color:var(--tx);font-weight:600;displ
   <div class="ed-c" id="edC">
    <fieldset><legend class="lg-id">Identificação <label class="chk"><input type="checkbox" data-f="cancelada"> Auditoria cancelada</label></legend><div class="gr">
     <label>Ano *<input class="in" data-f="ano" type="number" min="2000" max="2100" required></label>
-    <label class="s3">Título / objeto *<input class="in" data-f="titulo" required></label>
+    <label class="s2">Título / objeto *<input class="in" data-f="titulo" required></label>
+    <label>Nome curto <span class="dica">(aparece no dashboard, slides e e-mails)</span><input class="in" data-f="sigla" maxlength="40" placeholder="Ex.: sigla da unidade"></label>
     <label class="s2">Coordenador<input class="in" data-f="coordenador" list="coordList" placeholder="Ex.: CEL FULANO"><datalist id="coordList"></datalist></label>
     <label class="s2">Auxiliar Técnico<input class="in" data-f="auxiliar" list="auxList" placeholder="Ex.: SO FULANO"><datalist id="auxList"></datalist></label>
     <label>Tipo<select class="in" data-f="tipo" id="eTipo"></select></label>
@@ -580,24 +689,64 @@ const XL= {
 
 
 /* ===== Identidade do app ===== */
-const APP={id:'controle-auditorias',nome:'Divisão de Auditoria - Controles',arquivo:'controle-auditorias.json',versao:'Versão 3.0 - 04/11/2026'};
+const APP={id:'controle-auditorias',nome:'Divisão de Auditoria - Controles',arquivo:'controle-auditorias.json',versao:'Versão 4.0 - 05/11/2026'};
 document.title=APP.nome;document.getElementById('appNome').textContent=APP.nome;document.getElementById('stVer').textContent=APP.versao;
 
 /* ===== Regras dos avisos por e-mail (o mesmo código roda na página e no Google Apps Script) =====
-   Para cada auditoria não cancelada e não concluída, olha SÓ A PRÓXIMA tarefa pendente entre as que foram
-   marcadas para gerar aviso, depois da última tarefa com data realizada:
-   - ATRASADO: a data prevista já passou;
-   - VENCENDO: faltam até `antecedencia` dias (inclui vencer hoje), MAS só se o prazo do documento
-     for de pelo menos `antecedencia` dias; documento com prazo menor só entra quando atrasar.
-   Resultado: { "NOME DA PESSOA": [ {titulo, link, coordenador, auxiliar, itens:[{doc, plan, dias, tipo}]} ] }
-   Coordenador e auxiliar técnico da auditoria recebem (cada um nos seus dias: `papeis` diz quem recebe na rodada). */
+   Versão 4.0 (decisão do usuário, 05/11): para o E-MAIL o atraso é contado sobre a DATA ESPERADA (a "previsão" que aparece
+   em itálico na página = data realizada, ou esperada, do documento-base + prazo), e não sobre a data prevista do planejamento.
+   A página continua medindo o atraso pela data prevista; só o e-mail usa a esperada.
+   Para cada auditoria não cancelada e não concluída, olha SÓ A PRÓXIMA tarefa pendente entre as marcadas para gerar aviso,
+   depois da última tarefa com data realizada:
+   - ATRASADO: a data esperada já passou;
+   - VENCENDO: faltam até `antecedencia` dias para a data esperada (inclui hoje), MAS só se o prazo do documento for de pelo
+     menos `antecedencia` dias; documento com prazo menor só entra quando atrasar.
+   Também calcula, por auditoria, o ATRASO ESTIMADO DO FIM: última data esperada × última data prevista, contando que as etapas
+   que faltam não acontecem antes de hoje (sem antecipação).
+   Resultado: { "NOME DA PESSOA": [ {titulo, link, coordenador, auxiliar, papel, completo, itens:[...], resumo:{...}} ] }
+   papeis = {coord, aux, coordCompleto, auxCompleto}: quem recebe nesta rodada e se é o e-mail completo da semana
+   (no completo entram TODAS as auditorias em andamento da pessoa, com o cronograma; no simples, só as com pendência). */
 function AV_dias(a, b) { return Math.round((Date.parse(a + 'T12:00:00Z') - Date.parse(b + 'T12:00:00Z')) / 864e5); }
+function AV_soma(iso, n) { const d = new Date(iso + 'T12:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); }
 function AV_norm(s) { return String(s == null ? '' : s).normalize('NFD').replace(/[̀-ͯ]/g, '').trim().toUpperCase().replace(/\s+/g, ' '); }
+/* datas esperadas de cada documento: realizada, se houver; senão a do documento-base + prazo.
+   piso (opcional): nenhuma etapa ainda não realizada acontece antes dessa data (usado na estimativa do fim). */
+function AV_esperadas(a, DOCSL, piso) {
+  const docs = a.docs || {}, r = {}, idx = {};
+  DOCSL.forEach(function (d, i) {
+    idx[d.k] = i;
+    const x = docs[d.k] || {};
+    if (x.exec) { r[d.k] = { d: x.exec, real: true }; return; }
+    let v = '';
+    if (!i) v = x.plan || '';
+    else {
+      const b = r[d.base || DOCSL[i - 1].k], n = Number(x.prazo);
+      v = b && b.d && x.prazo !== '' && x.prazo != null && isFinite(n) ? AV_soma(b.d, n) : (x.plan || '');
+    }
+    if (piso && v && v < piso) v = piso;
+    r[d.k] = { d: v, real: false };
+  });
+  return r;
+}
+/* resumo da auditoria: fim previsto × fim estimado e a tabela do cronograma (uma linha por documento) */
+function AV_resumo(a, DOCSL, hoje) {
+  const docs = a.docs || {}, esp = AV_esperadas(a, DOCSL), est = AV_esperadas(a, DOCSL, hoje);
+  const ult = DOCSL[DOCSL.length - 1].k, fimPlan = (docs[ult] || {}).plan || '', fimEst = (est[ult] || {}).d || '';
+  let realizados = 0, ultR = -1;
+  DOCSL.forEach(function (d, i) { if ((docs[d.k] || {}).exec) ultR = i; });
+  const linhas = DOCSL.map(function (d, i) {
+    const x = docs[d.k] || {}, bk = i ? (d.base || DOCSL[i - 1].k) : null, bx = bk ? (docs[bk] || {}) : {};
+    if (x.exec) realizados++;
+    return { k: d.k, nome: d.nome, fase: d.fase || '', plan: x.plan || '', planIni: i ? (bx.plan || '') : (x.plan || ''),
+      esp: (est[d.k] || {}).d || '', espIni: i ? ((est[bk] || {}).d || '') : ((est[d.k] || {}).d || ''), real: !!x.exec,  /* cronograma usa a mesma conta da estimativa do fim (nada pendente antes de hoje) */
+      sup: !x.exec && i < ultR };  /* sem data, mas antes da última realizada: etapa superada (mesma regra da página) */
+  });
+  return { fimPlan: fimPlan, fimEst: fimEst, atrasoFim: fimPlan && fimEst ? AV_dias(fimEst, fimPlan) : null, linhas: linhas, realizados: realizados, total: DOCSL.length };
+}
 function calcularAvisos(D, DOCSL, hoje, antecedencia, papeis) {
-  /* papeis: {coord:true, aux:true} = quem recebe nesta rodada (sem informar = os dois) */
   papeis = papeis || { coord: true, aux: true };
   const por = {};
-  /* tarefas escolhidas para gerar aviso (na tela "Contatos e avisos"); sem escolha salva = todas */
+  /* tarefas escolhidas para gerar aviso (na tela "Configurações"); sem escolha salva = todas */
   const marcadas = (D.avisos && Array.isArray(D.avisos.docs)) ? D.avisos.docs : null;
   (D.auditorias || []).forEach(function (a) {
     if (a.cancelada) return;
@@ -610,20 +759,33 @@ function calcularAvisos(D, DOCSL, hoje, antecedencia, papeis) {
       if (marcadas && marcadas.indexOf(DOCSL[i].k) < 0) continue;
       alvo = i; break;
     }
-    if (alvo < 0) return;
-    const d = DOCSL[alvo], x = docs[d.k] || {};
-    if (!x.plan) return;
-    const dd = AV_dias(hoje, x.plan);
     let item = null;
-    if (dd > 0) item = { doc: d.nome, plan: x.plan, dias: dd, tipo: 'atrasado' };
-    else if (-dd <= antecedencia && !(alvo > 0 && Number(x.prazo) < antecedencia)) item = { doc: d.nome, plan: x.plan, dias: -dd, tipo: 'vencendo' };
-    if (!item) return;
-    const reg = { titulo: a.titulo, link: a.link || '', coordenador: a.coordenador || '', auxiliar: a.auxiliar || '', itens: [item] };
-    const pessoas = [papeis.coord ? a.coordenador : '', papeis.aux ? a.auxiliar : ''].filter(function (p) { return p && String(p).trim(); });
-    pessoas.filter(function (p, i) { return pessoas.findIndex(function (q) { return AV_norm(q) === AV_norm(p); }) === i; })
-      .forEach(function (p) { (por[String(p).trim()] = por[String(p).trim()] || []).push(reg); });
+    if (alvo >= 0) {
+      const d = DOCSL[alvo], x = docs[d.k] || {}, esp = (AV_esperadas(a, DOCSL)[d.k] || {}).d;
+      if (esp) {
+        const dd = AV_dias(hoje, esp);
+        if (dd > 0) item = { doc: d.nome, plan: x.plan || '', esp: esp, dias: dd, tipo: 'atrasado' };
+        else if (-dd <= antecedencia && !(alvo > 0 && Number(x.prazo) < antecedencia)) item = { doc: d.nome, plan: x.plan || '', esp: esp, dias: -dd, tipo: 'vencendo' };
+      }
+    }
+    [['coord', a.coordenador], ['aux', a.auxiliar]].forEach(function (pp) {
+      const papel = pp[0], nome = String(pp[1] || '').trim();
+      if (!nome || !papeis[papel]) return;
+      const completo = !!papeis[papel + 'Completo'];
+      if (!item && !completo) return;
+      const lista = por[nome] = por[nome] || [];
+      if (lista.some(function (r) { return r.id === a.id; })) return;           /* mesma pessoa nos dois papéis: uma vez só */
+      lista.push({ id: a.id, titulo: a.titulo, link: a.link || '', coordenador: a.coordenador || '', auxiliar: a.auxiliar || '', papel: papel,
+        completo: completo, itens: item ? [item] : [], resumo: AV_resumo(a, DOCSL, hoje) });
+    });
   });
-  return por;
+  /* junta grafias diferentes do mesmo nome */
+  const final = {};
+  Object.keys(por).forEach(function (n) {
+    const k = Object.keys(final).find(function (q) { return AV_norm(q) === AV_norm(n); }) || n;
+    final[k] = (final[k] || []).concat(por[n].filter(function (r) { return !(final[k] || []).some(function (s) { return s.id === r.id; }); }));
+  });
+  return final;
 }
 function AV_emailDe(contatos, nome) {
   const alvo = AV_norm(nome); let r = '';
@@ -633,6 +795,85 @@ function AV_emailDe(contatos, nome) {
 function AV_textoItem(it) {
   return it.tipo === 'atrasado' ? 'Atrasado há ' + it.dias + (it.dias === 1 ? ' dia' : ' dias')
     : it.dias === 0 ? 'Vence hoje' : 'Vence em ' + it.dias + (it.dias === 1 ? ' dia' : ' dias');
+}
+function AV_textoFim(r) {
+  if (r.atrasoFim == null) return '';
+  const n = Math.abs(r.atrasoFim), dd = n + (n === 1 ? ' dia' : ' dias');
+  return r.atrasoFim > 0 ? 'Se não houver antecipação das etapas que restam, a estimativa é de que a auditoria termine com <b>' + dd + ' de atraso</b> em relação ao planejado.'
+    : r.atrasoFim < 0 ? 'Mantido o ritmo atual, a estimativa é de que a auditoria termine <b>' + dd + ' antes</b> do planejado.'
+    : 'Mantido o ritmo atual, a estimativa é de que a auditoria termine <b>no prazo planejado</b>.';
+}
+/* cronograma por ETAPA (fase) em HTML de e-mail (tabelas, sem imagens): uma linha por fase, com a barra do previsto
+   (1ª à última data prevista da fase) e a do realizado/esperado (1ª à última data realizada ou esperada; a parte já realizada
+   em azul escuro e o restante esperado em azul acinzentado), e marca de hoje. Mesma leitura do cronograma do Dashboard. */
+function AV_cronograma(r, hoje, larg) {
+  larg = larg || 360;
+  const F = [];
+  r.linhas.forEach(function (x) {
+    let f = F[F.length - 1];
+    if (!f || f.nome !== (x.fase || '')) { f = { nome: x.fase || '', plan: [], esp: [], real: [], n: 0, nr: 0 }; F.push(f); }
+    if (x.plan) f.plan.push(x.plan); if (x.sup) return;
+    f.n++; if (x.esp) f.esp.push(x.esp); if (x.real) { f.nr++; if (x.esp) f.real.push(x.esp); }
+  });
+  F.forEach(function (f) { [f.plan, f.esp, f.real].forEach(function (a) { a.sort(); }); f.p0 = f.plan[0]; f.p1 = f.plan[f.plan.length - 1]; f.e0 = f.esp[0]; f.e1 = f.esp[f.esp.length - 1]; f.r1 = f.real[f.real.length - 1]; });
+  const datas = [hoje];
+  F.forEach(function (f) { [f.p0, f.p1, f.e0, f.e1].forEach(function (v) { if (v) datas.push(v); }); });
+  datas.sort();
+  const ini = datas[0].slice(0, 8) + '01', fimD = datas[datas.length - 1], t0 = Date.parse(ini + 'T12:00:00Z'), t1 = Date.parse(AV_soma(fimD, 1) + 'T12:00:00Z');
+  const px = function (iso) { return Math.round((Date.parse(iso + 'T12:00:00Z') - t0) / (t1 - t0) * larg); }, xh = px(hoje);
+  const CP = '#a9bedf', CR = '#0b3d91', CE = 'E';
+  /* uma faixa: segmentos [[a,b,cor],...] (largura mínima 2 px) e a marca de hoje */
+  function faixa(lista) {
+    const segs = [];
+    lista.forEach(function (q) { if (!q[0] || !q[1]) return; let x0 = px(q[0] <= q[1] ? q[0] : q[1]), x1 = px(q[0] <= q[1] ? q[1] : q[0]); if (x1 - x0 < 2) x1 = x0 + 2; segs.push([x0, Math.min(x1, larg), q[2]]); });
+    const ESTILO = { E: 'background:#eef2f9;border-top:1px dashed #0b3d91;border-bottom:1px dashed #0b3d91;height:7px;line-height:7px' };
+    const cortes = [0, larg, xh, xh + 1]; segs.forEach(function (s) { cortes.push(s[0], s[1]); });
+    const c = cortes.filter(function (v, i, A) { return v >= 0 && v <= larg && A.indexOf(v) === i; }).sort(function (x, y) { return x - y; });
+    let h = '<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;width:' + larg + 'px;table-layout:fixed"><tr>';
+    for (let i = 0; i < c.length - 1; i++) {
+      const w = c[i + 1] - c[i]; if (w <= 0) continue;
+      let bg = '';
+      segs.forEach(function (s) { if (c[i] >= s[0] && c[i + 1] <= s[1]) bg = s[2]; });
+      if (c[i] === xh && w === 1) bg = '#c0392e';
+      h += '<td style="width:' + w + 'px;height:9px;line-height:9px;font-size:1px;padding:0' + (bg === 'E' ? ';' + ESTILO.E : bg ? ';background:' + bg : '') + '">&nbsp;</td>';
+    }
+    return h + '</tr></table>';
+  }
+  /* régua dos meses */
+  const nm = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+  let regua = '<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;width:' + larg + 'px;table-layout:fixed"><tr>';
+  let m = ini;
+  while (m < AV_soma(fimD, 1)) {
+    const prox = (function () { const y = +m.slice(0, 4), mo = +m.slice(5, 7); return mo === 12 ? (y + 1) + '-01-01' : y + '-' + String(mo + 1).padStart(2, '0') + '-01'; })();
+    const w = px(prox < AV_soma(fimD, 1) ? prox : AV_soma(fimD, 1)) - px(m);
+    if (w > 0) regua += '<td style="width:' + w + 'px;border-left:1px solid #c9d2e0;font-size:9px;color:#56627a;padding:0 0 0 2px;overflow:hidden;white-space:nowrap">' + (w >= 18 ? nm[+m.slice(5, 7) - 1] + (m.slice(5, 7) === '01' || m === ini ? '/' + m.slice(2, 4) : '') : '') + '</td>';
+    m = prox;
+  }
+  regua += '</tr></table>';
+  const dt = function (iso) { return iso ? iso.split('-').reverse().join('/').slice(0, 5) + '/' + iso.slice(2, 4) : '—'; };
+  const per = function (x, y) { return x ? (x === y ? dt(x) : dt(x) + ' a ' + dt(y)) : '—'; };
+  const th = 'padding:2px 8px 4px;color:#56627a;white-space:nowrap';
+  let h = '<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;font-family:Arial,sans-serif;font-size:12px;color:#14203a">';
+  h += '<tr><td style="padding:2px 10px 4px 0;color:#56627a">Etapa</td><td style="' + th + '">Previsto</td><td style="' + th + '"><b style="color:#0b3d91">Realizado</b> / <i style="color:#8a94a6">esperado</i></td><td style="padding:2px 0 4px">' + regua + '</td></tr>';
+  F.forEach(function (f) {
+    const atr = f.p1 && f.e1 ? AV_dias(f.e1, f.p1) : 0;
+    const marca = atr > 0 ? ' <span style="color:#c0392e;font-weight:bold">(+' + atr + ')</span>' : atr < 0 ? ' <span style="color:#1f5b37">(' + atr + ')</span>' : '';
+    const st = f.nr === f.n ? 'concluída' : f.nr ? f.nr + ' de ' + f.n + ' realizadas' : 'não iniciada';
+    /* realizado: só datas efetivamente realizadas (negrito, azul escuro); esperado: o que falta, pela data esperada (itálico, cinza) */
+    const B = function (t) { return '<b style="color:#0b3d91">' + t + '</b>'; }, I = function (t) { return '<i style="color:#8a94a6">' + t + '</i>'; };
+    const realTxt = (f.nr === f.n ? B(per(f.e0, f.e1)) : f.nr ? B(per(f.e0, f.r1)) + ' ' + I('· até ' + dt(f.e1)) : I(per(f.e0, f.e1))) + marca;
+    const barR = f.nr === f.n ? [[f.e0, f.e1, CR]] : f.nr ? [[f.e0, f.r1, CR], [f.r1, f.e1, CE]] : [[f.e0, f.e1, CE]];
+    h += '<tr style="border-top:1px solid #e9edf4"><td style="padding:5px 10px 5px 0;white-space:nowrap"><b style="color:#0b3d91">' + f.nome + '</b><br><span style="font-size:11px;color:#56627a">' + st + '</span></td>' +
+      '<td style="padding:5px 8px;white-space:nowrap">' + per(f.p0, f.p1) + '</td>' +
+      '<td style="padding:5px 8px;white-space:nowrap">' + realTxt + '</td>' +
+      '<td style="padding:5px 0">' + faixa([[f.p0, f.p1, CP]]) + '<div style="height:3px;line-height:3px;font-size:1px">&nbsp;</div>' + faixa(barR) + '</td></tr>';
+  });
+  h += '</table><p style="font-size:11px;color:#56627a;margin:6px 0 0">' +
+    '<span style="display:inline-block;width:12px;height:8px;background:' + CP + '"></span> Previsto &nbsp; ' +
+    '<span style="display:inline-block;width:12px;height:8px;background:' + CR + '"></span> <b style="color:#0b3d91">Realizado</b> (datas já cumpridas) &nbsp; ' +
+    '<span style="display:inline-block;width:12px;height:6px;background:#eef2f9;border-top:1px dashed #0b3d91;border-bottom:1px dashed #0b3d91"></span> <i style="color:#8a94a6">Esperado</i> (o que falta: data realizada anterior + prazo, nunca antes de hoje) &nbsp; ' +
+    '<span style="display:inline-block;width:2px;height:10px;background:#c0392e"></span> Hoje.<br>Cada barra vai da 1ª à última data da etapa; (+n) = dias que o fim da etapa passa do previsto.</p>';
+  return h;
 }
 
 /* ===== Listas fixas ===== */
@@ -703,7 +944,7 @@ function mesclar(L,R){
  const av=String((L.avisos||{}).em||'')>=String((R.avisos||{}).em||'')?L.avisos:R.avisos;
  const hp=String(L.hhPadraoEm||'')>=String(R.hhPadraoEm||'')?L:R;
  const la=String((L.listasAch||{}).em||'')>=String((R.listasAch||{}).em||'')?L.listasAch:R.listasAch;
- return Object.assign({},R,L,{auditorias:aud,excluidas:exc,prazosPadrao:pp.prazosPadrao||{},prazosPadraoEm:pp.prazosPadraoEm||'',contatos:ct,avisos:av,hhPadrao:hp.hhPadrao||{},hhPadraoEm:hp.hhPadraoEm||'',achados:junta(L.achados,R.achados),oficios:junta(L.oficios,R.oficios),listasAch:la});
+ return Object.assign({},R,L,{auditorias:aud,excluidas:exc,prazosPadrao:pp.prazosPadrao||{},prazosPadraoEm:pp.prazosPadraoEm||'',contatos:ct,avisos:av,hhPadrao:hp.hhPadrao||{},hhPadraoEm:hp.hhPadraoEm||'',achados:junta(L.achados,R.achados),oficios:junta(L.oficios,R.oficios),listasAch:la,paints:(()=>{const o=Object.assign({},R.paints||{});for(const[k,v] of Object.entries(L.paints||{}))if(!o[k]||String((v||{}).em||'')>=String((o[k]||{}).em||''))o[k]=v;return o})()});
 }
 const $=id=>document.getElementById(id);
 /* Rodapé: data e hora da última gravação da base (por qualquer usuário) */
@@ -896,9 +1137,10 @@ function render(){
  if(!DADOS.prazosPadraoV2){const pp=DADOS.prazosPadrao||{};delete pp.of_sace;delete pp.of_daag;DADOS.prazosPadraoV2=1}
  if(!DADOS.prazosPadraoV3){const pp=DADOS.prazosPadrao||{};delete pp.debrief;DADOS.prazosPadraoV3=1}
  const A=DADOS.auditorias;A.forEach(recalcular);
- DADOS.meta={docs:DOCS.map(d=>({k:d.k,nome:d.nome,fase:d.fase}))};pintaCtBtn();pintaBaseEm();
+ DADOS.meta={docs:DOCS.map(d=>({k:d.k,nome:d.nome,fase:d.fase,base:d.base||''}))};pintaCtBtn();pintaBaseEm();
  if(typeof renderAch==='function')renderAch();
  if(typeof slidesNaTela==='function')slidesNaTela();
+ if(typeof renderDash==='function')renderDash(true);
  const anos=[...new Set(A.map(a=>String(a.ano||'')).filter(Boolean))].sort((a,b)=>b-a);
  if(FILTRO.ano&&!anos.includes(FILTRO.ano))anos.unshift(FILTRO.ano);
  $('fAno').innerHTML='<option value="">Todos os anos</option>'+anos.map(y=>`<option>${esc(y)}</option>`).join('');$('fAno').value=FILTRO.ano;
@@ -1055,10 +1297,11 @@ function pacotePainel(){
  const P={ref:hoje(),baseEm:(()=>{const d=window.BASE_EM?new Date(window.BASE_EM):null;return d&&!isNaN(d)?d.toLocaleDateString('pt-BR')+' às '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}):''})(),auditorias:[]};
  DADOS.auditorias.forEach(a=>{recalcular(a);const sit=situacao(a),i=pendente(a),px=i>=0?DOCS[i]:null,H=a.hh||{},hh={};
   hhDoTipo(a.tipo).forEach(x=>{const v=H[x.s]||{},h=Number.isFinite(v.h)?v.h:hhPad(x.s);if(v.p!=null||v.r!=null)hh[x.n]={prev:(v.p||0)*h,real:(v.r||0)*h}});
-  P.auditorias.push({id:a.id,ano:a.ano,titulo:a.titulo,tipo:a.tipo,nup:a.sigadaer,coordenador:a.coordenador,auxiliar:a.auxiliar,etapa:sit,cancelada:!!a.cancelada,concluida:sit==='Concluída',
+  P.auditorias.push({id:a.id,ano:a.ano,titulo:a.titulo,sigla:curto(a),tipo:a.tipo,nup:a.sigadaer,coordenador:a.coordenador,auxiliar:a.auxiliar,etapa:sit,cancelada:!!a.cancelada,concluida:sit==='Concluída',
    proximo:px&&!a.cancelada?{nome:px.nome,plan:doc(a,px.k).plan||''}:null,docs:DOCS.map(d=>({nome:d.nome,fase:d.fase,plan:doc(a,d.k).plan||'',exec:doc(a,d.k).exec||''})),
    achadosPrel:a.achadosPrel,achadosFin:a.achadosFin,custos:a.custos||{},concluidaEcgu:!!a.concluidaEcgu,local:a.local||'',hh})});
  P.achados=(DADOS.achados||[]).filter(x=>audDe(x.aud)).map(x=>({aud:x.aud,ano:(audDe(x.aud)||{}).ano,sistema:x.sistema||'',n:x.n,assunto:x.assunto||'',sintese:x.sintese||'',criterio:x.criterio||'',situacao:x.situacao||''}));
+ P.paint=paintPacote();
  return P;
 }
 let PN_PAC=null,PN_EM='';
@@ -1092,12 +1335,13 @@ function linhasCT(){
 }
 function guardaCT(){$('ctTb').querySelectorAll('[data-nome]').forEach(i=>{const n=i.dataset.nome,v=i.value.trim(),old=AV_emailDe(CT,n);if(v!==old){Object.keys(CT).forEach(k=>{if(AV_norm(k)===AV_norm(n))delete CT[k]});CT[n]={email:v,em:new Date().toISOString()}}})}
 function previaCT(){
- const dow=new Date().getDay(),pap=dow===1||dow===3?{coord:true}:dow===2||dow===4?{aux:true}:null;
- const por=calcularAvisos(Object.assign({},DADOS,{avisos:{docs:AVD}}),DOCS.map(d=>({k:d.k,nome:d.nome})),hoje(),ANTECEDENCIA,pap),nomes=Object.keys(por).sort((a,b)=>a.localeCompare(b,'pt-BR'));
- $('ctPrevInfo').textContent=(pap?'Hoje é dia de envio aos '+(pap.coord?'coordenadores':'auxiliares técnicos')+'. ':'Hoje não é dia de envio; a prévia mostra o que sairia para coordenadores e auxiliares com as datas de hoje. ')+(nomes.length?nomes.length+(nomes.length===1?' pessoa receberia':' pessoas receberiam')+' aviso hoje.':'Ninguém receberia aviso hoje.');
- $('ctPrev').innerHTML=nomes.map(n=>{const e=AV_emailDe(CT,n),L=por[n],q=L.length;
-  return`<details class="ctp"><summary><b>${esc(n)}</b> ${e?`<span class="sub">&lt;${esc(e)}&gt;</span>`:'<span class="late">sem e-mail — não receberá</span>'} · ${q} ${q===1?'auditoria com pendência':'auditorias com pendência'}</summary>
-  ${L.map(r=>`<div class="ctp-a"><b>${esc(r.titulo)}</b><ul>${r.itens.map(it=>`<li>${esc(it.doc)} — prevista ${dt(it.plan)} — <span class="${it.tipo==='atrasado'?'late':'warn'}">${AV_textoItem(it)}</span></li>`).join('')}</ul></div>`).join('')}</details>`}).join('');
+ const dow=new Date().getDay(),pap=dow===1?{coord:true,coordCompleto:true}:dow===3?{coord:true}:dow===2?{aux:true,auxCompleto:true}:dow===4?{aux:true}:null;
+ const por=calcularAvisos(Object.assign({},DADOS,{avisos:{docs:AVD}}),DOCS.map(d=>({k:d.k,nome:d.nome,fase:d.fase,base:d.base||''})),hoje(),ANTECEDENCIA,pap),nomes=Object.keys(por).sort((a,b)=>a.localeCompare(b,'pt-BR'));
+ const compl=pap&&(pap.coordCompleto||pap.auxCompleto);
+ $('ctPrevInfo').textContent=(pap?'Hoje é dia de envio aos '+(pap.coord?'coordenadores':'auxiliares técnicos')+(compl?' (resumo completo, com cronograma). ':' (só pendências). '):'Hoje não é dia de envio; a prévia mostra as pendências que sairiam para coordenadores e auxiliares com as datas de hoje. ')+(nomes.length?nomes.length+(nomes.length===1?' pessoa receberia':' pessoas receberiam')+' e-mail hoje.':'Ninguém receberia e-mail hoje.')+' No e-mail, o atraso é contado sobre a data esperada (em itálico).';
+ $('ctPrev').innerHTML=nomes.map(n=>{const e=AV_emailDe(CT,n),L=por[n],q=L.length,pend=L.filter(r=>r.itens.length).length;
+  return`<details class="ctp"><summary><b>${esc(n)}</b> ${e?`<span class="sub">&lt;${esc(e)}&gt;</span>`:'<span class="late">sem e-mail — não receberá</span>'} · ${q} ${q===1?'auditoria':'auditorias'}${compl?` (${pend} com pendência)`:''}</summary>
+  ${L.map(r=>`<div class="ctp-a"><b>${esc(r.titulo)}</b><ul>${r.itens.map(it=>`<li>${esc(it.doc)} — prevista ${dt(it.plan)}, esperada <i>${dt(it.esp)}</i> — <span class="${it.tipo==='atrasado'?'late':'warn'}">${AV_textoItem(it)}</span></li>`).join('')}${AV_textoFim(r.resumo)?`<li class="sub">${AV_textoFim(r.resumo)}</li>`:''}</ul></div>`).join('')}</details>`}).join('');
 }
 function docsCT(){let f='';$('ctDocs').innerHTML=DOCS.map(d=>{const c=d.fase!==f?`<div class="ct-f">${esc(d.fase)}</div>`:'';f=d.fase;return c+`<label class="chk"><input type="checkbox" data-avd="${d.k}"${AVD.includes(d.k)?' checked':''}> ${esc(d.nome)}</label>`}).join('')}
 function cfgTab(t){$('ct').querySelectorAll('[data-tab]').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===t));$('ct').querySelectorAll('[data-pane]').forEach(p=>p.hidden=p.dataset.pane!==t);$('ct').querySelector('.ed-c').scrollTop=0}
@@ -1131,17 +1375,12 @@ $('ctF').onsubmit=e=>{e.preventDefault();guardaCT();
    DADOS.listasAch= {assuntos:[], sistemas:[], situacoes:[], em}
    Calculados: atendimento = dias(data limite − última manifestação) (negativo = depois do prazo);
                validar benefício = última manifestação + 90 dias. */
-const LISTAS_ACH={
- assuntos:['Governança e Planejamento','Gestão de Riscos e Controles','Normatização e Processos','Contratações e Licitações','Gestão/Fiscalização Contratual','Pessoal, Benefícios e Pagamentos','Execução Orçamentária/Financeira','Patrimônio, Estoques e Material','Infraestrutura/Manutenção','Segurança e Prevenção','Subsistência/Segurança Alimentar','Capacitação/Segregação de Funções','Sistemas/Registros/Informação','Ressarcimento ao Erário','Conformidade Documental','Contabilidade e Demonstrações Financeiras'],
- situacoes:['Relatório Preliminar','Finalizado Preliminar','Monitoramento','Recomendação implementada parcialmente','Recomendação implementada'],
- sistemas:['OBRAS','SAVPAR','SISADM','SISCONTAER','SISGI','SISPAGAER','SISPROV','SISUB']};
+const LISTAS_ACH={assuntos:[],situacoes:['Relatório Preliminar','Finalizado Preliminar','Monitoramento','Recomendação implementada parcialmente','Recomendação implementada'],sistemas:[]};
 const COR_SIT={'Relatório Preliminar':'#5b6761','Finalizado Preliminar':'#0B3D91','Monitoramento':'#b26a00','Recomendação implementada parcialmente':'#7B4DB0','Recomendação implementada':'#2E7D4F'};
 const listas=()=>{const L=DADOS.listasAch||{};return{assuntos:L.assuntos&&L.assuntos.length?L.assuntos:LISTAS_ACH.assuntos,situacoes:L.situacoes&&L.situacoes.length?L.situacoes:LISTAS_ACH.situacoes,sistemas:L.sistemas&&L.sistemas.length?L.sistemas:LISTAS_ACH.sistemas}};
 const audDe=id=>DADOS.auditorias.find(a=>a.id===id);
-/* nome curto da auditoria: sigla entre parênteses no fim do título, ou o título encurtado */
-const SIGLAS_AUD=[['Demonstrativos Contábeis','Demonstr. Contábeis COMAER'],['Bens Móveis','Bens Móveis'],['Bens Imóveis','Bens Imóveis'],['Anápolis','BAAN'],['KC-390','KC-390 (COMPREP)'],['Coari','Aeródromo Coari'],['SAVPAR','SAVPAR (DIRAP)'],['F-X2','Crédito Externo F-X2'],['24 Próprios','24 PNR – BABV'],['GEDEX','SDPP / GEDEX'],['Gratificação de Representação','SDPP / GEDEX'],['Plano Plurianual','PPA (EMAER)'],['SSUB','SSUB – AFA'],['Barbacena','10 PNR – Barbacena'],['GAP-BE','GAP-BE'],['GAP-CO','GAP-CO'],['CABW','CABW'],['CABE','CABE'],['DIRINFRA','DIRINFRA'],['SICAOP','SICAOP']];
-const curto=a=>{if(!a)return'(auditoria excluída)';const t=String(a.titulo||'').trim();const sg=SIGLAS_AUD.find(([k])=>t.includes(k));if(sg)return sg[1];
- if(/Bens Móveis/.test(t))return'Bens Móveis';if(/Bens Imóveis/.test(t))return'Bens Imóveis';
+/* nome curto da auditoria: campo "Nome curto" (sigla); sem ele, a sigla entre parênteses no fim do título, ou o título encurtado */
+const curto=a=>{if(!a)return'(auditoria excluída)';if(a.sigla&&String(a.sigla).trim())return String(a.sigla).trim();const t=String(a.titulo||'').trim();
  const m=t.match(/\(([^()]{2,30})\)\s*$/);if(m&&!/^TC\s/.test(m[1])&&!/^[A-Z]{2}$/.test(m[1]))return m[1];
  const m2=t.match(/[\s–-]([A-Z][A-Z0-9]+(?:-[A-Z0-9]+)+|[A-Z]{3,}[A-Z0-9]*)\s*$/);if(m2)return m2[1];return t.length>34?t.slice(0,32).trim()+'…':t};
 const atend=x=>x.limite&&x.manifest?dias(x.limite,x.manifest):null;
@@ -1251,20 +1490,13 @@ function testaLinks(){document.querySelectorAll('[data-tl]').forEach(a=>{const i
 $('aCfg').onclick=()=>{const LA=listas();$('laAss').value=LA.assuntos.join('\n');$('laSit').value=LA.situacoes.join('\n');$('laSis').value=LA.sistemas.join('\n');$('cfa').showModal()};
 $('cfaF').onsubmit=e=>{e.preventDefault();const linhas=id=>[...new Set($(id).value.split('\n').map(t=>t.trim()).filter(Boolean))],LA=listas(),nl={assuntos:linhas('laAss'),situacoes:linhas('laSit'),sistemas:linhas('laSis')};
  if(!nl.assuntos.length){$('laAss').focus();$('laAss').setCustomValidity('Informe pelo menos um assunto.');$('laAss').reportValidity();$('laAss').setCustomValidity('');return}
- if(['assuntos','situacoes','sistemas'].some(k=>nl[k].join('|')!==LA[k].join('|'))){DADOS.listasAch=Object.assign(nl,{em:new Date().toISOString()});Store.touch()}
+ if(['assuntos','situacoes','sistemas'].some(k=>nl[k].join('|')!==LA[k].join('|'))){DADOS.listasAch=Object.assign({},DADOS.listasAch||{},nl,{em:new Date().toISOString()});Store.touch()}
  $('cfa').close();renderAch()};
 
 /* ----- Sugestão de assunto pela síntese -----
    Compara o texto com os achados já catalogados (os mais parecidos "votam" no seu assunto) e soma
    palavras-chave de cada assunto. Só sugere assuntos que estão na lista das Configurações da catalogação. */
-const KW_ASS={'Governança e Planejamento':'planej govern indica metas estrat plano diretr','Gestão de Riscos e Controles':'risco riscos contro monito matriz mitiga',
- 'Normatização e Processos':'normat norma normas regula proced manual portar fluxo instru ordens rotina','Contratações e Licitações':'licita pregao dispen inexig edital aquisi pesqui precos cotaca termo refere',
- 'Gestão/Fiscalização Contratual':'fiscal contra aditiv imr medica garant gestor prorro','Pessoal, Benefícios e Pagamentos':'pagame pessoa benefi auxili gratif adicio folha remune diaria indeni',
- 'Execução Orçamentária/Financeira':'empenh orcame financ liquid restos despes credit saldos saldo siafi','Patrimônio, Estoques e Material':'patrim estoqu almoxa materi bens invent imovei imovel desfaz armaze carga',
- 'Infraestrutura/Manutenção':'manute obra obras edific infrae reform predia instal','Segurança e Prevenção':'segura incend preven extint acide brigad',
- 'Subsistência/Segurança Alimentar':'alimen rancho subsis refeic cozinh genero nutric','Capacitação/Segregação de Funções':'capaci treina segreg qualif cursos curso',
- 'Sistemas/Registros/Informação':'sistem regist cadast inform dados siloms spiune spunet','Ressarcimento ao Erário':'ressar erario apurac sindic prejui debito',
- 'Conformidade Documental':'docume arquiv assina formal autuac proces','Contabilidade e Demonstrações Financeiras':'contab demons balanc lancam deprec reaval ajuste'};
+const KW_ASS=new Proxy({},{get:(_,k)=>((DADOS.listasAch||{}).palavras||{})[k]});
 const SW_ASS=new Set('para pela pelo pelos pelas como sobre entre ainda sendo foram sido seus suas desta deste dessa desse nesta neste nessa nesse quando qual quais onde estao esta essa esse isso aquele aquela todo toda todos todas mais menos muito pouco ausencia inexistencia falta falha falhas fragilidade fragilidades deficiencia deficiencias inadequada inadequado inadequados inadequadas irregular irregularidade com sem que dos das nos nas uma umas uns por sua seu ate apos sob tem ter ser estar houve haver nao'.split(' '));
 const tokAss=s=>(norm(s).match(/[a-z0-9]+/g)||[]).filter(w=>w.length>=4&&!SW_ASS.has(w)).map(w=>w.slice(0,6));
 function sugerirAssunto(texto){
@@ -1323,6 +1555,357 @@ $('matF').onsubmit=e=>{e.preventDefault();
  const ag=new Date().toISOString(),sis=$('mSis').value.trim(),sit=listas().situacoes[0];DADOS.achados=DADOS.achados||[];
  rows.forEach((r,k)=>{const o={id:Date.now()*100+k,aud,n:parseInt(v(r,'n'),10),sintese:v(r,'sintese'),criado:ag,alterado:ag};if(sis)o.sistema=sis;if(sit)o.situacao=sit;['criterio','assunto','beneficio'].forEach(c=>{if(v(r,c))o[c]=v(r,c)});DADOS.achados.push(o)});
  $('mat').close();AFIL.aud=String(aud);AFIL.vis='lista';AFIL.sit='';guardaAF();renderAch();Store.touch();alertaAch(`${pl(rows.length,'achado importado','achados importados')} da matriz para ${curto(audDe(aud))}. Abra cada um para completar o acompanhamento.`)};
+
+/* ===== Aba Dashboard: os gráficos dos slides, interativos e com filtros =====
+   Lê o mesmo pacote dos slides (pacotePainel) + achados da catalogação. Gráficos em SVG simples (sem bibliotecas).
+   Filtros no topo; clicar numa barra/quadro também filtra. */
+const DSH={ano:'',coord:'',aux:'',aud:'',tipo:'',etapa:'',status:'',assunto:''};
+try{Object.assign(DSH,JSON.parse(sessionStorage.getItem('dash_f')||'{}'))}catch(e){}
+const DSH_ST=[['ATRASADA','Atrasada','#C0392B'],['A VENCER','A vencer','#C98500'],['EM DIA','Em dia','#2E7D4F'],['CONCLUÍDA','Concluída','#4F6D9A'],['CANCELADA','Cancelada','#9AA1AC']];
+const DSH_COR=Object.fromEntries(DSH_ST.map(s=>[s[0],s[2]])),DSH_NOME=Object.fromEntries(DSH_ST.map(s=>[s[0],s[1]]));
+const DSH_PREV='#A9BEDF',DSH_REAL='#0B3D91';
+const DSH_ETAPAS=['Aguardando início','Início atrasado',...FASES,'Concluída','Cancelada'];
+const dshTit=s=>String(s||'').trim();
+let DSH_SUJO=true,DSH_EXP=null,DSH_EXPB={et:null,co:null};  /* auditoria expandida no cronograma (só uma por vez) */
+
+function dshLinhas(){
+ const P=pacotePainel(),ref=P.ref,porId={};
+ const L=P.auditorias.map(a=>{const A=audDe(a.id),prazo=a.proximo&&a.proximo.plan?dias(a.proximo.plan,ref):null;
+  const status=a.cancelada?'CANCELADA':a.concluida?'CONCLUÍDA':prazo==null?'EM DIA':prazo<0?'ATRASADA':prazo<=5?'A VENCER':'EM DIA';
+  const c=a.custos||{},v=k=>+c[k]||0;let hp=0,hr=0;Object.values(a.hh||{}).forEach(h=>{hp+=h.prev||0;hr+=h.real||0});
+  const r={id:a.id,sg:curto(A),titulo:a.titulo,ano:String(a.ano||''),tipo:a.tipo||'',coord:dshTit(a.coordenador),aux:dshTit(a.auxiliar),etapa:a.etapa,status,
+   prazo:a.cancelada||a.concluida?null:prazo,prox:a.proximo,docs:a.docs,
+   cPrev:v('dmPrev')+v('dcPrev')+v('psPrev'),cReal:v('dmReal')+v('dcReal')+v('psReal'),c,hhPrev:hp,hhReal:hr,hh:a.hh||{},
+   prel:a.achadosPrel==null?null:+a.achadosPrel,fin:a.achadosFin==null?null:+a.achadosFin};
+  porId[r.id]=r;return r});
+ const ach=(P.achados||[]).map(x=>Object.assign({},x,{sg:(porId[x.aud]||{}).sg||''}));
+ return{L,ach,ref};
+}
+/* aplica os filtros; "menos" ignora um filtro (para montar as opções daquele filtro) */
+function dshFiltra(L,menos){return L.filter(r=>(menos==='ano'||!DSH.ano||r.ano===DSH.ano)&&(menos==='coord'||!DSH.coord||r.coord===DSH.coord)&&(menos==='aux'||!DSH.aux||r.aux===DSH.aux)
+ &&(menos==='aud'||!DSH.aud||String(r.id)===DSH.aud)&&(menos==='tipo'||!DSH.tipo||r.tipo===DSH.tipo)&&(menos==='etapa'||!DSH.etapa||r.etapa===DSH.etapa)&&(menos==='status'||!DSH.status||r.status===DSH.status))}
+function dshSet(k,v){DSH[k]=DSH[k]===String(v)?'':String(v);try{sessionStorage.setItem('dash_f',JSON.stringify(DSH))}catch(e){}renderDash(true)}
+
+const dshN=n=>Number(n||0).toLocaleString('pt-BR'),dshR=n=>'R$ '+Number(n||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+const dshK=n=>{n=+n||0;return n>=1e6?(n/1e6).toLocaleString('pt-BR',{maximumFractionDigits:1})+' mi':n>=1e3?(n/1e3).toLocaleString('pt-BR',{maximumFractionDigits:1})+' mil':dshN(Math.round(n))};
+const dshVazio=t=>`<p class="ds-vz">${esc(t||'Nada para mostrar com os filtros atuais.')}</p>`;
+
+/* barras horizontais genéricas: rows=[{rot, segs:[{v,cor,tip,f}], tip, f, txt}] ; f = [filtro,valor] ao clicar */
+/* linhas de auditoria para a expansão dos quadros: barra de 1 unidade na cor do status; clique filtra a auditoria */
+function dshSubs(rs){const ord=r=>r.prazo==null?1e9:r.prazo;return rs.slice().sort((a,b)=>ord(a)-ord(b)||a.sg.localeCompare(b.sg,'pt')).map(r=>({rot:r.sg,f:['aud',r.id],sel:DSH.aud===String(r.id),
+ txt:DSH_NOME[r.status]+(r.prazo!=null?(r.prazo<0?' · '+(-r.prazo)+' d':r.prazo===0?' · hoje':' · faltam '+r.prazo+' d'):''),
+ tip:`${r.titulo}\nCoordenador: ${r.coord||'—'}\nEtapa: ${r.etapa}`+(r.prox&&r.prazo!=null?`\nPróximo: ${r.prox.nome} (${dt(r.prox.plan)})`:'')+`\nStatus: ${DSH_NOME[r.status]}`,segs:[{v:1,cor:DSH_COR[r.status]}]}))}
+function dshBarras(rows,o={}){
+ if(!rows.length)return dshVazio(o.vazio);
+ /* expansão (só uma por quadro): r.exp = chave; r.subs = linhas das auditorias, mostradas logo abaixo */
+ if(o.exp){const k=DSH_EXPB[o.exp];rows=rows.flatMap(r=>r.exp!=null&&r.exp===k?[Object.assign({},r,{ab:true})].concat((r.subs||[]).map(x=>Object.assign({sub:true},x))):[r])}
+ const W=o.w||560,lab=o.lab||150,txt=o.txtW==null?64:o.txtW,bh=o.bh||14,gap=o.gap||8,H=rows.length*(bh+gap)+6;
+ const max=o.max||Math.max(1,...rows.map(r=>r.segs.reduce((s,x)=>s+Math.max(0,x.v),0)));
+ const sx=v=>v/max*(W-lab-txt);
+ let s=`<svg class="ds-svg" viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="${esc(o.aria||'')}">`;
+ rows.forEach((r,i)=>{const y=i*(bh+gap)+3;let x=lab;const sel=r.sel?' ds-sel':'';
+  s+=`<g class="ds-row${r.f?' ds-cl':''}${sel}${r.sub?' ds-sub':''}${r.ab?' ds-ab':''}"${r.f?` data-f="${esc(r.f[0])}" data-v="${esc(r.f[1])}"`:''}${r.tip?` data-tip="${esc(r.tip)}"`:''}>`
+   +`<rect class="ds-hit" x="0" y="${y-gap/2}" width="${W}" height="${bh+gap}"/>`
+   +(o.exp&&r.exp!=null?`<g class="ds-exp" data-exp="${esc(o.exp+':'+r.exp)}" role="button" aria-label="${r.ab?'Recolher':'Expandir'} as auditorias de ${esc(r.rot)}"><rect x="0" y="${y-gap/2}" width="24" height="${bh+gap}" fill="transparent"/><path class="ds-chev" d="${r.ab?`M5,${y+bh/2-2} l4,4 l4,-4`:`M7,${y+bh/2-4} l4,4 l-4,4`}"/></g>`:'')
+   +`<text class="ds-lb" x="${lab-8}" y="${y+bh/2}" text-anchor="end" dominant-baseline="central">${esc(r.rot)}</text>`;
+  r.segs.forEach((g,k)=>{const w=Math.max(0,sx(g.v));if(!w)return;const fim=k===r.segs.length-1||!r.segs.slice(k+1).some(z=>z.v>0);
+   s+=`<path d="${dshPath(x,y,Math.max(w-(fim?0:2),1),bh,fim?4:0)}" fill="${g.cor}"${g.tip?` data-tip="${esc(g.tip)}"`:''}${g.f?` data-f="${esc(g.f[0])}" data-v="${esc(g.f[1])}" class="ds-cl"`:''}/>`;x+=w});
+  if(r.txt!=null)s+=`<text class="ds-vl" x="${x+6}" y="${y+bh/2}" dominant-baseline="central">${esc(r.txt)}</text>`;
+  s+='</g>'});
+ return s+'</svg>';
+}
+/* retângulo com a ponta direita arredondada (r) e a base reta */
+function dshPath(x,y,w,h,r){r=Math.min(r,w/2,h/2);return`M${x},${y}h${w-r}${r?`a${r},${r} 0 0 1 ${r},${r}`:''}v${h-2*r}${r?`a${r},${r} 0 0 1 -${r},${r}`:''}h-${w-r}z`}
+
+/* pares previsto × realizado por linha */
+function dshPares(rows,o={}){
+ if(!rows.length)return dshVazio(o.vazio);
+ const W=o.w||560,lab=o.lab||150,txt=96,bh=7,gap=12,H=rows.length*(bh*2+2+gap)+6,max=Math.max(1,...rows.map(r=>Math.max(r.p,r.r)));
+ const sx=v=>v/max*(W-lab-txt),fmt=o.fmt||dshN;
+ let s=`<svg class="ds-svg" viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="${esc(o.aria||'')}">`;
+ rows.forEach((r,i)=>{const y=i*(bh*2+2+gap)+3,acima=r.r>r.p&&r.p>0;
+  const tip=`${r.nome||r.rot}\nPrevisto: ${fmt(r.p)}\nRealizado: ${fmt(r.r)}`+(r.p?`\n${acima?'Acima':'Abaixo'} do previsto: ${fmt(Math.abs(r.r-r.p))}`:'');
+  s+=`<g class="ds-row${r.f?' ds-cl':''}${r.sel?' ds-sel':''}"${r.f?` data-f="${esc(r.f[0])}" data-v="${esc(r.f[1])}"`:''} data-tip="${esc(tip)}">`
+   +`<rect class="ds-hit" x="0" y="${y-gap/2}" width="${W}" height="${bh*2+2+gap}"/>`
+   +`<text class="ds-lb" x="${lab-8}" y="${y+bh+1}" text-anchor="end" dominant-baseline="central">${esc(r.rot)}</text>`
+   +(r.p>0?`<path d="${dshPath(lab,y,Math.max(sx(r.p),1),bh,3)}" fill="${DSH_PREV}"/>`:'')
+   +(r.r>0?`<path d="${dshPath(lab,y+bh+2,Math.max(sx(r.r),1),bh,3)}" fill="${DSH_REAL}"/>`:'')
+   +`<text class="ds-vl${acima?' ds-ac':''}" x="${lab+sx(Math.max(r.p,r.r))+6}" y="${y+bh+1}" dominant-baseline="central">${esc(o.txt?o.txt(r):fmt(r.r))}</text></g>`});
+ return s+'</svg>';
+}
+const dshLeg=it=>`<span class="ds-lg">${it.map(([c,t])=>`<span><i style="background:${c}"></i>${esc(t)}</span>`).join('')}</span>`;
+const dshLegPR=(p,r)=>dshLeg([[DSH_PREV,p||'Previsto'],[DSH_REAL,r||'Realizado']]);
+const dshLegSt=sts=>dshLeg(DSH_ST.filter(s=>!sts||sts.has(s[0])).map(s=>[s[2],s[1]]));
+
+function dshPainel(id,tit,sub,corpo,extra){return`<section class="ds-p" id="${id}"><div class="ds-ph"><div><h3>${esc(tit)}</h3>${sub?`<p>${sub}</p>`:''}</div>${extra||''}</div>${corpo}</section>`}
+
+function renderDash(forcar){
+ if($('pgDash').hidden){DSH_SUJO=true;return}
+ if(!forcar&&!DSH_SUJO&&$('dsCorpo').childElementCount)return;
+ DSH_SUJO=false;
+ const {L,ach,ref}=dshLinhas();
+ /* opções dos filtros */
+ const ops=(k,f,ord)=>{const m=new Map();dshFiltra(L,k).forEach(r=>{const v=f(r);if(v[0])m.set(v[0],v[1])});let a=[...m];a.sort(ord||((x,y)=>String(x[1]).localeCompare(String(y[1]),'pt')));return a};
+ const sel=(id,k,rot,a)=>{if(DSH[k]&&!a.some(x=>String(x[0])===DSH[k]))a.unshift([DSH[k],k==='aud'?'(auditoria)':DSH[k]]);
+  $(id).innerHTML=`<option value="">${rot}</option>`+a.map(([v,t])=>`<option value="${esc(v)}"${String(v)===DSH[k]?' selected':''}>${esc(t)}</option>`).join('')};
+ sel('dsAno','ano','Todos os anos',ops('ano',r=>[r.ano,r.ano],(a,b)=>b[0].localeCompare(a[0])));
+ sel('dsCoord','coord','Todos os coordenadores',ops('coord',r=>[r.coord,r.coord]));
+ sel('dsAux','aux','Todos os auxiliares',ops('aux',r=>[r.aux,r.aux]));
+ sel('dsAud','aud','Todas as auditorias',ops('aud',r=>[String(r.id),r.sg]));
+ sel('dsTipo','tipo','Todos os tipos',ops('tipo',r=>[r.tipo,r.tipo]));
+ sel('dsEtapa','etapa','Todas as etapas',ops('etapa',r=>[r.etapa,r.etapa],(a,b)=>DSH_ETAPAS.indexOf(a[0])-DSH_ETAPAS.indexOf(b[0])));
+ sel('dsSt','status','Todos os status',ops('status',r=>[r.status,DSH_NOME[r.status]],(a,b)=>DSH_ST.findIndex(s=>s[0]===a[0])-DSH_ST.findIndex(s=>s[0]===b[0])));
+ const ativos=Object.entries(DSH).filter(([k,v])=>v);
+ $('dsLimpa').hidden=!ativos.length;
+ const R=dshFiltra(L),ids=new Set(R.map(r=>r.id)),A=ach.filter(x=>ids.has(x.aud)),AA=DSH.assunto?A.filter(x=>x.assunto===DSH.assunto):A;
+ const uma=DSH.aud&&R.length===1?R[0]:null;
+ $('dsInfo').textContent=`${R.length} de ${L.length} auditorias`+(ativos.length?' com os filtros escolhidos':'')+` · referência: hoje, ${dt(ref)}`+(window.BASE_EM?'':'');
+ const W=Math.max(420,Math.min(760,($('dsCorpo').clientWidth||1100)/2-40)),WG=Math.max(640,($('dsCorpo').clientWidth||1100)-34);
+ let h='';
+
+ /* 1. indicadores */
+ const cnt=s=>R.filter(r=>r.status===s).length,and=R.filter(r=>!['CONCLUÍDA','CANCELADA'].includes(r.status)).length;
+ const sum=(f)=>R.reduce((s,r)=>s+(f(r)||0),0);
+ const kp=(rot,v,sub,st)=>`<button type="button" class="ds-k${st?' ds-cl':''}${st&&DSH.status===st?' ds-sel':''}"${st?` data-f="status" data-v="${st}" style="--k:${DSH_COR[st]}"`:''}><span class="ds-kl">${rot}</span><b>${v}</b><span class="ds-ks">${sub||'&nbsp;'}</span></button>`;
+ const cp=sum(r=>r.cPrev),cr=sum(r=>r.cReal),hp=sum(r=>r.hhPrev),hr=sum(r=>r.hhReal);
+ h+=`<div class="ds-ks-row">${kp('Auditorias',R.length,and+' em andamento')}${kp('Atrasadas',cnt('ATRASADA'),and?Math.round(cnt('ATRASADA')/and*100)+'% das em andamento':'','ATRASADA')}${kp('A vencer',cnt('A VENCER'),'próximo documento em até 5 dias','A VENCER')}${kp('Em dia',cnt('EM DIA'),'','EM DIA')}${kp('Concluídas',cnt('CONCLUÍDA'),'','CONCLUÍDA')}${kp('Canceladas',cnt('CANCELADA'),'','CANCELADA')}`
+  +kp('Diárias e passagens',dshK(cr),'realizado de '+dshK(cp)+' previsto')+kp('Homem-hora',dshK(hr),'realizado de '+dshK(hp)+' previsto')+kp('Achados catalogados',A.length,new Set(A.map(x=>x.aud)).size+' auditorias')+`</div>`;
+
+ /* 2. onde está cada auditoria (etapa × status) */
+ const et=DSH_ETAPAS.filter(e=>R.some(r=>r.etapa===e)).map(e=>{const rs=R.filter(r=>r.etapa===e);
+  return{rot:e,sel:DSH.etapa===e,f:['etapa',e],tip:`${e}: ${rs.length} auditoria(s)\n`+rs.map(r=>'• '+r.sg+' — '+DSH_NOME[r.status]).join('\n'),txt:rs.length,
+   segs:DSH_ST.map(s=>({v:rs.filter(r=>r.status===s[0]).length,cor:s[2],f:['status',s[0]]})),exp:e,subs:dshSubs(rs)}});
+ const g1=dshPainel('dsEt','Onde está cada auditoria','Quantidade por etapa, colorida pelo status do próximo documento. Clique para filtrar; no › para ver as auditorias ali mesmo.',dshBarras(et,{w:W,lab:196,aria:'Auditorias por etapa',exp:'et'}),dshLegSt(new Set(R.map(r=>r.status))));
+
+ /* 3. dias até o prazo */
+ const pz=R.filter(r=>r.prazo!=null).sort((a,b)=>a.prazo-b.prazo);
+ const g2=dshPainel('dsPz','Dias até o prazo','Próximo documento de cada auditoria em andamento: negativo = atrasado.',dshPrazo(pz,W),dshLegSt(new Set(['ATRASADA','A VENCER','EM DIA'])));
+
+ /* 4. carga por coordenador */
+ const cs=[...new Set(R.map(r=>r.coord||'(sem coordenador)'))].map(c=>{const rs=R.filter(r=>(r.coord||'(sem coordenador)')===c);
+  return{rot:c,sel:DSH.coord===c,f:c==='(sem coordenador)'?null:['coord',c],txt:rs.length,tip:`${c}: ${rs.length} auditoria(s)\n`+rs.map(r=>'• '+r.sg+' — '+DSH_NOME[r.status]).join('\n'),
+   segs:DSH_ST.map(s=>({v:rs.filter(r=>r.status===s[0]).length,cor:s[2]})),n:rs.length,exp:c,subs:dshSubs(rs)}}).sort((a,b)=>b.n-a.n||a.rot.localeCompare(b.rot,'pt'));
+ const g3=dshPainel('dsCo','Carga por coordenador','Auditorias de cada coordenador, pelo status. Clique para filtrar; no › para ver as auditorias ali mesmo.',dshBarras(cs,{w:W,lab:170,aria:'Auditorias por coordenador',exp:'co'}),dshLegSt(new Set(R.map(r=>r.status))));
+
+ /* 5. cronograma */
+ const dshLegGt=`<span class="ds-lg"><span><i style="background:${DSH_PREV}"></i>Previsto</span><span><i style="background:${DSH_REAL}"></i>Realizado</span><span><i class="ds-esp-i"></i><em>Esperado</em> (o que falta)</span></span>`;
+ const g4=dshPainel('dsGt',uma?'Cronograma por fase — '+uma.sg:'Cronograma: previsto × realizado',uma?'Da 1ª à última data de cada fase; tracejado, o que falta pela data esperada. A linha vertical é hoje.':'Previsto × realizado de cada auditoria; tracejado, o que falta pela data esperada (a mesma conta do e-mail). A linha vertical é hoje. Clique no nome ou na barra para filtrar; no › para abrir as fases ali mesmo.',dshGantt(R,uma,ref,WG,DSH.ano||R.map(r=>r.ano).filter(Boolean).sort()[0]||ref.slice(0,4)),uma?`<div class="ds-pa">${dshLegGt}<button type="button" class="btn ds-todas" data-f="aud" data-v="${uma.id}">← Ver todas as auditorias</button></div>`:dshLegGt);
+
+ /* 6. custos */
+ const cu=uma?[['Diárias de militares','dmPrev','dmReal'],['Diárias de civis','dcPrev','dcReal'],['Passagens','psPrev','psReal']].map(([n,p,r])=>({rot:n,p:+uma.c[p]||0,r:+uma.c[r]||0}))
+  :R.filter(r=>r.cPrev||r.cReal).sort((a,b)=>b.cPrev-a.cPrev).map(r=>({rot:r.sg,nome:r.titulo,p:r.cPrev,r:r.cReal,f:['aud',r.id],sel:DSH.aud===String(r.id)}));
+ const g5=dshPainel('dsCu','Diárias e passagens',`Previsto ${dshR(cp)} · Realizado ${dshR(cr)}`+(cp?` (${Math.round(cr/cp*100)}%)`:''),dshPares(cu,{w:W,lab:uma?160:120,fmt:dshR,txt:r=>dshK(r.r),aria:'Custos previstos e realizados',vazio:'Sem custos informados.'}),dshLegPR());
+
+ /* 7. homem-hora */
+ const hhRows=uma?Object.entries(uma.hh).map(([n,v])=>({rot:n.length>26?n.slice(0,25)+'…':n,nome:n,p:v.prev||0,r:v.real||0}))
+  :R.filter(r=>r.hhPrev||r.hhReal).sort((a,b)=>b.hhPrev-a.hhPrev).map(r=>({rot:r.sg,nome:r.titulo,p:r.hhPrev,r:r.hhReal,f:['aud',r.id],sel:DSH.aud===String(r.id)}));
+ const g6=dshPainel('dsHh','Homem-hora',`Previsto ${dshN(hp)} h · Realizado ${dshN(hr)} h`,dshPares(hhRows,{w:W,lab:uma?190:120,fmt:v=>dshN(v)+' h',txt:r=>dshN(r.r)+' h',aria:'Homem-hora previsto e realizado',vazio:'Sem homem-hora informado nos quadros das auditorias.'}),dshLegPR());
+
+ /* 8. achados preliminares × finais (campos das auditorias) */
+ const af=R.filter(r=>r.prel!=null||r.fin!=null).sort((a,b)=>(b.prel||0)-(a.prel||0)).map(r=>({rot:r.sg,nome:r.titulo,p:r.prel||0,r:r.fin||0,f:['aud',r.id],sel:DSH.aud===String(r.id)}));
+ const g7=dshPainel('dsAf','Relatórios e achados','Achados no relatório preliminar × no relatório final (campos de cada auditoria).',dshPares(af,{w:W,lab:120,fmt:dshN,txt:r=>`${dshN(r.p)} → ${dshN(r.r)}`,aria:'Achados preliminares e finais',vazio:'Nenhuma auditoria com nº de achados informado.'}),dshLegPR('Preliminar','Final'));
+
+ /* 9. achados da catalogação por assunto e por situação */
+ const porAss=new Map();A.forEach(x=>{const k=x.assunto||'(sem assunto)';const o=porAss.get(k)||{n:0,aud:new Set()};o.n++;o.aud.add(x.sg);porAss.set(k,o)});
+ const nAud=new Set(A.map(x=>x.aud)).size,lim=Math.max(2,Math.ceil(nAud/2));
+ const as=[...porAss].sort((a,b)=>b[1].n-a[1].n).map(([k,o])=>({rot:k.length>34?k.slice(0,33)+'…':k,sel:DSH.assunto===k,f:k==='(sem assunto)'?null:['assunto',k],txt:`${o.n} · ${o.aud.size} aud.`,
+  tip:`${k}\n${o.n} achado(s) em ${o.aud.size} auditoria(s)${o.aud.size>=lim&&nAud>1?' — recorrente':''}\n${[...o.aud].join(', ')}`,segs:[{v:o.n,cor:o.aud.size>=lim&&nAud>1?DSH_REAL:DSH_PREV}]}));
+ const g8=dshPainel('dsAs','Achados por assunto',nAud>1?`Catalogação de achados. Em destaque, assuntos presentes em pelo menos metade das auditorias (${lim} de ${nAud}). Clique para filtrar.`:'Catalogação de achados. Clique para filtrar.',dshBarras(as,{w:W,lab:230,txtW:86,aria:'Achados por assunto',vazio:'Nenhum achado catalogado nas auditorias filtradas.'}),dshLeg([[DSH_REAL,'Recorrente'],[DSH_PREV,'Demais']]));
+ const ss=(listas().situacoes||[]).concat([...new Set(AA.map(x=>x.situacao))].filter(s=>s&&!(listas().situacoes||[]).includes(s))).map(s=>({rot:s,n:AA.filter(x=>x.situacao===s).length})).filter(x=>x.n)
+  .map(x=>({rot:x.rot.length>36?x.rot.slice(0,35)+'…':x.rot,txt:x.n,tip:`${x.rot}: ${x.n} achado(s)`,segs:[{v:x.n,cor:COR_SIT[x.rot]||DSH_PREV}]}));
+ const g9=dshPainel('dsSi','Achados por situação'+(DSH.assunto?' — '+DSH.assunto:''),'Situação atual dos achados catalogados.',dshBarras(ss,{w:W,lab:250,aria:'Achados por situação',vazio:'Nenhum achado catalogado nas auditorias filtradas.'}));
+
+ /* 10. tabela */
+ const tb=R.slice().sort((a,b)=>(a.prazo==null?1e9:a.prazo)-(b.prazo==null?1e9:b.prazo)||a.sg.localeCompare(b.sg,'pt'));
+ const g10=dshPainel('dsTb','Auditorias filtradas','Clique numa linha para abrir a auditoria em Datas e Prazos.',tb.length?`<div class="ds-tw"><table class="ds-t"><thead><tr><th>Auditoria</th><th>Coordenador</th><th>Etapa</th><th>Próximo documento</th><th>Prevista</th><th>Status</th></tr></thead><tbody>`
+  +tb.map(r=>`<tr data-ir="${r.id}" tabindex="0"><td><b>${esc(r.sg)}</b><span>${esc(r.titulo)}</span></td><td>${esc(r.coord||'—')}</td><td>${esc(r.etapa)}</td><td>${esc(r.prox&&!['CONCLUÍDA','CANCELADA'].includes(r.status)?r.prox.nome:'—')}</td><td>${r.prox&&r.prazo!=null?dt(r.prox.plan):'—'}</td>`
+   +`<td><span class="ds-st" style="--k:${DSH_COR[r.status]}">${DSH_NOME[r.status]}${r.prazo!=null?` · ${r.prazo<0?Math.abs(r.prazo)+' d de atraso':r.prazo===0?'vence hoje':'faltam '+r.prazo+' d'}`:''}</span></td></tr>`).join('')+'</tbody></table></div>':dshVazio());
+
+ h+=`${g4.replace('class="ds-p"','class="ds-p ds-full"')}<div class="ds-g">${g1}${g3}${g2}${g5}${g6}${g7}${g8}${g9}</div>${g10}`;
+ $('dsCorpo').innerHTML=h;
+ $('dsChips').innerHTML=ativos.map(([k,v])=>`<button type="button" class="ds-chip" data-f="${k}" data-v="${esc(v)}" title="Tirar este filtro">${esc({ano:'Ano',coord:'Coordenador',aux:'Auxiliar',aud:'Auditoria',tipo:'Tipo',etapa:'Etapa',status:'Status',assunto:'Assunto'}[k])}: ${esc(k==='aud'?((L.find(r=>String(r.id)===v)||{}).sg||v):k==='status'?DSH_NOME[v]:v)} ×</button>`).join('');
+}
+
+function dshPrazo(pz,W){
+ if(!pz.length)return dshVazio('Nenhuma auditoria em andamento com os filtros atuais.');
+ const lab=130,txt=120,bh=12,gap=8,H=pz.length*(bh+gap)+24,mn=Math.min(0,...pz.map(r=>r.prazo)),mx=Math.max(0,...pz.map(r=>r.prazo));
+ const span=Math.max(1,mx-mn),sx=v=>lab+txt/2+(v-mn)/span*(W-lab-txt*1.5),x0=sx(0);
+ let s=`<svg class="ds-svg" viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Dias até o prazo por auditoria"><line class="ds-zero" x1="${x0}" x2="${x0}" y1="0" y2="${H-18}"/><text class="ds-ax" x="${x0}" y="${H-4}" text-anchor="middle">hoje</text>`;
+ pz.forEach((r,i)=>{const y=i*(bh+gap)+3,x1=sx(Math.min(0,r.prazo)),x2=sx(Math.max(0,r.prazo)),w=Math.max(2,x2-x1),neg=r.prazo<0;
+  const tip=`${r.titulo}\nPróximo: ${r.prox.nome}\nPrevista: ${dt(r.prox.plan)}\n${neg?'Atrasado há '+(-r.prazo)+' dia(s)':r.prazo===0?'Vence hoje':'Faltam '+r.prazo+' dia(s)'}\nCoordenador: ${r.coord||'—'}`;
+  const d=neg?`M${x2},${y}h-${w-4}a4,4 0 0 0 -4,4v${bh-8}a4,4 0 0 0 4,4h${w-4}z`:dshPath(x1,y,w,bh,4);
+  s+=`<g class="ds-row ds-cl${DSH.aud===String(r.id)?' ds-sel':''}" data-f="aud" data-v="${r.id}" data-tip="${esc(tip)}"><rect class="ds-hit" x="0" y="${y-gap/2}" width="${W}" height="${bh+gap}"/>`
+   +`<text class="ds-lb" x="${lab-8}" y="${y+bh/2}" text-anchor="end" dominant-baseline="central">${esc(r.sg)}</text><path d="${d}" fill="${DSH_COR[r.status]}"/>`
+   +`<text class="ds-vl" x="${neg?x1-6:x2+6}" y="${y+bh/2}" text-anchor="${neg?'end':'start'}" dominant-baseline="central">${r.prazo>0?'+':''}${r.prazo} d</text></g>`});
+ return s+'</svg>';
+}
+
+/* datas esperadas (mesma regra do e-mail: data realizada anterior + prazo, pendentes nunca antes de hoje) */
+function dshEsp(id,ref){const a=audDe(id);if(!a)return null;const L=DOCS.map(d=>({k:d.k,nome:d.nome,fase:d.fase,base:d.base||''}));
+ const e=AV_esperadas(a,L,ref);let ult=-1;DOCS.forEach((d,i)=>{if(doc(a,d.k).exec)ult=i});
+ const pend=DOCS.map((d,i)=>({fase:d.fase,d:(e[d.k]||{}).d||'',p:!doc(a,d.k).exec&&i>ult})).filter(x=>x.p&&x.d);return pend}
+function dshGantt(R,uma,ref,W,anoIni){
+ const faixa=(ds,pend)=>{const p=ds.map(d=>d.plan).filter(Boolean).sort(),e=ds.map(d=>d.exec).filter(Boolean).sort(),q=(pend||[]).map(x=>x.d).sort();
+  const o={p0:p[0],p1:p[p.length-1],e0:e[0],e1:e[e.length-1]};if(q.length){o.q1=q[q.length-1];o.q0=o.e1&&o.e1>q[0]?o.e1:(o.e1||q[0])}return o};
+ let rows;
+ if(uma){const pe=dshEsp(uma.id,ref)||[];rows=FASES.map(f=>Object.assign({rot:f},faixa(uma.docs.filter(d=>d.fase===f),pe.filter(x=>x.fase===f)))).filter(r=>r.p0||r.e0||r.q0)}
+ else{
+  const base=R.filter(r=>r.status!=='CANCELADA').map(r=>{const pe=dshEsp(r.id,ref)||[];return Object.assign({rot:r.sg,nome:r.titulo,id:r.id,docs:r.docs,pe},faixa(r.docs,pe))}).filter(r=>r.p0||r.e0).sort((a,b)=>(a.p0||a.e0).localeCompare(b.p0||b.e0));
+  rows=[];base.forEach(r=>{rows.push(r);if(DSH_EXP===r.id)FASES.forEach(f=>{const x=Object.assign({rot:f,nome:r.sg+' — '+f,sub:true},faixa(r.docs.filter(d=>d.fase===f),r.pe.filter(y=>y.fase===f)));if(x.p0||x.e0||x.q0)rows.push(x)})});
+ }
+ if(!rows.length)return dshVazio();
+ const ini=anoIni+'-01-01',all=rows.flatMap(r=>[r.p0,r.p1,r.e0,r.e1,r.q1]).filter(Boolean).concat([ref]).sort(),t0=Date.parse(ini),t1=Math.max(Date.parse(all[all.length-1]),t0+30*864e5);
+ const lab=uma?170:200,bh=6,gap=12,TOP=24,H=rows.length*(bh*2+2+gap)+TOP+4,sx=d=>lab+(Math.max(Date.parse(d),t0)-t0)/Math.max(864e5,t1-t0)*(W-lab-12);
+ let s=`<svg class="ds-svg" viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Cronograma previsto e realizado">`;
+ /* marcas de mês */
+ const d0=new Date(t0+43200000),m=new Date(d0.getFullYear(),0,1),nm=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+ const meses=[];for(let d=m;d.getTime()<=t1;d=new Date(d.getFullYear(),d.getMonth()+1,1))meses.push(d);
+ const passo=Math.ceil(meses.length/12);
+ meses.forEach((d,i)=>{const iso=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-01',x=sx(iso);s+=`<line class="ds-gr" x1="${x}" x2="${x}" y1="${TOP-6}" y2="${H}"/>`;if(i%passo===0)s+=`<text class="ds-ax" x="${x}" y="${TOP-11}" text-anchor="middle">${nm[d.getMonth()]}${d.getMonth()===0||i===0?'/'+String(d.getFullYear()).slice(2):''}</text>`});
+ rows.forEach((r,i)=>{const y=TOP+i*(bh*2+2+gap)+3;
+  const tip=`${r.nome||r.rot}\nPrevisto: ${r.p0?dt(r.p0)+' a '+dt(r.p1):'—'}\nRealizado: ${r.e0?dt(r.e0)+' a '+dt(r.e1):'—'}${r.q1?`\nEsperado (o que falta): até ${dt(r.q1)}${r.p1&&r.q1>r.p1?` (+${dias(r.q1,r.p1)} d além do previsto)`:''}`:''}`;
+  const ab=r.id&&DSH_EXP===r.id;
+  s+=`<g class="ds-row${r.id?' ds-cl':''}${r.sub?' ds-sub':''}${ab?' ds-ab':''}"${r.id?` data-f="aud" data-v="${r.id}"`:''} data-tip="${esc(tip)}"><rect class="ds-hit" x="0" y="${y-gap/2}" width="${W}" height="${bh*2+2+gap}"/>`
+   +(r.id&&!uma?`<g class="ds-exp" data-exp="gt:${r.id}" role="button" aria-label="${ab?'Recolher':'Expandir'} as fases de ${esc(r.rot)}"><rect x="0" y="${y-gap/2}" width="24" height="${bh*2+2+gap}" fill="transparent"/><path class="ds-chev" d="${ab?`M5,${y+bh-2} l4,4 l4,-4`:`M7,${y+bh-3} l4,4 l-4,4`}"/></g>`:'')
+   +`<text class="ds-lb" x="${lab-8}" y="${y+bh+1}" text-anchor="end" dominant-baseline="central">${esc(r.rot)}</text>`
+   +(r.p0?`<rect x="${sx(r.p0)}" y="${y}" width="${Math.max(3,sx(r.p1)-sx(r.p0))}" height="${bh}" rx="3" fill="${DSH_PREV}"/>`:'')
+   +(r.q0?`<rect class="ds-esp" x="${sx(r.q0)+0.5}" y="${y+bh+2.5}" width="${Math.max(3,sx(r.q1)-sx(r.q0))-1}" height="${bh-1}" rx="2.5"/>`:'')
+   +(r.e0?`<rect x="${sx(r.e0)}" y="${y+bh+2}" width="${Math.max(3,sx(r.e1)-sx(r.e0))}" height="${bh}" rx="3" fill="${DSH_REAL}"/>`:'')+'</g>'});
+ const xh=sx(ref);s+=`<line class="ds-hoje" x1="${xh}" x2="${xh}" y1="${TOP-6}" y2="${H}"/>`;
+ return s+'</svg>';
+}
+
+/* interação: dica ao passar o mouse e clique para filtrar */
+(()=>{const tip=document.createElement('div');tip.className='ds-tip';tip.hidden=true;document.body.appendChild(tip);
+ const pg=$('pgDash');
+ pg.addEventListener('mousemove',e=>{const t=e.target.closest('[data-tip]');if(!t||!pg.contains(t)){tip.hidden=true;return}
+  tip.textContent=t.dataset.tip;tip.hidden=false;const w=tip.offsetWidth,h=tip.offsetHeight;
+  let x=e.clientX+14,y=e.clientY+14;if(x+w>innerWidth-8)x=e.clientX-w-14;if(y+h>innerHeight-8)y=e.clientY-h-14;tip.style.left=x+'px';tip.style.top=y+'px'});
+ pg.addEventListener('mouseleave',()=>{tip.hidden=true});
+ pg.addEventListener('click',e=>{const ir=e.target.closest('[data-ir]');if(ir){dshAbrirAud(+ir.dataset.ir);return}
+  const ex=e.target.closest('[data-exp]'),t=ex||e.target.closest('[data-f]');if(!t||!pg.contains(t)||t.tagName==='SELECT')return;tip.hidden=true;
+  /* mantém o quadro clicado no mesmo lugar da tela depois de redesenhar */
+  const pn=t.closest('.ds-p'),pid=pn&&pn.id,top0=pn?pn.getBoundingClientRect().top:0;
+  if(ex){const v=ex.dataset.exp,i=v.indexOf(':'),q=v.slice(0,i),k=v.slice(i+1);
+   if(q==='gt'){const id=+k;DSH_EXP=DSH_EXP===id?null:id}else DSH_EXPB[q]=DSH_EXPB[q]===k?null:k;renderDash(true)}else dshSet(t.dataset.f,t.dataset.v);
+  const pn2=pid&&document.getElementById(pid);if(pn2)window.scrollBy(0,pn2.getBoundingClientRect().top-top0)});
+ pg.addEventListener('keydown',e=>{const ir=e.target.closest('[data-ir]');if(ir&&(e.key==='Enter'||e.key===' ')){e.preventDefault();dshAbrirAud(+ir.dataset.ir)}});
+ [['dsAno','ano'],['dsCoord','coord'],['dsAux','aux'],['dsAud','aud'],['dsTipo','tipo'],['dsEtapa','etapa'],['dsSt','status']].forEach(([id,k])=>$(id).addEventListener('change',e=>{DSH[k]=e.target.value;try{sessionStorage.setItem('dash_f',JSON.stringify(DSH))}catch(x){}renderDash(true)}));
+ $('dsLimpa').onclick=()=>{Object.keys(DSH).forEach(k=>DSH[k]='');try{sessionStorage.removeItem('dash_f')}catch(x){}renderDash(true)};
+ let rz=null;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>{if(!$('pgDash').hidden)renderDash(true)},200)});
+ document.querySelectorAll('.pg-tabs [data-page]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.page==='dashboard')setTimeout(()=>renderDash(true),0)}));
+ if(!pg.hidden)setTimeout(()=>renderDash(true),0);
+})();
+function dshAbrirAud(id){ABERTAS.add(id);irPara('auditorias');render();setTimeout(()=>{const r=document.querySelector(`#tb tr.lin[data-id="${id}"]`);if(r){r.scrollIntoView({block:'center'});r.focus()}},50)}
+/* ===== PAINT do ano: dados de cada PAINT (números, gráficos, objetivos e elaboração do PAINT seguinte).
+   Ficam só na base do Drive, em DADOS.paints[ano] = {..., em}; nada disso fica no código da página. ===== */
+const PT_COLS={
+ kpis:[['r','Indicador','t'],['v','Valor','t'],['s','Complemento','t']],
+ hhKpis:[['r','Indicador','t'],['v','Valor','t'],['s','Complemento','t']],
+ aval:[['label','Tipo de avaliação','t'],['e','Estratégica','n'],['i','Institucional','n'],['o','Obrigatória','n']],
+ cons:[['label','Tipo de consultoria','t'],['v','Quantidade','n']],
+ aud:[['label','Posto ou cargo','t'],['v','Auditores','n']],
+ orc:[['label','Serviço','t'],['v','Valor (R$)','n']],
+ hhFase:[['label','Tipo (quantidade)','t'],['p','Planejamento','n'],['e','Execução','n'],['c','Comunicação','n'],['m','Monitoramento','n']],
+ objetivos:[['aud','Auditoria','aud'],['carteira','Carteira','car'],['origem','Origem','t'],['ini','Início','d'],['fim','Término','d'],['obj','Objetivo','ta']],
+ proximo:[['etapa','Etapa','t'],['data','Data','d'],['texto','Atividade','t']]
+};
+const PT_GRAF=[['aval','Avaliações por tipo e carteira','quantidade de avaliações de cada tipo, por carteira'],['cons','Consultorias','quantidade por tipo'],['aud','Auditores por posto','quantidade de auditores'],['orc','Previsão de diárias e passagens por tipo de serviço','valor previsto em R$'],['hhFase','Homem-hora por auditoria, por tipo e fase','horas por auditoria em cada fase; no tipo, a quantidade planejada entre parênteses']];
+const paints=()=>{const P=DADOS.paints||{},o={};for(const[k,v] of Object.entries(P))if(v&&!v.excluido)o[k]=v;return o};
+const ptNum=s=>{s=String(s==null?'':s).trim().replace(/^R\$\s*/,'');if(!s)return 0;if(s.includes(','))s=s.replace(/\./g,'').replace(',','.');else if(/^\d{1,3}(\.\d{3})+$/.test(s))s=s.replace(/\./g,'');const n=Number(s);return Number.isFinite(n)?n:NaN};
+const ptFmt=n=>n==null||n===''?'':Number(n).toLocaleString('pt-BR',{maximumFractionDigits:2});
+/* ano do painel: o ano mais frequente das auditorias (mesma regra do painel) */
+function anoPainel(){const c={};DADOS.auditorias.forEach(a=>{if(a.ano)c[a.ano]=(c[a.ano]||0)+1});const k=Object.keys(c).sort((x,y)=>c[y]-c[x]);return String(k[0]||new Date().getFullYear())}
+/* pacote para o painel (mesmo formato que o painel usava antes) */
+function paintPacote(){
+ const ano=anoPainel(),P=paints()[ano];if(!P)return null;
+ const kp=L=>(L||[]).filter(x=>x.r||x.v).map(x=>`<div class="pt-kpi"><span class="pt-kpi-l">${esc(x.r)}</span><span class="pt-kpi-v">${esc(x.v)}</span><span class="pt-kpi-s">${esc(x.s)}</span></div>`).join('\n');
+ const N=P.notas||{},G=P.graficos||{};
+ const et=[];(P.proximo||[]).filter(x=>x.data||x.texto).slice().sort((a,b)=>String(a.data).localeCompare(String(b.data))).forEach(x=>{const e=String(x.etapa||'').trim()||'Etapa';let g=et.find(y=>y[0]===e);if(!g)et.push(g=[e,[]]);g[1].push([x.data,x.texto||''])});
+ return{ano,
+  objetivos:(P.objetivos||[]).map(o=>{const a=o.aud&&DADOS.auditorias.find(x=>String(x.id)===String(o.aud));return{k:a?[String(a.titulo||'')]:String(o.chave||'').split('|').map(s=>s.trim()).filter(Boolean),carteira:o.carteira||'',origem:o.origem||'',ini:o.ini||'',fim:o.fim||'',obj:o.obj||''}}).filter(o=>o.k.length),
+  p27:et,
+  textos:{paintKpis:kp(P.kpis),hhKpis:kp(P.hhKpis),paintSub:P.portaria?esc('Aprovado pela '+String(P.portaria).replace(/\.$/,'')+'. Números fixos do plano.'):'Números fixos do plano.',notaCons:esc(N.cons||''),notaUniverso:esc(N.universo||''),notaOrc:esc(N.orc||'')},
+  graficos:Object.fromEntries(Object.keys(PT_COLS).filter(k=>PT_GRAF.some(g=>g[0]===k)).map(k=>[k,(G[k]||[]).filter(r=>String(r.label||'').trim())]))};
+}
+
+/* ----- tela "PAINT do ano" ----- */
+let PT_ANO='',PT_ED=null;
+const ptVazio=ano=>({ano:String(ano),portaria:'',kpis:[],hhKpis:[],notas:{cons:'',universo:'',orc:''},graficos:{aval:[],cons:[],aud:[],orc:[],hhFase:[]},objetivos:[],proximo:[]});
+function ptTabela(tb,cols,rows){
+ const aud=DADOS.auditorias.filter(a=>!PT_ANO||String(a.ano)===PT_ANO||rows.some(r=>String(r.aud)===String(a.id))).sort((a,b)=>curto(a).localeCompare(curto(b),'pt'));
+ const cel=(c,v)=>{const[k,,t]=c;v=v==null?'':v;
+  if(t==='aud')return`<select class="in" data-k="${k}"><option value="">(escolha)</option>${aud.map(a=>`<option value="${esc(a.id)}"${String(a.id)===String(v)?' selected':''}>${esc(curto(a))}</option>`).join('')}</select>`;
+  if(t==='car')return`<select class="in" data-k="${k}">${['','Estratégica','Institucional','Obrigatória'].map(o=>`<option${o===v?' selected':''}>${o}</option>`).join('')}</select>`;
+  if(t==='d')return`<input class="in" type="date" data-k="${k}" value="${esc(v)}">`;
+  if(t==='n')return`<input class="in pt-n" data-k="${k}" inputmode="decimal" value="${esc(typeof v==='number'?ptFmt(v):v)}">`;
+  if(t==='ta')return`<textarea class="in" rows="3" data-k="${k}">${esc(v)}</textarea>`;
+  return`<input class="in" data-k="${k}" value="${esc(v)}">`};
+ tb.innerHTML=rows.map(r=>`<tr>${cols.map(c=>`<td>${cel(c,r[c[0]])}</td>`).join('')}<td class="pt-ac"><button type="button" class="pt-b" data-sobe title="Subir">↑</button><button type="button" class="pt-b" data-tira title="Excluir linha">×</button></td></tr>`).join('');
+ tb.dataset.cols=JSON.stringify(cols);
+}
+function ptLer(tb){const cols=JSON.parse(tb.dataset.cols||'[]');return[...tb.rows].map(tr=>{const o={};cols.forEach(([k,,t])=>{const e=tr.querySelector(`[data-k="${k}"]`);let v=e?e.value.trim():'';if(t==='n')v=v===''?0:ptNum(v);o[k]=v});return o}).filter(o=>cols.some(([k,,t])=>t==='n'?o[k]:o[k]!==''))}
+function ptMontar(){
+ const D=$('ptd'),P=PT_ED;
+ const anos=Object.keys(paints()).concat(PT_ANO&&!paints()[PT_ANO]?[PT_ANO]:[]).sort().reverse();
+ $('ptAno').innerHTML=anos.map(a=>`<option${a===PT_ANO?' selected':''}>${a}</option>`).join('')||'<option value="">(nenhum)</option>';
+ $('ptVaz').hidden=!!P;D.querySelector('.pt-corpo').hidden=!P;$('ptExc').hidden=!P||!paints()[PT_ANO];
+ if(!P)return;
+ $('ptPor').value=P.portaria||'';$('ptNC').value=(P.notas||{}).cons||'';$('ptNU').value=(P.notas||{}).universo||'';$('ptNO').value=(P.notas||{}).orc||'';
+ D.querySelectorAll('tbody[data-t]').forEach(tb=>{const t=tb.dataset.t,G=P.graficos||{};ptTabela(tb,PT_COLS[t],(t in G?G[t]:P[t])||[])});
+ D.querySelectorAll('.pt-ano').forEach(e=>e.textContent=PT_ANO);D.querySelectorAll('.pt-ano1').forEach(e=>e.textContent=+PT_ANO+1);
+}
+function ptColher(){
+ if(!PT_ED)return null;const D=$('ptd'),P=JSON.parse(JSON.stringify(PT_ED));
+ P.portaria=$('ptPor').value.trim();P.notas={cons:$('ptNC').value.trim(),universo:$('ptNU').value.trim(),orc:$('ptNO').value.trim()};P.graficos=P.graficos||{};
+ let ruim=null;D.querySelectorAll('.pt-n').forEach(e=>{if(e.value.trim()&&!Number.isFinite(ptNum(e.value)))ruim=ruim||e});
+ if(ruim){ruim.setCustomValidity('Número inválido');ruim.reportValidity();setTimeout(()=>ruim.setCustomValidity(''),2500);return null}
+ D.querySelectorAll('tbody[data-t]').forEach(tb=>{const t=tb.dataset.t,v=ptLer(tb);if(PT_GRAF.some(g=>g[0]===t))P.graficos[t]=v;else P[t]=v});
+ return P;
+}
+function ptAbrir(ano){PT_ANO=String(ano||'');const P=paints()[PT_ANO];PT_ED=P?JSON.parse(JSON.stringify(P)):null;ptMontar();ptTabPt('ger')}
+function ptTabPt(t){const D=$('ptd');D.querySelectorAll('[data-ptab]').forEach(b=>b.setAttribute('aria-selected',b.dataset.ptab===t));D.querySelectorAll('[data-ppane]').forEach(p=>p.hidden=p.dataset.ppane!==t);D.querySelector('.ed-c').scrollTop=0}
+(()=>{
+ const D=$('ptd');
+ $('pnPaint').onclick=()=>{const a=anoPainel();$('ptMsg').hidden=true;$('ptNovoBar').hidden=true;ptAbrir(paints()[a]?a:(Object.keys(paints()).sort().pop()||a));D.showModal()};
+ D.querySelectorAll('[data-fecha]').forEach(b=>b.onclick=()=>D.close());
+ D.querySelector('.cfg-tabs').onclick=e=>{const b=e.target.closest('[data-ptab]');if(b)ptTabPt(b.dataset.ptab)};
+ $('ptAno').onchange=e=>ptAbrir(e.target.value);
+ const msg=(t,err)=>{const m=$('ptMsg');m.textContent=t||'';m.hidden=!t;m.classList.toggle('err',!!err)};
+ $('ptNovo').onclick=()=>{const ult=Object.keys(paints()).sort().pop();$('ptNovoAno').value=ult?+ult+1:new Date().getFullYear();
+  $('ptNovoUlt').textContent=ult||'';$('ptNovoCpL').hidden=!ult;msg('');$('ptNovoBar').hidden=false;$('ptNovoAno').focus()};
+ $('ptNovoX').onclick=()=>{$('ptNovoBar').hidden=true};
+ $('ptNovoAno').onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();$('ptNovoOk').click()}};
+ $('ptNovoOk').onclick=()=>{const a=String($('ptNovoAno').value).trim();if(!/^20\d\d$/.test(a)){msg('Informe o ano com 4 dígitos.',true);return}
+  $('ptNovoBar').hidden=true;
+  if(paints()[a]){ptAbrir(a);msg('O PAINT '+a+' já existe; ele foi aberto para edição.');return}
+  const ult=Object.keys(paints()).sort().pop();let P=ptVazio(a);
+  if(ult&&$('ptNovoCp').checked){const U=paints()[ult];const d=(+a)-(+ult),ano=t=>String(t).replace(/\b(20\d\d)\b/g,y=>Math.abs(+y-(+ult))<=1?String(+y+d):y);const z=L=>(L||[]).map(x=>Object.fromEntries(Object.entries(x).map(([k,v])=>[k,k==='label'||k==='r'?ano(v):''])));
+   P.kpis=z(U.kpis);P.hhKpis=z(U.hhKpis);P.graficos=Object.fromEntries(Object.entries(U.graficos||{}).map(([k,L])=>[k,z(L)]))}
+  PT_ANO=a;PT_ED=P;ptMontar();ptTabPt('ger');msg('PAINT '+a+' criado. Preencha e clique em Salvar.')};
+ $('ptExc').onclick=()=>{const b=$('ptExc');if(!paints()[PT_ANO])return;
+  if(!b.dataset.conf){b.dataset.conf='1';b.textContent='Clique de novo para excluir o PAINT '+PT_ANO;setTimeout(()=>{delete b.dataset.conf;b.textContent='Excluir este ano'},4000);return}
+  delete b.dataset.conf;b.textContent='Excluir este ano';const ex=PT_ANO;
+  DADOS.paints=DADOS.paints||{};DADOS.paints[PT_ANO]={excluido:true,em:new Date().toISOString()};Store.touch();render();ptAbrir(Object.keys(paints()).sort().pop()||'');msg('PAINT '+ex+' excluído.')};
+ D.addEventListener('click',e=>{const b=e.target.closest('.pt-b');if(b){const tr=b.closest('tr');if(b.hasAttribute('data-tira'))tr.remove();else if(tr.previousElementSibling)tr.parentNode.insertBefore(tr,tr.previousElementSibling);return}
+  const n=e.target.closest('[data-mais]');if(n){const tb=D.querySelector(`tbody[data-t="${n.dataset.mais}"]`),cols=JSON.parse(tb.dataset.cols);
+   const todos=[...tb.rows].map(tr=>Object.fromEntries(cols.map(([k,,t])=>{const x=tr.querySelector(`[data-k="${k}"]`),v=x?x.value:'';return[k,t==='n'&&v.trim()&&Number.isFinite(ptNum(v))?ptNum(v):v]})));
+   ptTabela(tb,cols,todos.concat([Object.fromEntries(cols.map(([k])=>[k,'']))]));
+   const l=tb.rows[tb.rows.length-1];const f=l&&l.querySelector('input,select,textarea');if(f)f.focus()}});
+ $('ptArq').onclick=()=>$('ptArqF').click();
+ $('ptArqF').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;let J;
+  const msg=(t,err)=>{const m=$('ptMsg');m.textContent=t;m.hidden=!t;m.classList.toggle('err',!!err)};
+  try{J=JSON.parse(await f.text())}catch(_){msg('Arquivo inválido: não é um .json.',true);return}
+  if(!J||!J.paints||typeof J.paints!=='object'){msg('Este arquivo não traz dados de PAINT.',true);return}
+  const em=new Date().toISOString(),anos=Object.keys(J.paints);let n=0;
+  DADOS.paints=DADOS.paints||{};anos.forEach(a=>{DADOS.paints[a]=Object.assign(ptVazio(a),J.paints[a],{ano:a,em})});
+  if(J.palavras)DADOS.listasAch=Object.assign({},DADOS.listasAch||{},{palavras:J.palavras,em});
+  if(Array.isArray(J.siglas))DADOS.auditorias.forEach(a=>{if(a.sigla)return;const t=String(a.titulo||'');const sg=J.siglas.find(([k])=>t.includes(k));if(sg){a.sigla=sg[1];a.alterado=em;n++}});
+  delete DADOS.paint;Store.touch();render();ptAbrir(anos.slice().sort().pop());
+  msg('PAINT '+anos.join(', ')+' carregado na base.'+(n?' Nome curto preenchido em '+n+' auditoria(s).':''))};
+ $('ptF').onsubmit=e=>{e.preventDefault();const P=ptColher();if(!P){if(!PT_ED)D.close();return}
+  P.ano=PT_ANO;P.em=new Date().toISOString();DADOS.paints=DADOS.paints||{};DADOS.paints[PT_ANO]=P;Store.touch();render();D.close()};
+})();
 
 /* ===== Navegação (a aba aberta volta ao recarregar) ===== */
 function irPara(p){document.querySelectorAll('main[data-pg]').forEach(m=>m.hidden=m.dataset.pg!==p);
