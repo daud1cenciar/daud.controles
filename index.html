@@ -2025,13 +2025,13 @@ const RAE_DOCSL=()=>DOCS.map(d=>({k:d.k,nome:d.nome,fase:d.fase,base:d.base||''}
 /* risco = atraso estimado do fim (mesma conta do e-mail) ÷ dias previstos da auditoria (Início → último documento):
    0 = zero; até 10% = baixo; até 30% = médio; acima = alto */
 function raeRisco(a){
- const r=AV_resumo(a,RAE_DOCSL(),raeHoje()),ini=doc(a,D0).plan,tot=ini&&r.fimPlan?dias(r.fimPlan,ini):0,at=Math.max(0,r.atrasoFim||0),pct=tot>0?at/tot:0;
+ const r=AV_resumo(a,RAE_DOCSL(),raeHoje()),ini=doc(a,D0).plan,tot=ini&&r.fimPlan?dias(r.fimPlan,ini):0,at=situacao(a)==='Concluída'?0:Math.max(0,r.atrasoFim||0),pct=tot>0?at/tot:0;  /* concluída: risco zero */
  return{r,at,tot,pct,nivel:at<=0?'ZERO':pct<=.10?'BAIXO':pct<=.30?'MÉDIO':'ALTO'};
 }
 /* ponteiro do velocímetro: ângulo em graus (180 = esquerda/Baixo, 0 = direita/Alto). Faixas iguais de 60°:
-   verde 0–10%, amarelo 10–30%, vermelho 30–60% (acima de 60% fica no fim do vermelho); risco zero = início do verde */
+   verde 0–10%, amarelo 10–30%, vermelho 30–60% (acima de 60% fica no fim do vermelho); risco zero = deitado no eixo horizontal, à esquerda */
 function raeAngulo(pct){const p=Math.max(0,pct||0);
- if(p<=0)return 174;if(p<=.10)return 180-60*(p/.10);if(p<=.30)return 120-60*((p-.10)/.20);return Math.max(6,60-60*Math.min(1,(p-.30)/.30))}
+ if(p<=0)return 180;if(p<=.10)return 180-60*(p/.10);if(p<=.30)return 120-60*((p-.10)/.20);return Math.max(6,60-60*Math.min(1,(p-.30)/.30))}
 /* centro do arco na imagem do modelo (pixel 141,131 de 278×143; 9525 EMU por pixel) */
 const RAE_GAUGE={x:9374423+141*9525,y:2729606+131*9525,r:112*9525};
 function raePonteiro(pct,id){
