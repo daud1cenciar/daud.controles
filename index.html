@@ -2021,6 +2021,8 @@ function raeBarra(a){
 }
 const raeProrrog=a=>String(a.obs||'').split(/\n+/).map(s=>s.trim()).filter(s=>s&&/prorrog/i.test(s)&&!/^Trabalhos de campo previstos/i.test(s));
 /* itens do Status da AD como vão para o slide: os digitados + prorrogação (das Observações, se o status não fala nisso) + e-CGU */
+/* data esperada do documento (a mesma do e-mail: realizada/esperada do documento-base + prazo) */
+const raeEsperada=(a,k)=>((AV_esperadas(a,RAE_DOCSL())[k]||{}).d)||doc(a,k).plan||'';
 const RAE_DOCSL=()=>DOCS.map(d=>({k:d.k,nome:d.nome,fase:d.fase,base:d.base||''}));
 /* risco = atraso estimado do fim (mesma conta do e-mail) ÷ dias previstos da auditoria (Início → último documento):
    0 = zero; até 10% = baixo; até 30% = médio; acima = alto */
@@ -2054,7 +2056,7 @@ function raeItens(a,D){
  if(u>=0&&sit!=='Concluída')L.push({t:`Última tarefa realizada: ${DOCS[u].nome}, em ${dt(doc(a,DOCS[u].k).exec)}.`,d:false,auto:'realizada'});
  if(sit==='Concluída')L.push({t:'Auditoria concluída.',d:false});
  else{const i=pendente(a);
-  if(i>=0){const d=DOCS[i],p=doc(a,d.k).plan,n=p?dias(raeHoje(),p):null,dd=x=>x+(x===1?' dia':' dias');
+  if(i>=0){const d=DOCS[i],p=raeEsperada(a,d.k),n=p?dias(raeHoje(),p):null,dd=x=>x+(x===1?' dia':' dias');
    L.push({t:`Próxima tarefa: ${d.nome} — prazo ${dt(p)||'—'}`+(n==null?'.':n>0?`, atrasada há ${dd(n)}.`:n===0?', vence hoje.':`, em dia.`),d:n>0,auto:'prazo'})}
   const R=raeRisco(a).r,f=R.atrasoFim;
   if(f!=null)L.push({t:f>0?`Estimativa: sem antecipação das etapas restantes, término com ${f} ${f===1?'dia':'dias'} de atraso.`:f<0?`Estimativa: no ritmo atual, término ${-f} ${f===-1?'dia':'dias'} antes do previsto.`:'Estimativa: no ritmo atual, término no prazo previsto.',d:f>0,auto:'estimativa'})}
@@ -2071,7 +2073,7 @@ function raeFicha(a,D){
   fase:RAE_FASE[sit]||sit,tipo:'Tipo de Auditoria: '+(RAE_TIPO[a.tipo]||a.tipo||''),
   coord:(fem?'Coordenadora: ':'Coordenador: ')+raeNomePessoa(a.coordenador),demanda:'PAINT '+(a.ano||''),
   data:campo&&(ic.exec||ic.plan)?dt(ic.exec||ic.plan):'00/00/'+(a.ano||''),
-  prazo:sit==='Concluída'?'CONCLUÍDA':(i>=0&&doc(a,DOCS[i].k).plan?dt(doc(a,DOCS[i].k).plan):''),
+  prazo:sit==='Concluída'?'CONCLUÍDA':(i>=0?dt(raeEsperada(a,DOCS[i].k)):''),
   ult:dt(raeHoje()),barra:raeBarra(a),itens:raeItens(a,D||raeDataReuniao()),sit};
 }
 const raeDataReuniao=()=>{const e=$('raeData');return e&&e.value||raeHoje()};
