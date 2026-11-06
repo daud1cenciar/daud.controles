@@ -1710,9 +1710,9 @@ function rodapes() {
       const r = document.createElement('span'); r.className = 's-id-r';
       id.append(img, t, r); s.prepend(id);
     }
-    const idr = s.querySelector('.s-id-r'); if (idr) idr.textContent = `PAINT ${APP.info.ano} · posição em ${PT.fd(APP.info.ref)}`;
+    const idr = s.querySelector('.s-id-r'); if (idr) idr.textContent = `PAINT ${APP.info.ano} · posição em ${PT.fd(APP.info.ref)}${APP.info.hora ? ' às ' + APP.info.hora : ''}`;
     const foot = document.createElement('div'); foot.className = 's-foot';
-    const l = document.createElement('span'); l.textContent = `CENCIAR · Divisão de Auditoria · PAINT ${APP.info.ano} · ${window.__BASE ? 'Posição da base em' : 'Posição da planilha em'} ${PT.fd(APP.info.ref)}`;
+    const l = document.createElement('span'); l.textContent = `CENCIAR · Divisão de Auditoria · PAINT ${APP.info.ano} · ${window.__BASE ? 'Posição da base em' : 'Posição da planilha em'} ${PT.fd(APP.info.ref)}${APP.info.hora ? ' às ' + APP.info.hora : ''}`;
     const r = document.createElement('span'); r.textContent = `${i + 1} / ${all.length}`;
     foot.append(l, r); s.append(foot);
     const body = s.querySelector('.s-body'), fit = body.querySelector('.s-fit') || body.firstElementChild;
@@ -1736,7 +1736,7 @@ function desenhar() {
   $('#app-empty').hidden = true; $('#deck').hidden = false;
   document.querySelectorAll('.x-ano').forEach((n) => { n.textContent = info.ano; });
   aplicarFoto();
-  document.querySelectorAll('.x-ref').forEach((n) => { n.textContent = PT.fd(info.ref); });
+  document.querySelectorAll('.x-ref').forEach((n) => { n.textContent = PT.fd(info.ref) + (info.hora ? ' às ' + info.hora : ''); });
   PT.sel = null;
   dash._run();
   desenharMapa();
@@ -1748,7 +1748,7 @@ function desenhar() {
   rodapes(); ajustarMiniaturas(); fixarTextoSvg();
   const n = info.data.auditorias.length;
   $('#app-info').className = 'app-info';
-  $('#app-info').textContent = `${APP.nomeArquivo || 'Planilha'} · posição em ${PT.fd(info.ref)} · ${n} auditorias · ${slides().length} telas`;
+  $('#app-info').textContent = `${APP.nomeArquivo || 'Planilha'} · posição em ${PT.fd(info.ref)}${info.hora ? ' às ' + info.hora : ''} · ${n} auditorias · ${slides().length} telas`;
   ['#btn-show', '#btn-pptx', '#btn-zip'].forEach((b) => { $(b).disabled = false; });
 }
 async function abrirArquivo(file) {
@@ -1948,9 +1948,11 @@ function deBase(P) {
     // cronograma por fase: previsto = da 1ª à última data prevista; realizado = da 1ª à última data realizada (aberto se a fase não terminou)
     GANTT_FASES.forEach((f) => {
       const L = a.docs.filter((d) => d.fase === f); if (!L.length) return;
-      const pl = L.map((d) => d.plan).filter(Boolean).sort(), ex = L.map((d) => d.exec).filter(Boolean).sort();
+      // fase que começa no documento-base (Comunicação dos resultados: elaboração do RF a partir da Manifestação da Auditada)
+      const pl = L.flatMap((d) => [d.iniPlan, d.plan]).filter(Boolean).sort(), ex = L.flatMap((d) => [d.iniExec, d.exec]).filter(Boolean).sort();
+      const nEx = L.filter((d) => d.exec).length;
       if (pl.length) C.push({ sigla: s, fase: f, tipo: 'Previsto', inicio: pl[0], termino: pl[pl.length - 1], chave: `${s}|${f}|P` });
-      if (ex.length && !a.cancelada) C.push({ sigla: s, fase: f, tipo: 'Realizado', inicio: ex[0], termino: ex.length === L.length || fase_passou(a, f) ? ex[ex.length - 1] : null, chave: `${s}|${f}|R` });
+      if (ex.length && !a.cancelada) C.push({ sigla: s, fase: f, tipo: 'Realizado', inicio: ex[0], termino: nEx === L.length || fase_passou(a, f) ? ex[ex.length - 1] : null, chave: `${s}|${f}|R` });
     });
     Object.entries(a.hh || {}).forEach(([n, x]) => { if (x.prev) hh.set(n, (hh.get(n) || 0) + x.prev); hhPrev += x.prev || 0; hhReal += x.real || 0; });
   });
@@ -1959,7 +1961,7 @@ function deBase(P) {
   // achados cadastrados na base (aba Catalogação de Achados) no formato da planilha de catalogação
   const AL = (P.achados || []).filter((x) => SIG.has(x.aud)).map((x) => ({ objeto: SIG.get(x.aud), sistema: x.sistema || '—', n: String(x.n), assunto: x.assunto, sintese: x.sintese, criterio: x.criterio || '', situacao: x.situacao || '—', ano: String(x.ano || '') }));
   window.__ACH_BASE = AL.length ? { linhas: AL, oficios: P.nOficios || null } : null;
-  return { ref, ano, aba: 'base', data: { auditorias: A, marcos: M, cronograma: C, hh: [...hh].map(([atividade, v]) => ({ atividade, hh: v })) } };
+  return { ref, hora: P.hora || '', ano, aba: 'base', data: { auditorias: A, marcos: M, cronograma: C, hh: [...hh].map(([atividade, v]) => ({ atividade, hh: v })) } };
 }
 
 /* ajustes de tela que dependem dos dados (chamado por desenhar, antes dos rodapés) */
@@ -1973,6 +1975,7 @@ window.__posBase = function () {
   if (eh && !(dash.data('hh').data || []).length) { eh.replaceChildren(); eh.style.minHeight = '0'; const n = document.createElement('p'); n.className = 'pt-note'; n.textContent = 'Ainda não há homem-hora lançado nas auditorias. Preencha o quadro Homem-hora na edição de cada auditoria.'; eh.append(n); }
   const r = (dash.data('resumo').data || [])[0];
   const kv = document.querySelector('[data-base="canc"]'); if (kv && r) kv.textContent = PT.nf.format(r.canceladas);
+  document.querySelectorAll('.x-hoje').forEach((n) => { n.textContent = PT.fd(APP.info.ref) + (APP.info.hora ? ' às ' + APP.info.hora : ''); });
   $('#app-info').dataset.base = '1';
 };
 
@@ -2009,11 +2012,21 @@ function iniciarBase() {
   hk('h-aud', 'Homem-hora realizado', 'soma das auditorias (quadro Homem-hora)');
   const ch = document.getElementById('ch-hh'); if (ch) ch.closest('.pt-card').querySelector('h3').textContent = 'Homem-hora previsto por tarefa';
   const sub = document.querySelector('#s-hh .s-sub'); if (sub) sub.textContent = 'Homem-hora das auditorias cadastradas no controle e o modelo de homem-hora por auditoria definido no PAINT.';
-  const sg = document.querySelector('#s-gantt .s-sub'); if (sg) sg.innerHTML = 'Barra fina: da primeira à última data prevista da fase. Barra cheia: da primeira à última data realizada (aberta até hoje se a fase não terminou). Linha vertical: hoje.';
+  const sg = document.querySelector('#s-gantt .s-sub'); if (sg) sg.innerHTML = 'Barra fina: da primeira à última data prevista da fase. Barra cheia: da primeira à última data realizada (aberta até hoje se a fase não terminou). Linha vertical: hoje (<span class="x-hoje"></span>).';
   const sp = document.querySelector('#s-pipe .s-sub'); if (sp) sp.textContent = 'Cada cartão é uma auditoria na etapa atual, com os dias até a data prevista da próxima tarefa (negativo = vencido).';
   addEventListener('message', (e) => { if (e.data && e.data.tipo === 'painel-base' && (e.source === parent || e.origin === location.origin)) usarBase(e.data.pacote); });
   let L = null; try { L = JSON.parse(localStorage.getItem('painel-base') || 'null'); } catch (e) { /* */ }
   if (L) usarBase(L);
+  /* aberto em nova aba: refaz os slides quando a página do controle grava dados novos (alteração de outro usuário ou sua);
+     espera terminar a apresentação, a tela cheia ou a geração do PowerPoint (pedido do usuário 06/11) */
+  if (parent === window) {
+    const sig = (p) => JSON.stringify(Object.assign({}, p, { hora: '' }));
+    let atual = L ? sig(L) : '', esperando = null;
+    const ocupado = () => { const sh = document.querySelector('.show'), b = document.getElementById('btn-pptx'); return !!(sh && !sh.hidden) || !!(b && b.disabled) || !!document.fullscreenElement; };
+    const aplicar = () => { let P = null; try { P = JSON.parse(localStorage.getItem('painel-base') || 'null'); } catch (e) { /* */ } if (!P || sig(P) === atual) return;
+      if (ocupado()) { clearTimeout(esperando); esperando = setTimeout(aplicar, 5000); return; } atual = sig(P); usarBase(P); };
+    addEventListener('storage', (e) => { if (e.key === 'painel-base') aplicar(); });
+  }
   if (parent !== window) parent.postMessage({ tipo: 'painel-pronto' }, '*');
 }
 
