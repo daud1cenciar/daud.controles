@@ -395,6 +395,12 @@ legend.lg-id .chk{padding:0;font-size:13px;color:var(--tx);font-weight:600;displ
 #pgAud,#pgAch,#pgRae{max-width:1500px}
 .pg-tabs{max-width:1500px}
 #siteNav{padding-left:max(24px,calc((100vw - 1500px)/2));padding-right:max(24px,calc((100vw - 1500px)/2))}
+
+/* botão de desfazer filtro no cabeçalho dos quadros do Dashboard (funil com x) */
+.ds-phd{display:flex;align-items:flex-start;gap:8px}.ds-desf{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;flex:none;padding:0;border-radius:7px;border:1px solid var(--g);background:var(--gs);color:var(--g);cursor:pointer}.ds-desf:hover{background:var(--g);color:#fff}
+/* Abas sempre visíveis (pedido do usuário 06/11): a linha de abas fica presa logo abaixo do cabeçalho ao rolar */
+.pg-tabs{position:sticky;top:var(--navh,64px);z-index:14;background:var(--bg);box-shadow:0 0 0 100vmax var(--bg);clip-path:inset(0 -100vmax)}
+.pg-tabs.preso{box-shadow:0 0 0 100vmax var(--bg),0 6px 10px -8px rgba(0,0,0,.25);clip-path:inset(0 -100vmax -12px)}
 @media print{#siteNav,#stBar{display:none!important}body{padding:0}}
 </style>
 </head>
@@ -1507,6 +1513,13 @@ $('ctF').onsubmit=e=>{e.preventDefault();guardaCT();
  if(DOCS.slice(1).some(d=>pz[d.k]!==padrao(d.k))){DADOS.prazosPadrao=pz;DADOS.prazosPadraoEm=new Date().toISOString()}
  if(HH.some(x=>hp[x.s]!==hhPad(x.s))){DADOS.hhPadrao=hp;DADOS.hhPadraoEm=new Date().toISOString()}$('ct').close();render();Store.touch()};
 
+/* Abas presas abaixo do cabeçalho: mede a altura do cabeçalho e marca quando as abas estão "grudadas" (sombra discreta) */
+(function(){const nav=document.getElementById('siteNav'),tb=document.querySelector('.pg-tabs');if(!tb)return;
+ const mede=()=>{document.documentElement.style.setProperty('--navh',(nav&&getComputedStyle(nav).display!=='none'?nav.offsetHeight:0)+'px')};
+ mede();try{new ResizeObserver(mede).observe(nav||document.body)}catch(e){window.addEventListener('resize',mede)}
+ const marca=()=>tb.classList.toggle('preso',tb.getBoundingClientRect().top<=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--navh'))+.5&&window.scrollY>0);
+ window.addEventListener('scroll',marca,{passive:true});marca()})();
+
 /* ===================== CATALOGAÇÃO UNIFICADA DE ACHADOS (v3.0) =====================
    DADOS.achados  = [{id, aud (id da auditoria), n, sistema, assunto, sintese, criterio, situacao, beneficio,
                       limite, manifest, doc, link, prazoResp, docResp, criado, alterado}]
@@ -1790,7 +1803,16 @@ const dshLeg=it=>`<span class="ds-lg">${it.map(([c,t])=>`<span><i style="backgro
 const dshLegPR=(p,r)=>dshLeg([[DSH_PREV,p||'Previsto'],[DSH_REAL,r||'Realizado']]);
 const dshLegSt=sts=>dshLeg(DSH_ST.filter(s=>!sts||sts.has(s[0])).map(s=>[s[2],s[1]]));
 
-function dshPainel(id,tit,sub,corpo,extra){return`<section class="ds-p" id="${id}"><div class="ds-ph"><div><h3>${esc(tit)}</h3>${sub?`<p>${sub}</p>`:''}</div>${extra||''}</div>${corpo}</section>`}
+/* Desfazer filtro em cada quadro (pedido do usuário 06/11): filtros que o quadro aplica ao ser clicado;
+   quando algum está ativo, aparece no cabeçalho do quadro um botão para tirá-lo (o cronograma já tem "← Ver todas as auditorias") */
+let DSH_ORIG={};  /* quadro de onde veio cada filtro (o funil só desfaz o que foi clicado nele) */
+const DSH_PFILT={dsEt:['etapa','status'],dsPz:['aud'],dsCo:['coord','status'],dsCu:['aud'],dsHh:['aud'],dsAf:['aud'],dsAs:['assunto'],dsSi:['assunto']};
+const DSH_ROT={ano:'Ano',coord:'Coordenador',aux:'Auxiliar',aud:'Auditoria',tipo:'Tipo',etapa:'Etapa',status:'Status',assunto:'Assunto'};
+function dshValRot(k,v){if(k==='aud'){const a=audDe(+v);return a?curto(a):v}return k==='status'?(DSH_NOME[v]||v):v}
+function dshDesfaz(id){const ks=(DSH_PFILT[id]||[]).filter(k=>DSH[k]&&DSH_ORIG[k]===id);if(!ks.length)return'';
+ const tit='Desfazer filtro: '+ks.map(k=>DSH_ROT[k]+' '+dshValRot(k,DSH[k])).join(', ');
+ return`<button type="button" class="ds-desf" data-desf="${ks.join(',')}" title="${esc(tit)}" aria-label="${esc(tit)}"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h14l-5.5 7v6l-3 2v-8z"/><path d="M16 14l5 5M21 14l-5 5"/></svg></button>`}
+function dshPainel(id,tit,sub,corpo,extra){const df=dshDesfaz(id);return`<section class="ds-p" id="${id}"><div class="ds-ph"><div><h3>${esc(tit)}</h3>${sub?`<p>${sub}</p>`:''}</div>${df||extra?`<div class="ds-phd">${extra||''}${df}</div>`:''}</div>${corpo}</section>`}
 
 function renderDash(forcar){
  if($('pgDash').hidden){DSH_SUJO=true;return}
@@ -1938,11 +1960,12 @@ function dshGantt(R,uma,ref,W,anoIni){
   let x=e.clientX+14,y=e.clientY+14;if(x+w>innerWidth-8)x=e.clientX-w-14;if(y+h>innerHeight-8)y=e.clientY-h-14;tip.style.left=x+'px';tip.style.top=y+'px'});
  pg.addEventListener('mouseleave',()=>{tip.hidden=true});
  pg.addEventListener('click',e=>{const ir=e.target.closest('[data-ir]');if(ir){dshAbrirAud(+ir.dataset.ir);return}
+  const dz=e.target.closest('[data-desf]');if(dz){const pn=dz.closest('.ds-p'),pid=pn&&pn.id,t0=pn?pn.getBoundingClientRect().top:0;dz.dataset.desf.split(',').forEach(k=>DSH[k]='');try{sessionStorage.setItem('dash_f',JSON.stringify(DSH))}catch(x){}renderDash(true);const p2=pid&&document.getElementById(pid);if(p2)window.scrollBy(0,p2.getBoundingClientRect().top-t0);return}
   const ex=e.target.closest('[data-exp]'),t=ex||e.target.closest('[data-f]');if(!t||!pg.contains(t)||t.tagName==='SELECT')return;tip.hidden=true;
   /* mantém o quadro clicado no mesmo lugar da tela depois de redesenhar */
   const pn=t.closest('.ds-p'),pid=pn&&pn.id,top0=pn?pn.getBoundingClientRect().top:0;
   if(ex){const v=ex.dataset.exp,i=v.indexOf(':'),q=v.slice(0,i),k=v.slice(i+1);
-   if(q==='gt'){const id=+k;DSH_EXP=DSH_EXP===id?null:id}else DSH_EXPB[q]=DSH_EXPB[q]===k?null:k;renderDash(true)}else dshSet(t.dataset.f,t.dataset.v);
+   if(q==='gt'){const id=+k;DSH_EXP=DSH_EXP===id?null:id}else DSH_EXPB[q]=DSH_EXPB[q]===k?null:k;renderDash(true)}else{if(pid)DSH_ORIG[t.dataset.f]=pid;else delete DSH_ORIG[t.dataset.f];dshSet(t.dataset.f,t.dataset.v)}
   const pn2=pid&&document.getElementById(pid);if(pn2)window.scrollBy(0,pn2.getBoundingClientRect().top-top0)});
  pg.addEventListener('keydown',e=>{const ir=e.target.closest('[data-ir]');if(ir&&(e.key==='Enter'||e.key===' ')){e.preventDefault();dshAbrirAud(+ir.dataset.ir)}});
  [['dsAno','ano'],['dsCoord','coord'],['dsAux','aux'],['dsAud','aud'],['dsTipo','tipo'],['dsEtapa','etapa'],['dsSt','status']].forEach(([id,k])=>$(id).addEventListener('change',e=>{DSH[k]=e.target.value;try{sessionStorage.setItem('dash_f',JSON.stringify(DSH))}catch(x){}renderDash(true)}));
