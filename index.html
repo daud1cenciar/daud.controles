@@ -391,6 +391,10 @@ legend.lg-id .chk{padding:0;font-size:13px;color:var(--tx);font-weight:600;displ
 .rae-vel{width:100%;max-height:70px}
 
 .hhtab th.c{text-align:center}.hhtab .hhsep{border-left:2px solid var(--ln)}
+/* Largura de computador (pedido do usuário 06/11): Datas e Prazos, Catalogação e RAE com a mesma largura do Dashboard (1500px); cabeçalho e abas acompanham */
+#pgAud,#pgAch,#pgRae{max-width:1500px}
+.pg-tabs{max-width:1500px}
+#siteNav{padding-left:max(24px,calc((100vw - 1500px)/2));padding-right:max(24px,calc((100vw - 1500px)/2))}
 @media print{#siteNav,#stBar{display:none!important}body{padding:0}}
 </style>
 </head>
@@ -474,7 +478,7 @@ legend.lg-id .chk{padding:0;font-size:13px;color:var(--tx);font-weight:600;displ
 </main>
 
 <main id="pgRae" data-pg="rae" hidden>
- <div class="sl-h"><div><h1>RAE</h1><p class="lead">Apresentação semanal da DAUD: um slide por auditoria e o resumo dos achados, com os dados da base. Tudo vem da base: nº da AD (em Datas e Prazos), fase, tipo, coordenador, datas, prazo, barra de progresso, risco (pelo atraso estimado) e Status da AD (última tarefa realizada, próxima tarefa, estimativa do fim, prorrogação, novidades das Observações e situação das 7 tarefas do e-CGU, pela importação do “Minhas tarefas”).</p></div></div>
+ <div class="sl-h"><div><h1>RAE</h1><p class="lead">Apresentação semanal da DAUD: um slide por auditoria e o resumo dos achados, com os dados da base. Tudo vem da base: nº da AD (em Datas e Prazos), fase, tipo, coordenador, datas, prazo, barra de progresso, risco (pelo atraso estimado) e Status da AD (última tarefa realizada, próxima tarefa, estimativa do fim, prorrogação, novidades das Observações gerais e situação das 7 tarefas do e-CGU, pela importação do “Minhas tarefas”).</p></div></div>
  <div class="rae-tb">
   <label>Ano <select class="in" id="raeAno"></select></label>
   <label>Data da reunião <input class="in" type="date" id="raeData"></label>
@@ -632,8 +636,8 @@ legend.lg-id .chk{padding:0;font-size:13px;color:var(--tx);font-weight:600;displ
     <table class="dtab etab hhtab" id="edHHt"><tbody id="edHH"></tbody></table>
     <p class="sub" id="edHHsem" hidden>Escolha o tipo da auditoria para aparecerem as tarefas de Planejamento e de Trabalho de campo.</p>
    </fieldset>
-   <fieldset><legend>Observações</legend><div class="gr">
-    <label class="s4"><span hidden>Observações</span><textarea class="in" data-f="obs" rows="3"></textarea></label>
+   <fieldset><legend>Observações gerais</legend><div class="gr">
+    <label class="s4"><span hidden>Observações gerais</span><textarea class="in" data-f="obs" rows="3"></textarea></label>
    </div></fieldset>
   </div>
   <div class="ed-f"><button type="button" class="del" id="edDel">Excluir auditoria</button><button type="button" class="btn" id="edCan">Cancelar</button><button type="submit" class="btn pri" id="edOk">Salvar</button></div>
@@ -745,7 +749,7 @@ const XL= {
 
 
 /* ===== Identidade do app ===== */
-const APP={id:'controle-auditorias',nome:'Divisão de Auditoria - Controles',arquivo:'controle-auditorias.json',versao:'Versão 5.1 - 05/11/2026'};
+const APP={id:'controle-auditorias',nome:'Divisão de Auditoria - Controles',arquivo:'controle-auditorias.json',versao:'Versão 5.2 - 05/11/2026'};
 document.title=APP.nome;document.getElementById('appNome').textContent=APP.nome;document.getElementById('stVer').textContent=APP.versao;
 
 /* ===== Regras dos avisos por e-mail (o mesmo código roda na página e no Google Apps Script) =====
@@ -785,6 +789,10 @@ function AV_esperadas(a, DOCSL, piso) {
   return r;
 }
 /* resumo da auditoria: fim previsto × fim estimado e a tabela do cronograma (uma linha por documento) */
+/* Documentos cuja fase começa na data do documento-base (pedido do usuário 05/11): a Comunicação dos resultados começa
+   logo após a Manifestação da Auditada, com a elaboração do Relatório Final (~25 dias até a Entrega ao Chefe SCAIG).
+   Nos cronogramas (e-mail, Dashboard, Slides) a barra da fase começa na data do documento-base, sem o vazio entre as fases. */
+var AV_INI_FASE = { rf_entrega: 'elaboração do Relatório Final, a partir da Manifestação da Auditada' };
 function AV_resumo(a, DOCSL, hoje) {
   const docs = a.docs || {}, esp = AV_esperadas(a, DOCSL), est = AV_esperadas(a, DOCSL, hoje);
   const ult = DOCSL[DOCSL.length - 1].k, fimPlan = (docs[ult] || {}).plan || '', fimEst = (est[ult] || {}).d || '';
@@ -794,7 +802,7 @@ function AV_resumo(a, DOCSL, hoje) {
     const x = docs[d.k] || {}, bk = i ? (d.base || DOCSL[i - 1].k) : null, bx = bk ? (docs[bk] || {}) : {};
     if (x.exec) realizados++;
     return { k: d.k, nome: d.nome, fase: d.fase || '', plan: x.plan || '', planIni: i ? (bx.plan || '') : (x.plan || ''),
-      esp: (est[d.k] || {}).d || '', espIni: i ? ((est[bk] || {}).d || '') : ((est[d.k] || {}).d || ''), real: !!x.exec,  /* cronograma usa a mesma conta da estimativa do fim (nada pendente antes de hoje) */
+      esp: (est[d.k] || {}).d || '', espIni: i ? ((est[bk] || {}).d || '') : ((est[d.k] || {}).d || ''), real: !!x.exec, realIni: bk ? !!(docs[bk] || {}).exec : false, iniFase: !!AV_INI_FASE[d.k],  /* cronograma usa a mesma conta da estimativa do fim (nada pendente antes de hoje) */
       sup: !x.exec && i < ultR };  /* sem data, mas antes da última realizada: etapa superada (mesma regra da página) */
   });
   return { fimPlan: fimPlan, fimEst: fimEst, atrasoFim: fimPlan && fimEst ? AV_dias(fimEst, fimPlan) : null, linhas: linhas, realizados: realizados, total: DOCSL.length };
@@ -825,15 +833,15 @@ function AV_ecgu(a, DOCSL) {
 function AV_ecguHtml(c) {
   if (!c) return '';
   const dt = function (iso) { return iso ? iso.split('-').reverse().join('/') : ''; };
-  const pos = c.em ? ' <span style="color:#56627a;font-weight:normal">(posição do e-CGU de ' + dt(c.em) + ')</span>' : '';
+  const pos = c.em ? ' <span style="color:#56627a;font-weight:normal;font-size:11px">(e-CGU de ' + dt(c.em) + ')</span>' : '';
   if (!c.faltam.length && !c.alem.length)
-    return '<table cellpadding="8" cellspacing="0" style="border-collapse:collapse;width:100%;background:#eef7f1;border-left:4px solid #1f5b37"><tr><td style="font-size:13px;color:#1f5b37">' +
+    return '<table cellpadding="5" cellspacing="0" style="border-collapse:collapse;width:100%;background:#eef7f1;border-left:3px solid #1f5b37"><tr><td style="font-size:12px;color:#1f5b37">' +
       '<b>e-CGU em dia com o controle:</b> ' + c.ecgu + ' de ' + c.total + ' tarefas finalizadas, como esperado.' + pos + '</td></tr></table>';
-  const lista = function (L) { return L.map(function (l) { return '<li><b>' + l.tarefa + '</b> <span style="color:#56627a">(no controle: ' + l.doc + ')</span></li>'; }).join(''); };
-  let h = '<table cellpadding="10" cellspacing="0" style="border-collapse:collapse;width:100%;background:#fdecea;border:2px solid #c0392e"><tr><td style="font-size:13px;color:#14203a">' +
-    '<div style="font-size:15px;font-weight:bold;color:#c0392e">⚠ Diferença com o e-CGU: ' + c.ecgu + ' de ' + c.total + ' tarefas finalizadas no e-CGU; pelo controle deveriam ser ' + c.deveria + '.</div>' + pos;
-  if (c.faltam.length) h += '<div style="margin-top:6px"><b>' + (c.faltam.length === 1 ? 'Tarefa que precisa ser finalizada' : c.faltam.length + ' tarefas que precisam ser finalizadas') + ' no e-CGU</b> (no controle, a etapa correspondente já foi cumprida):<ul style="margin:4px 0 0 18px;padding:0">' + lista(c.faltam) + '</ul></div>';
-  if (c.alem.length) h += '<div style="margin-top:6px"><b>' + (c.alem.length === 1 ? 'Tarefa finalizada' : c.alem.length + ' tarefas finalizadas') + ' no e-CGU sem o documento correspondente realizado no controle</b> (informe a data à equipe respondendo a este e-mail):<ul style="margin:4px 0 0 18px;padding:0">' + lista(c.alem) + '</ul></div>';
+  const lista = function (L) { return L.map(function (l) { return '<b>' + l.tarefa + '</b> <span style="color:#56627a">(' + l.doc + ')</span>'; }).join('; '); };
+  let h = '<table cellpadding="6" cellspacing="0" style="border-collapse:collapse;width:100%;background:#fdecea;border:1px solid #e3a59f;border-left:4px solid #c0392e"><tr><td style="font-size:12px;line-height:1.4;color:#14203a">' +
+    '<span style="font-size:13px;font-weight:bold;color:#c0392e">⚠ Diferença com o e-CGU: ' + c.ecgu + ' de ' + c.total + ' tarefas finalizadas; pelo controle deveriam ser ' + c.deveria + '.</span>' + pos;
+  if (c.faltam.length) h += '<br>Finalizar no e-CGU: ' + lista(c.faltam) + '.';
+  if (c.alem.length) h += '<br>Finalizadas no e-CGU sem o documento realizado no controle (informe a data respondendo a este e-mail): ' + lista(c.alem) + '.';
   return h + '</td></tr></table>';
 }
 function calcularAvisos(D, DOCSL, hoje, antecedencia, papeis) {
@@ -905,6 +913,9 @@ function AV_cronograma(r, hoje, larg) {
   r.linhas.forEach(function (x) {
     let f = F[F.length - 1];
     if (!f || f.nome !== (x.fase || '')) { f = { nome: x.fase || '', plan: [], esp: [], real: [], n: 0, nr: 0 }; F.push(f); }
+    if (x.iniFase && !f.plan.length && !f.n) {           /* fase começa no documento-base (ex.: elaboração do RF) */
+      if (x.planIni) f.plan.push(x.planIni); if (x.espIni) { f.esp.push(x.espIni); if (x.realIni) { f.real.push(x.espIni); f.ir = true; } }
+    }
     if (x.plan) f.plan.push(x.plan); if (x.sup) return;
     f.n++; if (x.esp) f.esp.push(x.esp); if (x.real) { f.nr++; if (x.esp) f.real.push(x.esp); }
   });
@@ -951,11 +962,12 @@ function AV_cronograma(r, hoje, larg) {
   F.forEach(function (f) {
     const atr = f.p1 && f.e1 ? AV_dias(f.e1, f.p1) : 0;
     const marca = atr > 0 ? ' <span style="color:#c0392e;font-weight:bold">(+' + atr + ')</span>' : atr < 0 ? ' <span style="color:#1f5b37">(' + atr + ')</span>' : '';
-    const st = f.nr === f.n ? 'concluída' : f.nr ? f.nr + ' de ' + f.n + ' realizadas' : 'não iniciada';
+    const st = f.nr === f.n ? 'concluída' : f.nr ? f.nr + ' de ' + f.n + ' realizadas' : f.ir ? 'em elaboração' : 'não iniciada';
     /* realizado: só datas efetivamente realizadas (negrito, azul escuro); esperado: o que falta, pela data esperada (itálico, cinza) */
     const B = function (t) { return '<b style="color:#0b3d91">' + t + '</b>'; }, I = function (t) { return '<i style="color:#8a94a6">' + t + '</i>'; };
-    const realTxt = (f.nr === f.n ? B(per(f.e0, f.e1)) : f.nr ? B(per(f.e0, f.r1)) + ' ' + I('· até ' + dt(f.e1)) : I(per(f.e0, f.e1))) + marca;
-    const barR = f.nr === f.n ? [[f.e0, f.e1, CR]] : f.nr ? [[f.e0, f.r1, CR], [f.r1, f.e1, CE]] : [[f.e0, f.e1, CE]];
+    const parc = f.nr || f.ir;
+    const realTxt = (f.nr === f.n ? B(per(f.e0, f.e1)) : parc ? B(per(f.e0, f.r1)) + ' ' + I('· até ' + dt(f.e1)) : I(per(f.e0, f.e1))) + marca;
+    const barR = f.nr === f.n ? [[f.e0, f.e1, CR]] : parc ? [[f.e0, f.r1, CR], [f.r1, f.e1, CE]] : [[f.e0, f.e1, CE]];
     h += '<tr style="border-top:1px solid #e9edf4"><td style="padding:5px 10px 5px 0;white-space:nowrap"><b style="color:#0b3d91">' + f.nome + '</b><br><span style="font-size:11px;color:#56627a">' + st + '</span></td>' +
       '<td style="padding:5px 8px;white-space:nowrap">' + per(f.p0, f.p1) + '</td>' +
       '<td style="padding:5px 8px;white-space:nowrap">' + realTxt + '</td>' +
@@ -965,7 +977,7 @@ function AV_cronograma(r, hoje, larg) {
     '<span style="display:inline-block;width:12px;height:8px;background:' + CP + '"></span> Previsto &nbsp; ' +
     '<span style="display:inline-block;width:12px;height:8px;background:' + CR + '"></span> <b style="color:#0b3d91">Realizado</b> (datas já cumpridas) &nbsp; ' +
     '<span style="display:inline-block;width:12px;height:6px;background:#eef2f9;border-top:1px dashed #0b3d91;border-bottom:1px dashed #0b3d91"></span> <i style="color:#8a94a6">Esperado</i> (o que falta: data realizada anterior + prazo, nunca antes de hoje) &nbsp; ' +
-    '<span style="display:inline-block;width:2px;height:10px;background:#c0392e"></span> Hoje.<br>Cada barra vai da 1ª à última data da etapa; (+n) = dias que o fim da etapa passa do previsto.</p>';
+    '<span style="display:inline-block;width:2px;height:10px;background:#c0392e"></span> Hoje.<br>Cada barra vai da 1ª à última data da etapa (a Comunicação dos resultados começa na Manifestação da Auditada, com a elaboração do Relatório Final); (+n) = dias que o fim da etapa passa do previsto.</p>';
   return h;
 }
 
@@ -1192,8 +1204,8 @@ function detalhe(a){
 <td>${dt(x.plan)||'<span class="sub">—</span>'}</td>
 <td>${x.exec?`<span class="ok">${dt(x.exec)}</span>`:r.d&&!a.cancelada?`<span class="prev" title="Previsão: ainda não realizado">${dt(r.d)}</span>`:'<span class="sub">—</span>'}</td>
 <td><span class="${t.c}">${esc(t.t)}</span></td>
-<td class="dd">${d.doc?(x.num?esc(x.num):'<span class="sub">—</span>'):''}</td>
-<td class="c">${d.doc?(lnk(x.link,'Abrir '+d.nome)||'<span class="sub">—</span>'):''}</td></tr>`}).join('');
+<td class="dd">${x.num?esc(x.num):'<span class="sub">—</span>'}</td>
+<td class="c">${lnk(x.link,'Abrir '+d.nome)||'<span class="sub">—</span>'}</td></tr>`}).join('');
  const inf=[['Nº da AD',a.ad],['Coordenador',a.coordenador],['Auxiliar Técnico',a.auxiliar],['Tipo',a.tipo],['Unidade auditada',a.unidade],['Nº do processo no SIGADAER'+(a.arquivado?' (arquivado)':''),a.sigadaer],['Nº da tarefa no e-CGU'+(a.concluidaEcgu?' (concluída)':''),a.ecgu],['Nº de Achados Preliminares',a.achadosPrel],['Nº de Achados Finais',a.achadosFin]].map(([l,v])=>`<div><dt>${l}</dt><dd>${v===undefined||v===''||v===null?'<span class="sub">—</span>':esc(v)}</dd></div>`).join('')+`<div><dt>Localização</dt><dd>${localHtml(a.local)}</dd></div>`;
  const c=a.custos||{},tem=k=>c[k]!=null,tot=(s)=>CUSTOS.some(([k])=>tem(k+s))?CUSTOS.reduce((t,[k])=>t+(c[k+s]||0),0):null;
  const vcel=v=>v==null?'<span class="sub">—</span>':brl(v);
@@ -1201,8 +1213,8 @@ function detalhe(a){
  const custos=CUSTOS.map(([k,n])=>`<tr><td class="dn">${n}</td><td class="n">${vcel(c[k+'Prev'])}</td><td class="n">${vcel(c[k+'Real'])}</td><td class="n">${dif(c[k+'Prev'],c[k+'Real'])}</td></tr>`).join('')
   +`<tr class="tot"><td>Total</td><td class="n">${vcel(tot('Prev'))}</td><td class="n">${vcel(tot('Real'))}</td><td class="n">${dif(tot('Prev'),tot('Real'))}</td></tr>`;
  return`<div class="det-g">
-<section class="infs"><div class="inf-h"><h3>Informações</h3><button type="button" class="btn pri btn-p" data-ed="${a.id}">Editar</button></div><dl class="inf">${inf}</dl>${a.cancelada?'<p class="late">Auditoria cancelada.</p>':''}${a.obs?`<div class="obsb"><dt>Observações</dt><p class="obs">${esc(a.obs)}</p></div>`:''}</section>
-<section><h3>Documentos</h3><table class="dtab"><thead><tr><th>Documento</th><th class="n">Prazo</th><th>Prevista</th><th>Realizada</th><th>Status</th><th>Nº do documento</th><th class="c">Link</th></tr></thead><tbody>${docs}</tbody></table></section>
+<section class="infs"><div class="inf-h"><h3>Informações</h3><button type="button" class="btn pri btn-p" data-ed="${a.id}">Editar</button></div><dl class="inf">${inf}</dl>${a.cancelada?'<p class="late">Auditoria cancelada.</p>':''}${a.obs?`<div class="obsb"><dt>Observações gerais</dt><p class="obs">${esc(a.obs)}</p></div>`:''}</section>
+<section><h3>Documentos</h3><table class="dtab"><thead><tr><th>Documento</th><th class="n">Prazo</th><th>Prevista</th><th>Realizada</th><th>Status</th><th>Observações</th><th class="c">Link</th></tr></thead><tbody>${docs}</tbody></table></section>
 <section><h3>Custos</h3><table class="dtab ctab"><thead><tr><th>Item</th><th class="n">Previsto</th><th class="n">Realizado</th><th class="n">Diferença</th></tr></thead><tbody>${custos}</tbody></table></section>
 <section><h3>Homem-hora</h3>${hhHtml(a)}</section>
 </div>`;
@@ -1284,13 +1296,13 @@ $('tb').onkeydown=e=>{const r=e.target.closest('tr.lin');if(r&&(e.key==='Enter'|
 $('eTipo').innerHTML='<option value=""></option>'+TIPOS.map(t=>`<option>${esc(t)}</option>`).join('');
 (()=>{let fase='';
 $('edDocs').innerHTML=`<fieldset class="ini"><legend>Documentos e datas</legend><p class="aviso">Preencha a <b>data prevista de qualquer documento</b> (normalmente a do ${esc(DOCS[0].nome)}) e as outras são calculadas pelos prazos, em dias corridos, cada um contado a partir da data prevista do documento indicado no prazo (normalmente o anterior; os Ofícios SACE e DAAG contam do Início, a Publicação em BCA e a Reunião contam da Portaria). Os prazos vêm com o <b>prazo padrão</b> e podem ser alterados só nesta auditoria (<span class="alt">laranja</span> = diferente do padrão; ↺ volta ao padrão). Enquanto a <b>data realizada</b> está vazia aparece uma previsão.</p>
-<table class="etab"><thead><tr><th>Documento</th><th class="n">Prazo (dias)</th><th>Data prevista</th><th>Data realizada</th><th>Nº do documento</th><th>Link</th></tr></thead><tbody>`+DOCS.map((d,i)=>{const cab=d.fase!==fase?`<tr class="fsr"><td colspan="6">${esc(d.fase)}</td></tr>`:'';fase=d.fase;
+<table class="etab"><thead><tr><th>Documento</th><th class="n">Prazo (dias)</th><th>Data prevista</th><th>Data realizada</th><th>Observações</th><th>Link</th></tr></thead><tbody>`+DOCS.map((d,i)=>{const cab=d.fase!==fase?`<tr class="fsr"><td colspan="6">${esc(d.fase)}</td></tr>`:'';fase=d.fase;
  return cab+`<tr><td class="dn">${i+1}. ${esc(d.nome)}</td>
 <td class="n">${i?`<span class="pz"><input class="in" type="number" min="-999" max="3650" step="1" inputmode="numeric" data-doc="${d.k}" data-df="prazo" title="Dias após a data prevista de ${esc(DOCS[baseI(i)].nome)}"><button type="button" class="volta" data-volta="${d.k}" title="" hidden>↺</button></span>${d.base!==(DOCS[i-1]||{}).k?`<div class="dica">após ${esc(DOCS[baseI(i)].nome)}</div>`:''}`:'<span class="sub">inicial</span>'}</td>
 <td><input class="in" type="date" data-doc="${d.k}" data-df="plan" title="Se você digitar aqui, as outras datas previstas são recalculadas."></td>
 <td><input class="in" type="date" data-doc="${d.k}" data-df="exec"><div class="dica" data-prevr="${d.k}"></div></td>
-<td>${d.doc?`<input class="in" data-doc="${d.k}" data-df="num">`:'<span class="sub">—</span>'}</td>
-<td>${d.doc?`<span class="lkf"><input class="in" type="url" inputmode="url" placeholder="https://…" data-doc="${d.k}" data-df="link"><a class="lk" data-prev="${d.k}" target="_blank" rel="noopener noreferrer" title="Testar o link" aria-label="Testar o link" hidden></a></span>`:''}</td></tr>`}).join('')+`</tbody></table></fieldset>`;
+<td><input class="in" data-doc="${d.k}" data-df="num"></td>
+<td>${`<span class="lkf"><input class="in" type="url" inputmode="url" placeholder="https://…" data-doc="${d.k}" data-df="link"><a class="lk" data-prev="${d.k}" target="_blank" rel="noopener noreferrer" title="Testar o link" aria-label="Testar o link" hidden></a></span>`}</td></tr>`}).join('')+`</tbody></table></fieldset>`;
 })();
 $('edC').querySelectorAll('[data-prev]').forEach(a=>a.innerHTML=ICO_LINK);
 const campos=()=>[...$('edC').querySelectorAll('[data-f]')];
@@ -1424,7 +1436,7 @@ function pacotePainel(){
  DADOS.auditorias.forEach(a=>{recalcular(a);const sit=situacao(a),i=pendente(a),px=i>=0?DOCS[i]:null,H=a.hh||{},hh={};
   hhDoTipo(a.tipo).forEach(x=>{const v=H[x.s]||{},h=Number.isFinite(v.h)?v.h:hhPad(x.s);if(v.p!=null||v.r!=null)hh[x.n]={prev:(v.p||0)*h,real:(v.r||0)*hhR(v,h)}});
   P.auditorias.push({id:a.id,ano:a.ano,titulo:a.titulo,sigla:curto(a),tipo:a.tipo,nup:a.sigadaer,coordenador:a.coordenador,auxiliar:a.auxiliar,etapa:sit,cancelada:!!a.cancelada,concluida:sit==='Concluída',
-   proximo:px&&!a.cancelada?{nome:px.nome,plan:doc(a,px.k).plan||''}:null,docs:DOCS.map(d=>({nome:d.nome,fase:d.fase,plan:doc(a,d.k).plan||'',exec:doc(a,d.k).exec||''})),
+   proximo:px&&!a.cancelada?{nome:px.nome,plan:doc(a,px.k).plan||''}:null,docs:DOCS.map(d=>{const o={nome:d.nome,fase:d.fase,plan:doc(a,d.k).plan||'',exec:doc(a,d.k).exec||''},b=AV_INI_FASE[d.k]&&(d.base||DOCS[DOCS.indexOf(d)-1].k);if(b){o.iniPlan=doc(a,b).plan||'';o.iniExec=doc(a,b).exec||''}return o}),
    achadosPrel:a.achadosPrel,achadosFin:a.achadosFin,custos:a.custos||{},concluidaEcgu:!!a.concluidaEcgu,local:a.local||'',hh})});
  P.achados=(DADOS.achados||[]).filter(x=>audDe(x.aud)).map(x=>({aud:x.aud,ano:(audDe(x.aud)||{}).ano,sistema:x.sistema||'',n:x.n,assunto:x.assunto||'',sintese:x.sintese||'',criterio:x.criterio||'',situacao:x.situacao||''}));
  P.paint=paintPacote();
@@ -1884,9 +1896,11 @@ function dshPrazo(pz,W){
 /* datas esperadas (mesma regra do e-mail: data realizada anterior + prazo, pendentes nunca antes de hoje) */
 function dshEsp(id,ref){const a=audDe(id);if(!a)return null;const L=DOCS.map(d=>({k:d.k,nome:d.nome,fase:d.fase,base:d.base||''}));
  const e=AV_esperadas(a,L,ref);let ult=-1;DOCS.forEach((d,i)=>{if(doc(a,d.k).exec)ult=i});
- const pend=DOCS.map((d,i)=>({fase:d.fase,d:(e[d.k]||{}).d||'',p:!doc(a,d.k).exec&&i>ult})).filter(x=>x.p&&x.d);return pend}
+ const pend=DOCS.map((d,i)=>({fase:d.fase,d:(e[d.k]||{}).d||'',p:!doc(a,d.k).exec&&i>ult})).filter(x=>x.p&&x.d);
+ /* fase que começa no documento-base (elaboração do RF): o começo esperado entra na fase */
+ DOCS.forEach((d,i)=>{if(!AV_INI_FASE[d.k])return;const b=d.base||DOCS[i-1].k,j=DOCS.findIndex(x=>x.k===b);if(!doc(a,b).exec&&j>ult&&(e[b]||{}).d)pend.push({fase:d.fase,d:e[b].d,p:true})});return pend}
 function dshGantt(R,uma,ref,W,anoIni){
- const faixa=(ds,pend)=>{const p=ds.map(d=>d.plan).filter(Boolean).sort(),e=ds.map(d=>d.exec).filter(Boolean).sort(),q=(pend||[]).map(x=>x.d).sort();
+ const faixa=(ds,pend)=>{const p=ds.flatMap(d=>[d.iniPlan,d.plan]).filter(Boolean).sort(),e=ds.flatMap(d=>[d.iniExec,d.exec]).filter(Boolean).sort(),q=(pend||[]).map(x=>x.d).sort();
   const o={p0:p[0],p1:p[p.length-1],e0:e[0],e1:e[e.length-1]};if(q.length){o.q1=q[q.length-1];o.q0=o.e1&&o.e1>q[0]?o.e1:(o.e1||q[0])}return o};
  let rows;
  if(uma){const pe=dshEsp(uma.id,ref)||[];rows=FASES.map(f=>Object.assign({rot:f},faixa(uma.docs.filter(d=>d.fase===f),pe.filter(x=>x.fase===f)))).filter(r=>r.p0||r.e0||r.q0)}
