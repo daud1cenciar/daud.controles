@@ -4,6 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Divisão de Auditoria - Controles</title>
+<!-- Ícone do CENCIAR (atalho no celular, aba do navegador) -->
+<link rel="icon" type="image/png" sizes="48x48" href="icones/favicon-48.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icones/icone-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icones/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="application-name" content="DAUD Controles">
+<meta name="apple-mobile-web-app-title" content="DAUD Controles">
 <meta name="description" content="Controle das auditorias da unidade, com os dados guardados no seu próprio Google Drive.">
 <!-- config.js (só no site): window.CF_CONFIG = { googleClientId: '...apps.googleusercontent.com' } -->
 <script src="config.js"></script>
@@ -445,8 +452,10 @@ html.ro .pg-tabs [data-page="auditorias"],html.ro .pg-tabs [data-page="achados"]
  <button type="button" data-page="achados"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"/><path d="m15 15 5.5 5.5M8 10.5h5M10.5 8v5"/></svg>Catalogação de Achados</button>
  <button type="button" data-page="dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Dashboard</button>
  <button type="button" data-page="slides"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v4M8 20h8M7 12l3-3 2 2 4-4"/></svg>Slides</button>
+ <button type="button" data-page="analise"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>Análise Preliminar</button>
  <button type="button" data-page="rae"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 8h10M7 12h6M7 16h8"/></svg>RAE</button>
 </nav>
+<main id="pgAP" data-pg="analise" hidden></main>
 <main id="pgAud" data-pg="auditorias">
  <p class="kl" id="hello">Olá</p>
  <h1>Auditorias</h1>
@@ -627,6 +636,7 @@ html.ro .pg-tabs [data-page="auditorias"],html.ro .pg-tabs [data-page="achados"]
     <label>Unidade auditada<input class="in" data-f="unidade"></label>
     <label><span>Localização <span class="dica">(latitude, longitude)</span></span><input class="in" data-f="local" placeholder="-15.7934, -47.8823"></label>
     <label class="s4">Link da auditoria no e-CGU <span class="dica">(copie o endereço da página da auditoria no e-CGU e cole aqui)</span><span class="lkf"><input class="in" type="url" inputmode="url" placeholder="Cole aqui o endereço da auditoria no e-CGU (https://…)" data-f="link"><a class="lk" data-prev="_aud" target="_blank" rel="noopener noreferrer" title="Testar o link" aria-label="Testar o link" hidden></a></span></label>
+    <label class="s4">Objetivo da auditoria <span class="dica">(conforme o PAINT; usado pelo Robô Auditor na Análise Preliminar)</span><textarea class="in" data-f="objetivo" rows="3" style="resize:vertical;font:inherit"></textarea></label>
    </div></fieldset>
    <div id="edDocs"></div>
    <fieldset><legend>Processos</legend><div class="gr">
@@ -2823,6 +2833,8 @@ const h=readHint();
 if(CID&&h&&h.email){$('lgGoT').textContent='Continuar como '+h.email;$('lgGo').onclick=()=>signIn(h.email)}
 window.CFAuth={
  ready(cb){startCb=cb;if(started)cb()},
+ /* [Robô Auditor] token de acesso do usuário logado, usado pela aba Análise Preliminar */
+ token:()=>ensureToken(),
  reconnect:async()=>{try{await requestToken('',user&&user.email);Store.touch();Store.flush()}catch(e){}},
  signOut:async()=>{try{await Store.flush()}catch(e){}try{localStorage.removeItem(H);sessionStorage.removeItem(SS)}catch(e){}location.reload()},
 };
@@ -2834,6 +2846,7 @@ if(CID){try{const ss=JSON.parse(sessionStorage.getItem(SS)||'null');if(ss&&ss.to
 })();
 CFAuth.ready(()=>Store.boot());
 </script>
+<script src="analise-preliminar.js"></script>
 </body>
 </html>
 
