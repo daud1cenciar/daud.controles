@@ -405,6 +405,28 @@ legend.lg-id .chk{padding:0;font-size:13px;color:var(--tx);font-weight:600;displ
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .det-ach .w4{grid-column:1 / -1}
 #aTbl td.px{font-size:.86rem;max-width:230px}
+/* somente leitura (06/11): esconde tudo o que edita */
+html.ro #novo,html.ro #ctBtn,html.ro #aCfg,html.ro #aMat,html.ro #aNovo,html.ro #pnPaint,html.ro #raeEcgu,html.ro #raeCfgB,html.ro [data-ed],html.ro [data-each],html.ro #stIm,html.ro .rae-a label{display:none!important}
+#roTag{background:#fff4e0;color:#8a5200;border:1px solid #f0c98a;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:600;margin-right:8px}
+:root[data-theme="dark"] #roTag{background:#3a2c14;color:#f0c98a;border-color:#6b4f1e}
+html.ro .pg-tabs [data-page="auditorias"],html.ro .pg-tabs [data-page="achados"]{display:none!important}
+/* catalogação agrupada por auditoria (06/11) */
+#aTbl tr.grp td.au .sub{font-weight:400;font-size:12px;margin-top:2px}
+#aTbl td.sits .pill{font-size:11px;margin:0 2px 3px 0}
+#aTbl tr.grp-det>td{background:var(--gs);padding:2px 12px 14px 36px;border-bottom:1px solid var(--ln)}
+#aTbl .tl-ach{width:100%;background:var(--sf);border:1px solid var(--ln);border-radius:10px;border-collapse:separate;border-spacing:0;overflow:hidden}
+#aTbl .tl-ach th{font-size:12px;background:var(--sf)}
+#aTbl .tl-ach tr.det>td{padding-left:28px}
+#aTbl th.lkc,#aTbl td.lkc{width:52px;text-align:center}
+
+/* Engrenagem das Configurações no cabeçalho (07/11) */
+.nv-cfg{position:relative;cursor:pointer}.nv-cfg[hidden]{display:none}
+.nv-badge{position:absolute;top:1px;right:0;min-width:16px;height:16px;padding:0 4px;border-radius:8px;background:var(--r);color:#fff;font-size:10.5px;font-weight:700;line-height:16px;text-align:center}
+.cfg-sub{display:flex;gap:6px;padding:10px 20px 0;flex-wrap:wrap}.cfg-sub[hidden]{display:none}
+.cfg-sub button{border:1px solid var(--ln);background:var(--sf);color:var(--mu);border-radius:999px;padding:4px 12px;font-size:13px;font-weight:600;cursor:pointer}
+.cfg-sub button[aria-selected="true"]{background:var(--gs);border-color:var(--g);color:var(--g)}
+#ct .ed-h .cfg-so{margin-left:12px;margin-right:auto;font-size:12.5px}
+#ct .ed-c{min-height:min(62vh,640px)}
 @media print{#siteNav,#stBar{display:none!important}body{padding:0}}
 </style>
 </head>
@@ -432,7 +454,6 @@ legend.lg-id .chk{padding:0;font-size:13px;color:var(--tx);font-weight:600;displ
  <div class="bar">
   <label>Ano<select id="fAno" class="in"><option value="">Todos os anos</option></select></label>
   <label class="q">Buscar<input id="fQ" class="in" type="search" placeholder="Digite qualquer texto: objeto, coordenador, auxiliar, NUP, nº de documento…"></label>
-  <button type="button" class="btn" id="ctBtn">Configurações</button>
   <button type="button" class="btn pri" id="novo">+ Nova auditoria</button>
  </div>
  <div class="chips" id="chips"></div>
@@ -450,7 +471,6 @@ legend.lg-id .chk{padding:0;font-size:13px;color:var(--tx);font-weight:600;displ
   <label>Auditoria<select id="aAud" class="in"><option value="">Todas</option></select></label>
   <label>Assunto<select id="aAss" class="in"><option value="">Todos</option></select></label>
   <label class="q">Buscar<input id="aQ" class="in" type="search" placeholder="Síntese, critério, sistema, observações…"></label>
-  <button type="button" class="btn" id="aCfg">Configurações</button>
   <button type="button" class="btn" id="aMat" title="Ler a matriz de achados (.xlsx) de uma auditoria e cadastrar os achados">Importar matriz de achados</button>
   <button type="button" class="btn pri" id="aNovo">+ Novo achado</button>
  </div>
@@ -458,7 +478,7 @@ legend.lg-id .chk{padding:0;font-size:13px;color:var(--tx);font-weight:600;displ
  <div data-v="lista">
   <div class="chips" id="aChips"></div>
   <p class="cnt" id="aCnt"></p>
-  <div class="card lst" id="aLista"><table class="tl" id="aTbl"><thead><tr><th class="cv"></th><th data-ao="aud">Auditoria</th><th data-ao="n" class="n">Nº</th><th data-ao="sistema">Sistema</th><th data-ao="assunto">Assunto</th><th data-ao="sintese">Síntese do achado</th><th data-ao="situacao">Situação</th><th data-ao="passo">Próximo passo</th><th data-ao="prazo">Prazo</th><th data-ao="status">Status</th></tr></thead><tbody id="aTb"></tbody></table></div>
+  <div class="card lst" id="aLista"><table class="tl" id="aTbl"><thead><tr><th class="cv"></th><th data-ao="aud">Auditoria</th><th data-ao="n" class="n">Achados</th><th>Situações</th><th data-ao="passo">Próxima ação (menor prazo)</th><th data-ao="prazo">Prazo</th><th data-ao="status">Status</th><th class="lkc">e-CGU</th></tr></thead><tbody id="aTb"></tbody></table></div>
   <p class="nota">Status pela situação, com as datas de Datas e Prazos (realizada; prevista enquanto não houver): Relatório Preliminar → Avaliar o Relatório Final 7 dias após o Envio do Relatório Final · Finalizado Preliminar → Ofício de validação de benefícios 90 dias após o Envio do Relatório Preliminar · Monitoramento → Ofício de validação 90 dias após o Término do monitoramento · com o Ofício de validação enviado → 30 dias para avaliar a resposta · Recomendação implementada, parcialmente ou não implementada → Concluído.</p>
  </div>
  <div data-v="rec" hidden>
@@ -494,7 +514,6 @@ legend.lg-id .chk{padding:0;font-size:13px;color:var(--tx);font-weight:600;displ
   <label>Data da reunião <input class="in" type="date" id="raeData"></label>
   <span class="rae-sp"></span>
   <button type="button" class="btn" id="raeEcgu" title="Exportação &quot;Minhas tarefas&quot; do e-CGU (.xlsx)">Importar e-CGU…</button><input type="file" id="raeEcguF" accept=".xlsx" hidden>
-  <button type="button" class="btn" id="raeCfgB">Configurações</button>
   <button type="button" class="btn pri" id="raeGera">Gerar RAE (.pptx)</button>
  </div>
  <p class="aviso pt-msg" id="raeMsg" hidden></p>
@@ -513,6 +532,7 @@ legend.lg-id .chk{padding:0;font-size:13px;color:var(--tx);font-weight:600;displ
     <label class="s3">Assunto *<select class="in" data-a="assunto" required></select></label>
     <label class="s4">Síntese específica do achado *<textarea class="in" data-a="sintese" rows="3" required></textarea></label>
     <label class="s4">Critério principal<input class="in" data-a="criterio" placeholder="Ex.: Manual Eletrônico SISADM, itens 6.6.29 e 6.6.30"></label>
+    <label class="s4">Link do achado<span class="lkf"><input class="in" type="url" inputmode="url" data-a="linkAch" placeholder="https://… (ex.: achado no e-CGU)"><a class="lk" data-tl="a" target="_blank" rel="noopener noreferrer" title="Testar o link" aria-label="Testar o link" hidden></a></span></label>
    </div></fieldset>
    <fieldset><legend>Acompanhamento</legend><div class="gr">
     <label class="s2">Situação<select class="in" data-a="situacao"></select></label>
@@ -572,29 +592,6 @@ legend.lg-id .chk{padding:0;font-size:13px;color:var(--tx);font-weight:600;displ
   <div class="ed-c"><p class="aviso" id="raeEgInfo"></p><p class="dica">Confira a auditoria de cada grupo de tarefas. A ligação fica gravada: nas próximas importações vem pronta.</p>
    <table class="dtab rae-tab"><thead><tr><th>Título no e-CGU</th><th>Situação</th><th>Auditoria</th></tr></thead><tbody id="raeEgL"></tbody></table></div>
   <div class="ed-f"><button type="button" class="btn" data-fecha>Cancelar</button><button type="submit" class="btn pri">Aplicar</button></div>
- </form>
-</dialog>
-<dialog id="rac" class="dlg2 dlg-larga" aria-labelledby="racT">
- <form id="racF2" method="dialog" autocomplete="off" novalidate>
-  <div class="ed-h"><h2 id="racT">Configurações da RAE</h2><button type="button" class="ed-x" data-fecha aria-label="Fechar">×</button></div>
-  <div class="ed-c">
-   <h3 class="pt-h">Barra de progresso</h3><p class="dica">Marcos considerados: barra = marcos concluídos ÷ marcos marcados (concluído = data realizada; os que ficaram sem data antes do último realizado contam como concluídos). Auditoria concluída = barra cheia.</p>
-   <div class="rae-ck" id="racM"></div><button type="button" class="btn pt-mais" id="racPadrao">Restaurar padrão</button>
-   <h3 class="pt-h">Achados em monitoramento</h3><p class="dica">Situações da catalogação que contam na coluna "Achados monit." do resumo.</p><div class="rae-ck" id="racS"></div>
-  </div>
-  <div class="ed-f"><button type="button" class="btn" data-fecha>Cancelar</button><button type="submit" class="btn pri">Salvar</button></div>
- </form>
-</dialog>
-<dialog id="cfa" class="dlg2" aria-labelledby="cfaT">
- <form id="cfaF" method="dialog" novalidate>
-  <div class="ed-h"><h2 id="cfaT">Configurações da catalogação</h2><button type="button" class="ed-x" data-fecha aria-label="Fechar">×</button></div>
-  <div class="ed-c">
-   <div data-pane="la">
-    <p class="aviso">Opções que aparecem no cadastro de achados. Escreva <b>uma por linha</b>. Tirar uma opção da lista não muda os achados que já a usam.</p>
-    <div class="gr la-g"><label>Assuntos<textarea class="in" id="laAss" rows="16"></textarea></label><label>Situações<textarea class="in" id="laSit" rows="16"></textarea></label><label>Sistemas<textarea class="in" id="laSis" rows="16"></textarea></label></div>
-   </div>
-  </div>
-  <div class="ed-f"><button type="button" class="btn" data-fecha>Cancelar</button><button type="submit" class="btn pri">Salvar</button></div>
  </form>
 </dialog>
 
@@ -663,8 +660,9 @@ legend.lg-id .chk{padding:0;font-size:13px;color:var(--tx);font-weight:600;displ
 
 <dialog id="ct" aria-labelledby="ctT">
  <form id="ctF" method="dialog" novalidate autocomplete="off">
-  <div class="ed-h"><h2 id="ctT">Configurações</h2><button type="button" class="ed-x" id="ctX" aria-label="Fechar">×</button></div>
-  <div class="cfg-tabs" role="tablist"><button type="button" role="tab" data-tab="av" aria-selected="true">Avisos e contatos</button><button type="button" role="tab" data-tab="pz" aria-selected="false">Prazos padrão</button><button type="button" role="tab" data-tab="hh" aria-selected="false">HH padrão</button></div>
+  <div class="ed-h"><h2 id="ctT">Configurações</h2><span class="sub cfg-so">Só o e-mail principal vê e altera estas configurações.</span><button type="button" class="ed-x" id="ctX" aria-label="Fechar">×</button></div>
+  <div class="cfg-tabs" role="tablist" id="cfgG"><button type="button" role="tab" data-grp="ge" aria-selected="true">Geral</button><button type="button" role="tab" data-grp="dp" aria-selected="false">Datas e Prazos</button><button type="button" role="tab" data-grp="ca" aria-selected="false">Catalogação de Achados</button><button type="button" role="tab" data-grp="ra" aria-selected="false">RAE</button></div>
+  <div class="cfg-sub" id="cfgS"><button type="button" data-tab="ac" id="acTabB">Usuários</button><button type="button" data-tab="av">Avisos e contatos</button><button type="button" data-tab="pz">Prazos padrão</button><button type="button" data-tab="hh">HH padrão</button></div>
   <div class="ed-c">
    <div data-pane="pz" hidden>
     <p class="aviso">Quantos dias depois da data prevista do documento indicado vem cada documento (pode ser 0 ou negativo). Estes prazos são usados nas <b>auditorias novas</b>; as já cadastradas mantêm os prazos que têm.</p>
@@ -673,6 +671,25 @@ legend.lg-id .chk{padding:0;font-size:13px;color:var(--tx);font-weight:600;displ
    <div data-pane="hh" hidden>
     <p class="aviso">Horas de trabalho de <b>cada pessoa</b> envolvida em cada tarefa. É o valor que já vem preenchido em cada auditoria; quem alterou o HH numa auditoria mantém o valor dela.</p>
     <table class="dtab"><thead><tr><th>Sigla</th><th>Tarefa</th><th>Tipo</th><th>HH por pessoa</th></tr></thead><tbody id="hpTb"></tbody></table>
+   </div>
+   <div data-pane="ac" hidden>
+    <p class="aviso" id="acSem" hidden>O cadastro de usuários funciona no site, com login Google (aqui a página está sem login).</p>
+    <div id="acCom">
+    <p class="aviso">Quem pode entrar no controle. O acesso é o <b>compartilhamento do próprio arquivo da base</b> no seu Drive: <b>Leitor</b> vê só o Dashboard, os Slides e a RAE e não altera nada — o Google Drive recusa qualquer gravação; <b>Editor</b> pode cadastrar e alterar. As mudanças valem na hora (não dependem do Salvar). A pessoa recebe um e-mail do Google com o convite e, no primeiro acesso, entra com o Gmail e clica em “Abrir a base compartilhada comigo”.</p>
+    <table class="dtab"><thead><tr><th>E-mail</th><th>Nome</th><th>Acesso</th><th></th></tr></thead><tbody id="acTb"></tbody></table>
+    <div class="ct-add"><input class="in" id="acNovoE" type="email" placeholder="fulano@gmail.com"><select class="in" id="acNovoR"><option value="reader">Leitor (somente leitura)</option><option value="writer">Editor</option></select><button type="button" class="btn" id="acAdd">Liberar acesso</button></div>
+    <p class="sub" id="acMsg"></p>
+    </div>
+   </div>
+   <div data-pane="la" hidden>
+    <p class="aviso">Opções que aparecem no cadastro de achados. Escreva <b>uma por linha</b>. Tirar uma opção da lista não muda os achados que já a usam.</p>
+    <div class="gr la-g"><label>Assuntos<textarea class="in" id="laAss" rows="16"></textarea></label><label>Situações<textarea class="in" id="laSit" rows="16"></textarea></label><label>Sistemas<textarea class="in" id="laSis" rows="16"></textarea></label></div>
+   </div>
+   <div data-pane="rae" hidden>
+   <h3 class="pt-h">Barra de progresso</h3><p class="dica">Marcos considerados: barra = marcos concluídos ÷ marcos marcados (concluído = data realizada; os que ficaram sem data antes do último realizado contam como concluídos). Auditoria concluída = barra cheia.</p>
+   <div class="rae-ck" id="racM"></div><button type="button" class="btn pt-mais" id="racPadrao">Restaurar padrão</button>
+   <h3 class="pt-h">Achados em monitoramento</h3><p class="dica">Situações da catalogação que contam na coluna "Achados monit." do resumo.</p><div class="rae-ck" id="racS"></div>
+  
    </div>
    <div data-pane="av">
    <p class="aviso">Às 10h, os <b>coordenadores</b> (às <b>segundas e quartas</b>) e os <b>auxiliares técnicos</b> (às <b>terças e quintas</b>) — se não for dia útil, no dia útil seguinte — recebem um resumo por e-mail com as auditorias em que a <b>próxima tarefa marcada abaixo</b> está <b>atrasada</b> ou <b>vence nos próximos 5 dias</b> (tarefa com prazo menor que 5 dias só entra quando atrasar). Quem não tem pendência não recebe nada. Às <b>quartas</b>, os e-mails <b>SCAIG</b> e <b>DAUD</b> (em Contatos) recebem <b>cópia</b> de todos os resumos enviados aos coordenadores.</p>
@@ -764,7 +781,7 @@ const XL= {
 
 
 /* ===== Identidade do app ===== */
-const APP={id:'controle-auditorias',nome:'Divisão de Auditoria - Controles',arquivo:'controle-auditorias.json',versao:'Versão 6.0 - 06/11/2026'};
+const APP={id:'controle-auditorias',nome:'Divisão de Auditoria - Controles',arquivo:'controle-auditorias.json',versao:'Versão 7.0 - 06/11/2026'};
 document.title=APP.nome;document.getElementById('appNome').textContent=APP.nome;document.getElementById('stVer').textContent=APP.versao;
 
 /* ===== Regras dos avisos por e-mail (o mesmo código roda na página e no Google Apps Script) =====
@@ -1059,19 +1076,42 @@ const SEMENTE_ACH=/*SEMENTE_ACH*/null;
 let DADOS=Object.assign({auditorias:SEMENTE.map(x=>JSON.parse(JSON.stringify(x))),prazosPadrao:{},excluidas:{}},SEMENTE_ACH?JSON.parse(JSON.stringify(SEMENTE_ACH)):{});
 /* Junta duas versões dos dados (a deste aparelho e a da base compartilhada), auditoria por auditoria:
    fica a versão alterada por último de cada uma; exclusões ficam registradas em "excluidas" para não voltarem. */
-function mesclar(L,R){
+const igual=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
+const objPuro=o=>o&&typeof o==='object'&&!Array.isArray(o);
+/* junção de três vias de um registro: campo a campo (desce em objetos como docs, hh, custos, rae) */
+function juntaCampos(l,r,b,lGanha){const o={};
+ for(const k of new Set([...Object.keys(r||{}),...Object.keys(l||{})])){const lv=(l||{})[k],rv=(r||{})[k],bv=(b||{})[k];
+  if(k==='alterado'){o[k]=String(lv||'')>=String(rv||'')?lv:rv;continue}
+  let v;if(igual(lv,rv))v=lv;else if(igual(lv,bv))v=rv;else if(igual(rv,bv))v=lv;
+  else if(objPuro(lv)&&objPuro(rv))v=juntaCampos(lv,rv,objPuro(bv)?bv:{},lGanha);else v=lGanha?lv:rv;
+  if(v!==undefined)o[k]=v}
+ return o}
+function mesclar(L,R,B){
  L=L||{};R=R||{};
  const exc=Object.assign({},R.excluidas||{});for(const[k,v] of Object.entries(L.excluidas||{}))if(!exc[k]||v>exc[k])exc[k]=v;
- /* listas com id: fica a versão alterada por último de cada item; itens excluídos não voltam */
- const junta=(x,y)=>{const m=new Map();for(const a of [...(y||[]),...(x||[])]){const o=m.get(a.id);if(!o||String(a.alterado||'')>=String(o.alterado||''))m.set(a.id,a)}return[...m.values()].filter(a=>!(exc[a.id]&&exc[a.id]>=String(a.alterado||'')))};
- const aud=junta(L.auditorias,R.auditorias);
+ /* listas com id (auditorias, achados): junta item a item.
+    Com a "base" (a última versão da base que este aparelho leu ou gravou), a junção é CAMPO A CAMPO (revisão 06/11):
+    o que só um lado mudou em relação à base é mantido dos dois lados; só quando os dois mudaram o MESMO campo vale
+    o item alterado por último. Sem base (ex.: dados guardados só neste aparelho), fica o item alterado por último inteiro.
+    Item da base remota mais antigo que o da base (gravação atrasada de outro aparelho) não desfaz o que já estava lá. */
+ const ix=a=>{const m=new Map();(a||[]).forEach(o=>o&&m.set(o.id,o));return m};
+ const junta=(x,y,bb)=>{const X=ix(x),Y=ix(y),Bm=ix(bb),out=[];
+  for(const id of new Set([...Y.keys(),...X.keys()])){const l=X.get(id),r=Y.get(id),b=Bm.get(id);let v;
+   if(!l)v=r;else if(!r)v=l;
+   else if(igual(l,r))v=l;
+   else if(!b||!B)v=String(l.alterado||'')>=String(r.alterado||'')?l:r;
+   else{const rMudou=!igual(r,b)&&!(String(r.alterado||'')<String(b.alterado||'')),lMudou=!igual(l,b);
+    v=!rMudou?l:!lMudou?r:juntaCampos(l,r,b,String(l.alterado||'')>=String(r.alterado||''))}
+   if(v)out.push(v)}
+  return out.filter(a=>!(exc[a.id]&&exc[a.id]>=String(a.alterado||'')))};
+ const aud=junta(L.auditorias,R.auditorias,B&&B.auditorias);
  const pp=String(L.prazosPadraoEm||'')>=String(R.prazosPadraoEm||'')?L:R;
  const ct=Object.assign({},R.contatos||{});for(const[k,v] of Object.entries(L.contatos||{}))if(!ct[k]||String(v.em||'')>=String(ct[k].em||''))ct[k]=v;
  const av=String((L.avisos||{}).em||'')>=String((R.avisos||{}).em||'')?L.avisos:R.avisos;
  const hp=String(L.hhPadraoEm||'')>=String(R.hhPadraoEm||'')?L:R;
  const la=String((L.listasAch||{}).em||'')>=String((R.listasAch||{}).em||'')?L.listasAch:R.listasAch;
  const rc=String((L.raeCfg||{}).em||'')>=String((R.raeCfg||{}).em||'')?L.raeCfg:R.raeCfg;
- return Object.assign({},R,L,{auditorias:aud,excluidas:exc,prazosPadrao:pp.prazosPadrao||{},prazosPadraoEm:pp.prazosPadraoEm||'',contatos:ct,avisos:av,hhPadrao:hp.hhPadrao||{},hhPadraoEm:hp.hhPadraoEm||'',achados:junta(L.achados,R.achados),oficios:junta(L.oficios,R.oficios),listasAch:la,raeCfg:rc,paints:(()=>{const o=Object.assign({},R.paints||{});for(const[k,v] of Object.entries(L.paints||{}))if(!o[k]||String((v||{}).em||'')>=String((o[k]||{}).em||''))o[k]=v;return o})()});
+ return Object.assign({},R,L,{auditorias:aud,excluidas:exc,prazosPadrao:pp.prazosPadrao||{},prazosPadraoEm:pp.prazosPadraoEm||'',contatos:ct,avisos:av,hhPadrao:hp.hhPadrao||{},hhPadraoEm:hp.hhPadraoEm||'',achados:junta(L.achados,R.achados,B&&B.achados),oficios:junta(L.oficios,R.oficios,B&&B.oficios),listasAch:la,raeCfg:rc,paints:(()=>{const o=Object.assign({},R.paints||{});for(const[k,v] of Object.entries(L.paints||{}))if(!o[k]||String((v||{}).em||'')>=String((o[k]||{}).em||''))o[k]=v;return o})()});
 }
 const $=id=>document.getElementById(id);
 /* Rodapé: data e hora da última gravação da base (por qualquer usuário) */
@@ -1227,7 +1267,7 @@ function detalhe(a){
 <td><span class="${t.c}">${esc(t.t)}</span></td>
 <td class="dd">${x.num?esc(x.num):'<span class="sub">—</span>'}</td>
 <td class="c">${lnk(x.link,'Abrir '+d.nome)||'<span class="sub">—</span>'}</td></tr>`}).join('');
- const inf=[['Nº da AD',a.ad],['Coordenador',a.coordenador],['Auxiliar Técnico',a.auxiliar],['Tipo',a.tipo],['Unidade auditada',a.unidade],['Nº do processo no SIGADAER'+(a.arquivado?' (arquivado)':''),a.sigadaer],['Nº da tarefa no e-CGU'+(a.concluidaEcgu?' (concluída)':''),a.ecgu],['Nº de Achados Preliminares',a.achadosPrel],['Nº de Achados Finais',a.achadosFin]].map(([l,v])=>`<div><dt>${l}</dt><dd>${v===undefined||v===''||v===null?'<span class="sub">—</span>':esc(v)}</dd></div>`).join('')+`<div><dt>Localização</dt><dd>${localHtml(a.local)}</dd></div>`;
+ const inf=[['Nº da AD',a.ad&&adRepetido(a)?a.ad+' ⚠ repetido em outra auditoria do ano':a.ad],['Coordenador',a.coordenador],['Auxiliar Técnico',a.auxiliar],['Tipo',a.tipo],['Unidade auditada',a.unidade],['Nº do processo no SIGADAER'+(a.arquivado?' (arquivado)':''),a.sigadaer],['Nº da tarefa no e-CGU'+(a.concluidaEcgu?' (concluída)':''),a.ecgu],['Nº de Achados Preliminares',a.achadosPrel],['Nº de Achados Finais',a.achadosFin]].map(([l,v])=>`<div><dt>${l}</dt><dd>${v===undefined||v===''||v===null?'<span class="sub">—</span>':esc(v)}</dd></div>`).join('')+`<div><dt>Localização</dt><dd>${localHtml(a.local)}</dd></div>`;
  const c=a.custos||{},tem=k=>c[k]!=null,tot=(s)=>CUSTOS.some(([k])=>tem(k+s))?CUSTOS.reduce((t,[k])=>t+(c[k+s]||0),0):null;
  const vcel=v=>v==null?'<span class="sub">—</span>':brl(v);
  const dif=(p,r)=>p==null||r==null?'<span class="sub">—</span>':`<span class="${r>p?'late':'ok'}">${brl(r-p)}</span>`;
@@ -1416,6 +1456,9 @@ function abrir(id){
  prevLinks();recalcEditor();
  $('ed').showModal();$('edC').scrollTop=0;
 }
+/* Nº da AD não se repete no mesmo ano (pedido do usuário 07/11): compara pelo número (AD 21/... = 21 = AD 021); sem número, pelo texto */
+function chaveAD(v){v=String(v||'').trim();if(!v)return '';const m=v.match(/\d+/);return m?'n'+parseInt(m[0],10):'t'+v.toUpperCase().replace(/\s+/g,' ')}
+function adRepetido(a){const k=chaveAD(a.ad);return !!k&&DADOS.auditorias.some(x=>x.id!==a.id&&String(x.ano)===String(a.ano)&&chaveAD(x.ad)===k)}
 function proximoAD(ano){
  const ns=DADOS.auditorias.filter(x=>String(x.ano)===String(ano)).map(x=>parseInt((String(x.ad||'').match(/AD\s*(\d+)/i)||[])[1],10)).filter(Number.isFinite);
  return ano?'AD '+String((ns.length?Math.max(...ns):0)+1).padStart(2,'0')+'/CENCIAR/SCAIG':'';
@@ -1428,6 +1471,9 @@ $('edF').onsubmit=e=>{
  const ano=$('edC').querySelector('[data-f="ano"]'),tit=$('edC').querySelector('[data-f="titulo"]');
  if(!tit.value.trim()){tit.focus();tit.setCustomValidity('Informe o título/objeto.');tit.reportValidity();tit.setCustomValidity('');return}
  const y=parseInt(ano.value,10);if(!(y>=2000&&y<=2100)){ano.focus();ano.setCustomValidity('Informe um ano entre 2000 e 2100.');ano.reportValidity();ano.setCustomValidity('');return}
+ {const adI=$('edC').querySelector('[data-f="ad"]'),k=chaveAD(adI.value);
+  const dup=k&&DADOS.auditorias.find(x=>x.id!==editando&&String(x.ano)===String(y)&&chaveAD(x.ad)===k);
+  if(dup){adI.focus();adI.setCustomValidity(`Este número já é usado em ${y} por "${dup.sigla||dup.titulo}". Sugestão: ${proximoAD(y)}`);adI.reportValidity();adI.setCustomValidity('');return}}
  const ini=valEd(D0,'plan');if(!ini.value){ini.focus();ini.setCustomValidity('Informe a data prevista de pelo menos um documento (o Início é calculado).');ini.reportValidity();ini.setCustomValidity('');return}
  for(const d of DOCS.slice(1)){const i=valEd(d.k,'prazo');if(i.value===''||!Number.isFinite(parseInt(i.value,10))){i.focus();i.setCustomValidity('Informe o prazo em dias.');i.reportValidity();i.setCustomValidity('');return}}
  const o={};
@@ -1485,7 +1531,13 @@ function pessoasDasAuditorias(){
  const m={};DADOS.auditorias.forEach(a=>{[['coordenador','coord'],['auxiliar','aux']].forEach(([f,t])=>{const n=String(a[f]||'').trim();if(!n)return;const k=AV_norm(n);m[k]=m[k]||{nome:n,coord:0,aux:0};m[k][t]++})});return m;
 }
 function semEmail(){const P=pessoasDasAuditorias();return Object.values(P).filter(p=>!AV_emailDe(DADOS.contatos,p.nome)).length}
-function pintaCtBtn(){const n=semEmail();$('ctBtn').innerHTML='Configurações'+(n?` <span class="badge" title="${n} pessoa(s) sem e-mail">${n}</span>`:'')}
+/* Configurações: engrenagem no cabeçalho, ao lado do tema, só para o e-mail principal (pedido do usuário 07/11) */
+const ICO_ENG='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>';
+(()=>{const b=document.createElement('button');b.type='button';b.id='cfgBtn';b.className='nv-th nv-cfg';b.title='Configurações';b.setAttribute('aria-label','Configurações');b.hidden=true;b.innerHTML=ICO_ENG;
+ const t=$('themeBtn');t.parentNode.insertBefore(b,t);b.onclick=()=>abrirCT()})();
+const souPrincipal=()=>!window.BASE_RO&&(typeof window.souPrincipal==='function'?window.souPrincipal():true);
+function pintaCtBtn(){const b=$('cfgBtn');if(!b)return;const pode=souPrincipal();b.hidden=!pode;if(!pode&&$('ct').open)$('ct').close();
+ const n=pode?semEmail():0;b.innerHTML=ICO_ENG+(n?`<span class="nv-badge">${n}</span>`:'');b.title=n?`Configurações — ${n} pessoa(s) sem e-mail nos contatos`:'Configurações'}
 const emailOk=e=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
 function linhasCT(){
  const P=pessoasDasAuditorias(),fx=AV_COPIAS.map(AV_norm);Object.keys(CT).forEach(n=>{const k=AV_norm(n);if(!P[k]&&CT[n].email&&!fx.includes(k))P[k]={nome:n,coord:0,aux:0}});
@@ -1505,14 +1557,51 @@ function previaCT(){
   ${L.map(r=>`<div class="ctp-a"><b>${esc(r.titulo)}</b><ul>${r.itens.map(it=>`<li>${esc(it.doc)} — prevista ${dt(it.plan)}, esperada <i>${dt(it.esp)}</i> — <span class="${it.tipo==='atrasado'?'late':'warn'}">${AV_textoItem(it)}</span></li>`).join('')}${AV_textoFim(r.resumo)?`<li class="sub">${AV_textoFim(r.resumo)}</li>`:''}${r.ecgu?`<li class="${r.ecgu.faltam.length||r.ecgu.alem.length?'late':'sub'}">e-CGU: ${r.ecgu.ecgu} de ${r.ecgu.total} finalizadas; pelo controle deveriam ser ${r.ecgu.deveria}${r.ecgu.faltam.length?' — finalizar: '+esc(r.ecgu.faltam.map(l=>l.tarefa).join(', ')):''}${r.ecgu.alem.length?' — finalizadas sem o documento no controle: '+esc(r.ecgu.alem.map(l=>l.tarefa).join(', ')):''}</li>`:''}</ul></div>`).join('')}</details>`}).join('');
 }
 function docsCT(){let f='';$('ctDocs').innerHTML=DOCS.map(d=>{const c=d.fase!==f?`<div class="ct-f">${esc(d.fase)}</div>`:'';f=d.fase;return c+`<label class="chk"><input type="checkbox" data-avd="${d.k}"${AVD.includes(d.k)?' checked':''}> ${esc(d.nome)}</label>`}).join('')}
-function cfgTab(t){$('ct').querySelectorAll('[data-tab]').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===t));$('ct').querySelectorAll('[data-pane]').forEach(p=>p.hidden=p.dataset.pane!==t);$('ct').querySelector('.ed-c').scrollTop=0}
-$('ct').querySelector('.cfg-tabs').onclick=e=>{const b=e.target.closest('[data-tab]');if(b)cfgTab(b.dataset.tab)};
+/* ===== Acessos (só o e-mail principal): libera Gmails como Leitor ou Editor pelo compartilhamento do arquivo da base ===== */
+const AC_ROT={owner:'Proprietário',writer:'Editor',reader:'Leitor',commenter:'Comentarista',organizer:'Organizador',fileOrganizer:'Organizador'};
+function acMsg(t,erro){$('acMsg').innerHTML=t?`<span class="${erro?'late':'ok'}">${esc(t)}</span>`:''}
+async function acListar(){$('acTb').innerHTML='<tr><td colspan="4" class="sub">Carregando…</td></tr>';
+ try{const L=(await Acessos.listar()).sort((a,b)=>(a.role==='owner'?-1:b.role==='owner'?1:0)||String(a.emailAddress||'').localeCompare(String(b.emailAddress||'')));
+  $('acTb').innerHTML=L.map(p=>{const quem=p.type==='user'||p.type==='group'?esc(p.emailAddress||''):p.type==='anyone'?'<i>Qualquer pessoa com o link</i>':'<i>'+esc(p.type+' '+(p.domain||''))+'</i>';
+   const sel=p.role==='owner'?'<b>Proprietário</b>':`<select class="in" data-acr="${esc(p.id)}">${['reader','writer'].map(r=>`<option value="${r}"${p.role===r?' selected':''}>${r==='reader'?'Leitor (somente leitura)':'Editor'}</option>`).join('')}${!['reader','writer'].includes(p.role)?`<option selected disabled>${esc(AC_ROT[p.role]||p.role)}</option>`:''}</select>`;
+   return`<tr><td>${quem}</td><td class="sub">${esc(p.displayName||'')}</td><td>${sel}</td><td>${p.role==='owner'?'':`<button type="button" class="del" data-acx="${esc(p.id)}" data-ace="${esc(p.emailAddress||p.type)}">remover</button>`}</td></tr>`}).join('')||'<tr><td colspan="4" class="sub">Ninguém além de você.</td></tr>';
+ }catch(e){$('acTb').innerHTML='<tr><td colspan="4" class="late">Não consegui ler os acessos do arquivo da base ('+esc(e.message||'')+').</td></tr>'}}
+$('acAdd').onclick=async()=>{const e=$('acNovoE').value.trim().toLowerCase(),r=$('acNovoR').value;
+ if(!emailOk(e)){$('acNovoE').setCustomValidity('E-mail inválido.');$('acNovoE').reportValidity();$('acNovoE').setCustomValidity('');return}
+ $('acAdd').disabled=true;acMsg('Liberando…');
+ try{await Acessos.dar(e,r);$('acNovoE').value='';acMsg(e+' liberado como '+(r==='reader'?'Leitor':'Editor')+'. O Google enviou o convite por e-mail.');await acListar()}
+ catch(x){acMsg('Não consegui liberar '+e+' ('+(x.message||'erro')+'). Confira se é uma conta Google (Gmail).',true)}
+ $('acAdd').disabled=false};
+$('acTb').addEventListener('change',async e=>{const s=e.target.closest('[data-acr]');if(!s)return;s.disabled=true;acMsg('Alterando…');
+ try{await Acessos.mudar(s.dataset.acr,s.value);acMsg('Acesso alterado para '+(s.value==='reader'?'Leitor':'Editor')+'.')}catch(x){acMsg('Não consegui alterar ('+(x.message||'erro')+').',true)}await acListar()});
+$('acTb').addEventListener('click',async e=>{const b=e.target.closest('[data-acx]');if(!b)return;
+ if(!b.dataset.armado){b.dataset.armado='1';b.textContent='confirmar';return}
+ b.disabled=true;try{await Acessos.tirar(b.dataset.acx);acMsg('Acesso de '+b.dataset.ace+' removido.')}catch(x){acMsg('Não consegui remover ('+(x.message||'erro')+').',true)}await acListar()});
+/* Somente leitura: nenhuma janela de edição abre (os botões já ficam escondidos pelo CSS html.ro) */
+(()=>{const ED=['ed','ach','ct','cfa','mat','ptd','raee','rac'],sm=HTMLDialogElement.prototype.showModal;
+ HTMLDialogElement.prototype.showModal=function(){if(window.BASE_RO&&ED.includes(this.id))return;return sm.call(this)}})();
+/* Leitor vê só Dashboard, Slides e RAE (pedido do usuário 06/11): Datas e Prazos e Catalogação somem e não abrem */
+const RO_FORA=['auditorias','achados'];
+(()=>{const ir=irPara;irPara=function(p){if(window.BASE_RO&&RO_FORA.includes(p))p='dashboard';return ir(p)}})();
+window.aoMudarAcesso=()=>{pintaCtBtn();if(!window.BASE_RO)return;document.querySelectorAll('dialog[open]').forEach(d=>{if(['ed','ach','ct','cfa','mat','ptd','raee','rac'].includes(d.id))d.close()});
+ const at=document.querySelector('main[data-pg]:not([hidden])');if(!at||RO_FORA.includes(at.dataset.pg))setTimeout(()=>{const b=document.querySelector('.pg-tabs [data-page="dashboard"]');if(b)b.click()},0)};
+const CFG_GRP={ge:['ac'],dp:['av','pz','hh'],ca:['la'],ra:['rae']};
+const cfgGrpDe=t=>Object.keys(CFG_GRP).find(g=>CFG_GRP[g].includes(t));
+function cfgTab(t){if(t in CFG_GRP)t=CFG_GRP[t][0]
+ const g=cfgGrpDe(t),C=$('ct');
+ C.querySelectorAll('[data-grp]').forEach(b=>b.setAttribute('aria-selected',b.dataset.grp===g));
+ const sub=CFG_GRP[g];
+ C.querySelectorAll('#cfgS [data-tab]').forEach(b=>{b.style.display=sub.includes(b.dataset.tab)?'':'none';b.setAttribute('aria-selected',b.dataset.tab===t)});
+ $('cfgS').hidden=sub.length<2;
+ C.querySelectorAll('[data-pane]').forEach(p=>p.hidden=p.dataset.pane!==t);C.querySelector('.ed-c').scrollTop=0}
+$('cfgG').onclick=e=>{const b=e.target.closest('[data-grp]');if(b)cfgTab(b.dataset.grp)};
+$('cfgS').onclick=e=>{const b=e.target.closest('[data-tab]');if(b)cfgTab(b.dataset.tab)};
 function tabelasPadrao(){
  $('ppTb').innerHTML=DOCS.map((d,i)=>`<tr><td class="dn">${i+1}. ${esc(d.nome)}</td><td class="sub">${i?esc(DOCS[baseI(i)].nome):'—'}</td><td>${i?`<input class="in pp" type="number" min="-999" max="3650" inputmode="numeric" data-pp="${d.k}" value="${padrao(d.k)}">`:'<span class="sub">data inicial</span>'}</td></tr>`).join('');
  $('hpTb').innerHTML=HH.map(x=>`<tr><td class="sub">${x.s}</td><td class="dn">${esc(x.n)}</td><td class="sub">${x.t?esc(x.t):'Todos'}</td><td><input class="in pp" type="number" min="0" max="999" step="0.5" inputmode="decimal" data-hp="${x.s}" value="${hhPad(x.s)}"></td></tr>`).join('');
 }
-function abrirCT(){tabelasPadrao();cfgTab('av');CT=JSON.parse(JSON.stringify(DADOS.contatos||{}));AVD=(DADOS.avisos&&Array.isArray(DADOS.avisos.docs))?DADOS.avisos.docs.slice():DOCS.map(d=>d.k);docsCT();$('ctNovoN').value='';$('ctNovoE').value='';linhasCT();previaCT();$('ct').showModal()}
-$('ctBtn').onclick=abrirCT;
+function abrirCT(){if(!souPrincipal())return;tabelasPadrao();const acOk=!!(window.Acessos&&Acessos.pode());$('acSem').hidden=acOk;$('acCom').hidden=!acOk;cfgTab(acOk?'ge':'dp');if(acOk)acListar();
+ if(typeof listasTela==='function')listasTela();if(typeof raeCfgTela==='function')raeCfgTela();CT=JSON.parse(JSON.stringify(DADOS.contatos||{}));AVD=(DADOS.avisos&&Array.isArray(DADOS.avisos.docs))?DADOS.avisos.docs.slice():DOCS.map(d=>d.k);docsCT();$('ctNovoN').value='';$('ctNovoE').value='';linhasCT();previaCT();$('ct').showModal()}
 $('ctDocs').addEventListener('change',e=>{const k=e.target.dataset.avd;if(!k)return;AVD=DOCS.map(d=>d.k).filter(x=>x===k?e.target.checked:AVD.includes(x));previaCT()});
 $('ctX').onclick=$('ctCan').onclick=()=>$('ct').close();
 $('ctTb').addEventListener('input',e=>{if(e.target.dataset.nome!==undefined){e.target.classList.toggle('falta',!e.target.value.trim());guardaCT();previaCT()}});
@@ -1526,9 +1615,11 @@ $('ctF').onsubmit=e=>{e.preventDefault();guardaCT();
  for(const i of $('ppTb').querySelectorAll('[data-pp]')){const v=parseInt(i.value,10);if(i.value===''||!Number.isFinite(v)){erro(i,'pz','Informe os dias.');return}pz[i.dataset.pp]=v}
  for(const i of $('hpTb').querySelectorAll('[data-hp]')){const v=parseFloat(String(i.value).replace(',','.'));if(i.value===''||!(v>=0)){erro(i,'hh','Informe as horas (0 ou mais).');return}hp[i.dataset.hp]=v}
  for(const i of $('ctTb').querySelectorAll('[data-nome]')){const v=i.value.trim();if(v&&!emailOk(v)){cfgTab('av');i.focus();i.setCustomValidity('E-mail inválido.');i.reportValidity();i.setCustomValidity('');return}}
+ const nl=typeof listasLidas==='function'?listasLidas():null;if(nl&&!nl.assuntos.length){erro($('laAss'),'la','Informe pelo menos um assunto.');return}
+ if(nl)listasGrava(nl);if(typeof raeCfgGrava==='function')raeCfgGrava();
  DADOS.contatos=CT;const ant=(DADOS.avisos||{}).docs;if(!ant||ant.join()!==AVD.join())DADOS.avisos={docs:AVD.slice(),em:new Date().toISOString()};
  if(DOCS.slice(1).some(d=>pz[d.k]!==padrao(d.k))){DADOS.prazosPadrao=pz;DADOS.prazosPadraoEm=new Date().toISOString()}
- if(HH.some(x=>hp[x.s]!==hhPad(x.s))){DADOS.hhPadrao=hp;DADOS.hhPadraoEm=new Date().toISOString()}$('ct').close();render();Store.touch()};
+ if(HH.some(x=>hp[x.s]!==hhPad(x.s))){DADOS.hhPadrao=hp;DADOS.hhPadraoEm=new Date().toISOString()}$('ct').close();render();if(typeof renderAch==='function')renderAch();if(typeof renderRae==='function')renderRae();Store.touch()};
 
 /* Abas presas abaixo do cabeçalho: mede a altura do cabeçalho e marca quando as abas estão "grudadas" (sombra discreta) */
 (function(){const nav=document.getElementById('siteNav'),tb=document.querySelector('.pg-tabs');if(!tb)return;
@@ -1572,13 +1663,15 @@ function statusAch(x){
  else if(t==='fprel'){passo='Ofício de validação de benefícios';const b=dAud(a,'rp_envio');prazo=b?somaDias(b,90):'';nota='90 dias após o Envio do Relatório Preliminar'+(a&&a.docs&&a.docs.rp_envio&&!a.docs.rp_envio.exec?' (previsto)':'')}
  else if(t==='rp'){const d=a&&a.docs&&a.docs.rf_envio||{},b=d.exec||d.plan||'';passo='Avaliar o Relatório Final';prazo=b?somaDias(b,7):'';nota='7 dias após o Envio do Relatório Final'+(b&&!d.exec?' (previsto)':'')}
  else return{passo:'',prazo:'',c:'sub',txt:'—',ord:1e6+1};
+ /* Envio do RF ainda não feito e já atrasado: o status mostra isso, para não parecer que a avaliação é que está pendente (pedido do usuário 06/11) */
+ if(t==='rp'&&!x.ofVal){const d=a&&a.docs&&a.docs.rf_envio||{};if(!d.exec&&d.plan){const r=dias(hoje(),d.plan);if(r>0)return{passo,prazo,nota:'o Relatório Final ainda não foi enviado (previsto para '+dt(d.plan)+')',c:'warn',txt:'Aguardando o Envio do RF, atrasado há '+pl(r,'dia','dias'),ord:-r-0.5}}}
  if(!prazo)return{passo,prazo:'',c:'sub',txt:'sem data em Datas e Prazos',ord:1e5,nota};
  const h=dias(hoje(),prazo);
  return{passo,prazo,nota,ord:-h,c:h>0?'late':h===0?'warn':'sub',txt:h>0?'Atrasado há '+pl(h,'dia','dias'):h===0?'Vence hoje':'Faltam '+pl(-h,'dia','dias')};
 }
 const AFIL=(()=>{try{return Object.assign({aud:'',ass:'',q:'',sit:'',vis:'lista',ord:'aud',dir:1},JSON.parse(sessionStorage.getItem('ach_filtro')||'{}'))}catch(e){return{aud:'',ass:'',q:'',sit:'',vis:'lista',ord:'aud',dir:1}}})();
 const guardaAF=()=>{try{sessionStorage.setItem('ach_filtro',JSON.stringify(AFIL))}catch(e){}};
-const ABERTOS=new Set();
+const ABERTOS=new Set(),AUD_AB=new Set();  /* achados abertos; auditorias (grupos) abertas */
 $('aQ').value=AFIL.q;
 $('aAud').onchange=()=>{AFIL.aud=$('aAud').value;guardaAF();renderAch()};
 $('aAss').onchange=()=>{AFIL.ass=$('aAss').value;guardaAF();renderAch()};
@@ -1589,7 +1682,7 @@ document.querySelectorAll('#aTbl th[data-ao]').forEach(th=>th.onclick=()=>{const
 function filtraAch(semSit){
  const q=norm(AFIL.q).trim().split(/\s+/).filter(Boolean),aud=AFIL.aud?+AFIL.aud:null;
  return(DADOS.achados||[]).filter(x=>{if(aud&&x.aud!==aud)return false;if(AFIL.ass&&x.assunto!==AFIL.ass)return false;if(!semSit&&AFIL.sit&&x.situacao!==AFIL.sit)return false;
-  if(q.length){const t=norm([curto(audDe(x.aud)),(audDe(x.aud)||{}).titulo,x.n,x.sistema,x.assunto,x.sintese,x.criterio,x.situacao,x.beneficio,x.docResp,x.obs].join(' | '));if(!q.every(w=>t.includes(w)))return false}return true});
+  if(q.length){const t=norm([curto(audDe(x.aud)),(audDe(x.aud)||{}).titulo,x.n,x.sistema,x.assunto,x.sintese,x.criterio,x.situacao,x.beneficio,x.docResp,x.obs,(audDe(x.aud)||{}).sigla].join(' | '));if(!q.every(w=>t.includes(w)))return false}return true});
 }
 const pillSit=s=>s?`<span class="pill" style="--pc:${COR_SIT[s]||'#5b6761'}">${esc(s)}</span>`:'<span class="sub">—</span>';
 const stHtml=S=>`<span class="${S.c}">${esc(S.txt)}</span>`;
@@ -1608,14 +1701,30 @@ function renderAch(){
  const base=filtraAch(true),F=AFIL.sit?base.filter(x=>x.situacao===AFIL.sit):base;
  const cont=s=>base.filter(x=>x.situacao===s).length,sits=[...new Set(L.situacoes.concat(base.map(x=>x.situacao).filter(Boolean)))];
  $('aChips').innerHTML=sits.filter(s=>cont(s)||AFIL.sit===s).map(s=>`<button type="button" class="chip${AFIL.sit===s?' on':''}" data-sit="${esc(s)}">${esc(s)} <b>${cont(s)}</b></button>`).join('')+(AFIL.sit?'<button type="button" class="chip limpa" data-sit="'+esc(AFIL.sit)+'">× Mostrar todas</button>':'');
- $('aCnt').textContent=pl(F.length,'achado','achados')+(F.length!==A.length?' (de '+A.length+')':'');
- const val={aud:x=>curto(audDe(x.aud)),n:x=>x.n,sistema:x=>x.sistema||'',assunto:x=>x.assunto||'',sintese:x=>x.sintese||'',situacao:x=>sits.indexOf(x.situacao),passo:x=>statusAch(x).passo,prazo:x=>statusAch(x).prazo||'9999',status:x=>statusAch(x).ord};
+ /* lista agrupada por auditoria (pedido do usuário 06/11): linha-resumo com a próxima ação de menor prazo e o link do e-CGU;
+    ao abrir, os achados aparecem recolhidos e cada um abre o seu detalhe (edição por achado) */
+ const G=new Map();F.forEach(x=>{if(!G.has(x.aud))G.set(x.aud,[]);G.get(x.aud).push(x)});
+ const grupos=[...G].map(([aud,L])=>{const au=audDe(aud),SS=L.map(x=>({x,S:statusAch(x)}));
+  const ab=SS.filter(o=>o.S.passo&&o.S.passo!=='Concluído'),cp=ab.filter(o=>o.S.prazo).sort((a,b)=>a.S.prazo.localeCompare(b.S.prazo));
+  const top=cp[0]||ab[0]||SS[0],mesmo=top?SS.filter(o=>o.S.passo===top.S.passo&&o.S.prazo===top.S.prazo).length:0;
+  const sit={};L.forEach(x=>{sit[x.situacao||'—']=(sit[x.situacao||'—']||0)+1});
+  return{aud,au,L:L.sort((a,b)=>(+a.n||0)-(+b.n||0)),top:top&&top.S,mesmo,sit,todosConc:!ab.length}});
+ const val={aud:g=>curto(g.au),n:g=>g.L.length,passo:g=>g.top?g.top.passo:'',prazo:g=>g.top&&g.top.prazo||'9999',status:g=>g.top?g.top.ord:1e9};
  const f=val[AFIL.ord]||val.aud,d=AFIL.dir;
- F.sort((a,b)=>{const x=f(a),y=f(b);const c=typeof x==='number'&&typeof y==='number'?x-y:String(x).localeCompare(String(y),'pt-BR',{numeric:true});return c*d||(curto(audDe(a.aud)).localeCompare(curto(audDe(b.aud)))||a.n-b.n)});
+ grupos.sort((a,b)=>{const x=f(a),y=f(b);const c=typeof x==='number'&&typeof y==='number'?x-y:String(x).localeCompare(String(y),'pt-BR',{numeric:true});return c*d||curto(a.au).localeCompare(curto(b.au),'pt-BR')});
  document.querySelectorAll('#aTbl th[data-ao]').forEach(th=>{const on=th.dataset.ao===AFIL.ord;th.classList.toggle('on',on);th.dataset.seta=on?(d>0?'▲':'▼'):'↕'});
- $('aTb').innerHTML=F.map(x=>{const ab=ABERTOS.has(x.id),au=audDe(x.aud),S=statusAch(x);
-  return`<tr class="lin${ab?' aberta':''}" data-ach="${x.id}" tabindex="0"><td class="cv">${ab?'▾':'▸'}</td><td class="au" title="${esc(au?au.titulo:'')}">${esc(curto(au))}</td><td class="n">${esc(x.n)}</td><td>${esc(x.sistema||'—')}</td><td>${esc(x.assunto||'—')}</td><td class="sin">${esc(x.sintese||'')}</td><td>${pillSit(x.situacao)}</td><td class="px">${esc(S.passo)||'<span class="sub">—</span>'}</td><td>${dt(S.prazo)||'<span class="sub">—</span>'}</td><td>${stHtml(S)}</td></tr>`
-  +(ab?`<tr class="det"><td colspan="10">${detAch(x)}</td></tr>`:'')}).join('')||`<tr><td colspan="10" class="vazio">${A.length?'Nenhum achado com esses filtros.':'Nenhum achado cadastrado ainda. Clique em “+ Novo achado” ou em “Importar achados”.'}</td></tr>`;
+ const busca=!!AFIL.q.trim();
+ $('aTb').innerHTML=grupos.map(g=>{const ab=AUD_AB.has(g.aud)||busca,T=g.top;
+  const sits=Object.entries(g.sit).map(([s,n])=>`<span class="pill" style="--pc:${COR_SIT[s]||'#5b6761'}" title="${esc(s)}">${esc(s)} ${n}</span>`).join(' ');
+  const linha=`<tr class="lin grp${ab?' aberta':''}" data-grp="${g.aud}" tabindex="0"><td class="cv">${ab?'▾':'▸'}</td><td class="au" title="${esc(g.au?g.au.titulo:'')}">${esc(curto(g.au))}</td><td class="n">${g.L.length}</td><td class="sits">${sits}</td>
+   <td class="px">${g.todosConc?'<span class="ok">Todos concluídos</span>':T&&T.passo?esc(T.passo)+(g.mesmo>1?` <span class="sub">(${g.mesmo} achados)</span>`:''):'<span class="sub">—</span>'}</td><td>${T&&T.prazo&&!g.todosConc?dt(T.prazo):'<span class="sub">—</span>'}</td><td>${T&&!g.todosConc?stHtml(T):''}</td><td class="lkc">${g.au&&g.au.link?lnk(g.au.link,'Abrir a auditoria no e-CGU'):'<span class="sub">—</span>'}</td></tr>`;
+  if(!ab)return linha;
+  const sub=g.L.map(x=>{const xa=ABERTOS.has(x.id),S=statusAch(x);
+   return`<tr class="lin ach${xa?' aberta':''}" data-ach="${x.id}" tabindex="0"><td class="cv">${xa?'▾':'▸'}</td><td class="n">${esc(x.n)}</td><td>${esc(x.sistema||'—')}</td><td>${esc(x.assunto||'—')}</td><td class="sin">${esc(x.sintese||'')}</td><td>${pillSit(x.situacao)}</td><td class="px">${esc(S.passo)||'<span class="sub">—</span>'}</td><td>${dt(S.prazo)||'<span class="sub">—</span>'}</td><td>${stHtml(S)}</td><td class="lkc">${x.linkAch?lnk(x.linkAch,'Abrir o achado'):''}</td></tr>`
+   +(xa?`<tr class="det"><td colspan="10">${detAch(x)}</td></tr>`:'')}).join('');
+  return linha+`<tr class="grp-det"><td colspan="8"><table class="tl tl-ach"><thead><tr><th class="cv"></th><th class="n">Nº</th><th>Sistema</th><th>Assunto</th><th>Síntese do achado</th><th>Situação</th><th>Próximo passo</th><th>Prazo</th><th>Status</th><th class="lkc">Link</th></tr></thead><tbody>${sub}</tbody></table></td></tr>`}).join('')
+  ||`<tr><td colspan="8" class="vazio">${A.length?'Nenhum achado com esses filtros.':'Nenhum achado cadastrado ainda. Clique em “+ Novo achado” ou em “Importar achados”.'}</td></tr>`;
+ $('aCnt').textContent=pl(F.length,'achado','achados')+' em '+pl(grupos.length,'auditoria','auditorias')+(F.length!==A.length?' (de '+A.length+' achados)':'');
  // recorrência
  const R=filtraAch(true).filter(x=>!AFIL.sit||x.situacao===AFIL.sit),objs=[...new Set(R.map(x=>x.aud))].map(audDe).filter(Boolean).sort((a,b)=>R.filter(x=>x.aud===b.id).length-R.filter(x=>x.aud===a.id).length);
  const lim=Math.max(2,Math.ceil(objs.length/2));
@@ -1628,16 +1737,16 @@ function renderAch(){
 const pillN=(n,t,on)=>`<span class="pill" style="--pc:${on?'#b26a00':'#5b6761'}">${n} de ${t}</span>`;
 function detAch(x){
  const c=(l,v,cl)=>`<div${cl?` class="${cl}"`:''}><dt>${l}</dt><dd>${v||'<span class="sub">—</span>'}</dd></div>`;
- return`<dl class="det-ach">${c('Auditoria',esc((audDe(x.aud)||{}).titulo||''),'w2')}${c('Ano',esc((audDe(x.aud)||{}).ano||''))}
-${c('Critério principal',esc(x.criterio),'w2')}${c('Situação',pillSit(x.situacao))}
+ return`<dl class="det-ach">${c('Critério principal',esc(x.criterio),'w2')}${c('Situação',pillSit(x.situacao))}
 ${c('Benefício esperado',esc(x.beneficio),'w3')}
 ${(S=>c('Próximo passo',esc(S.passo)+(S.prazo?` — prazo ${dt(S.prazo)}`:'')+(S.nota?`<br><span class="sub">${esc(S.nota)}</span>`:''),'w2')+c('Status',stHtml(S)))(statusAch(x))}
 ${c('Ofício de validação de benefícios',x.ofVal||x.ofValLink?(dt(x.ofVal)||'')+' '+lnk(x.ofValLink,'Abrir o ofício de validação'):'')}${c('Ofício resposta à validação',x.ofResp||x.ofRespLink?(dt(x.ofResp)||'')+' '+lnk(x.ofRespLink,'Abrir o ofício resposta'):'')}
-${c('Link do documento',x.link?lnk(x.link,'Abrir o documento'):'')}${c('Prazo de resposta',dt(x.prazoResp))}${c('Documento de resposta',esc(x.docResp),'w2')}
+${c('Link do achado',x.linkAch?lnk(x.linkAch,'Abrir o achado'):'')}${c('Link do documento',x.link?lnk(x.link,'Abrir o documento'):'')}${c('Prazo de resposta',dt(x.prazoResp))}${c('Documento de resposta',esc(x.docResp),'w2')}
 ${c('Observações gerais',esc(x.obs||'').replace(/\n/g,'<br>'),'w4')}
 <div class="acoes"><button type="button" class="btn pri btn-p" data-each="${x.id}">Editar</button></div></dl>`;
 }
-$('aTb').onclick=e=>{const b=e.target.closest('[data-each]');if(b){abrirAch(+b.dataset.each);return}const r=e.target.closest('tr.lin');if(!r)return;const id=+r.dataset.ach;ABERTOS.has(id)?ABERTOS.delete(id):ABERTOS.add(id);renderAch()};
+$('aTb').onclick=e=>{if(e.target.closest('a'))return;const b=e.target.closest('[data-each]');if(b){abrirAch(+b.dataset.each);return}const r=e.target.closest('tr.lin');if(!r)return;
+ if(r.dataset.grp){const id=+r.dataset.grp;AUD_AB.has(id)?AUD_AB.delete(id):AUD_AB.add(id)}else{const id=+r.dataset.ach;ABERTOS.has(id)?ABERTOS.delete(id):ABERTOS.add(id)}renderAch()};
 $('aTb').onkeydown=e=>{const r=e.target.closest('tr.lin');if(r&&(e.key==='Enter'||e.key===' ')){e.preventDefault();r.click()}};
 document.querySelectorAll('.dlg2 [data-fecha]').forEach(b=>b.onclick=()=>b.closest('dialog').close());
 const opcAud=sel=>{const L=DADOS.auditorias.slice().sort((a,b)=>String(b.ano).localeCompare(String(a.ano))||curto(a).localeCompare(curto(b),'pt-BR'));sel.innerHTML='<option value=""></option>'+L.map(a=>`<option value="${a.id}">${esc(a.ano)} · ${esc(curto(a))}${curto(a)!==a.titulo?' – '+esc(a.titulo.length>70?a.titulo.slice(0,68)+'…':a.titulo):''}</option>`).join('')};
@@ -1647,7 +1756,7 @@ let achEd=null;
 const fA=k=>$('achF').querySelector(`[data-a="${k}"]`);
 function calcAch(){const x={aud:+fA('aud').value||null,situacao:fA('situacao').value,ofVal:fA('ofVal').value,ofResp:fA('ofResp').value},S=statusAch(x);
  $('achCalc').innerHTML=S.passo?`Próximo passo: <b>${esc(S.passo)}</b>${S.prazo?` — prazo <b>${dt(S.prazo)}</b>`:''} · ${stHtml(S)}${S.nota?` <span class="sub">(${esc(S.nota)})</span>`:''}`:'Escolha a auditoria e a situação para ver o próximo passo.'}
-const ACH_CAMPOS=['n','sistema','sintese','criterio','beneficio','ofVal','ofValLink','ofResp','ofRespLink','link','prazoResp','docResp','obs'];
+const ACH_CAMPOS=['n','sistema','sintese','criterio','linkAch','beneficio','ofVal','ofValLink','ofResp','ofRespLink','link','prazoResp','docResp','obs'];
 function proxN(aud){return Math.max(0,...(DADOS.achados||[]).filter(x=>x.aud===aud&&x.id!==achEd).map(x=>+x.n||0))+1}
 function abrirAch(id,audPadrao){
  const x=id?(DADOS.achados||[]).find(a=>a.id===id):null;achEd=x?x.id:null;const L=listas();
@@ -1670,7 +1779,7 @@ $('achF').onsubmit=e=>{e.preventDefault();
  const ant=achEd?(DADOS.achados||[]).find(x=>x.id===achEd)||{}:{},o={};['limite','manifest','doc'].forEach(k=>{if(ant[k]!=null)o[k]=ant[k]});o.aud=aud;o.n=n;
  ['assunto','situacao'].concat(ACH_CAMPOS.filter(k=>k!=='n')).forEach(k=>{let v=String(fA(k).value).trim();if(/link/i.test(k)&&v)v=safeUrl(v)||v;if(v)o[k]=v});
  DADOS.achados=DADOS.achados||[];const agora=new Date().toISOString();
- if(achEd){const i=DADOS.achados.findIndex(x=>x.id===achEd);o.id=achEd;o.criado=DADOS.achados[i].criado;DADOS.achados[i]=o}else{o.id=Date.now()*100+Math.floor(Math.random()*100);o.criado=agora;DADOS.achados.push(o);ABERTOS.add(o.id)}
+ if(achEd){const i=DADOS.achados.findIndex(x=>x.id===achEd);o.id=achEd;o.criado=DADOS.achados[i].criado;DADOS.achados[i]=o}else{o.id=Date.now()*100+Math.floor(Math.random()*100);o.criado=agora;DADOS.achados.push(o);ABERTOS.add(o.id);AUD_AB.add(o.aud)}
  o.alterado=agora;$('ach').close();renderAch();Store.touch()};
 $('achDel').onclick=()=>{const b=$('achDel');if(!b.dataset.armado){b.dataset.armado='1';b.textContent='Clique de novo para confirmar';return}
  DADOS.excluidas=DADOS.excluidas||{};DADOS.excluidas[achEd]=new Date().toISOString();DADOS.achados=DADOS.achados.filter(x=>x.id!==achEd);$('ach').close();renderAch();Store.touch()};
@@ -1681,11 +1790,10 @@ document.querySelectorAll('[data-tl]').forEach(a=>a.innerHTML=ICO_LINK);
 function testaLinks(){document.querySelectorAll('[data-tl]').forEach(a=>{const i=a.parentNode.querySelector('input'),u=safeUrl(i.value);a.hidden=!u;if(u)a.href=u})}
 ['achF'].forEach(f=>$(f).addEventListener('input',e=>{if(e.target.type==='url')testaLinks()}));
 /* ----- Configurações da catalogação (listas) ----- */
-$('aCfg').onclick=()=>{const LA=listas();$('laAss').value=LA.assuntos.join('\n');$('laSit').value=LA.situacoes.join('\n');$('laSis').value=LA.sistemas.join('\n');$('cfa').showModal()};
-$('cfaF').onsubmit=e=>{e.preventDefault();const linhas=id=>[...new Set($(id).value.split('\n').map(t=>t.trim()).filter(Boolean))],LA=listas(),nl={assuntos:linhas('laAss'),situacoes:linhas('laSit'),sistemas:linhas('laSis')};
- if(!nl.assuntos.length){$('laAss').focus();$('laAss').setCustomValidity('Informe pelo menos um assunto.');$('laAss').reportValidity();$('laAss').setCustomValidity('');return}
- if(['assuntos','situacoes','sistemas'].some(k=>nl[k].join('|')!==LA[k].join('|'))){DADOS.listasAch=Object.assign({},DADOS.listasAch||{},nl,{em:new Date().toISOString()});Store.touch()}
- $('cfa').close();renderAch()};
+/* agora na engrenagem do cabeçalho (Configurações › Catalogação de Achados) */
+function listasTela(){const LA=listas();$('laAss').value=LA.assuntos.join('\n');$('laSit').value=LA.situacoes.join('\n');$('laSis').value=LA.sistemas.join('\n')}
+function listasLidas(){const linhas=id=>[...new Set($(id).value.split('\n').map(t=>t.trim()).filter(Boolean))];return{assuntos:linhas('laAss'),situacoes:linhas('laSit'),sistemas:linhas('laSis')}}
+function listasGrava(nl){const LA=listas();if(['assuntos','situacoes','sistemas'].some(k=>nl[k].join('|')!==LA[k].join('|')))DADOS.listasAch=Object.assign({},DADOS.listasAch||{},nl,{em:new Date().toISOString()})}
 
 /* ----- Sugestão de assunto pela síntese -----
    Compara o texto com os achados já catalogados (os mais parecidos "votam" no seu assunto) e soma
@@ -2017,7 +2125,7 @@ function dshGantt(R,uma,ref,W,anoIni){
  document.querySelectorAll('.pg-tabs [data-page]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.page==='dashboard')setTimeout(()=>renderDash(true),0)}));
  if(!pg.hidden)setTimeout(()=>renderDash(true),0);
 })();
-function dshAbrirAud(id){ABERTAS.add(id);irPara('auditorias');render();setTimeout(()=>{const r=document.querySelector(`#tb tr.lin[data-id="${id}"]`);if(r){r.scrollIntoView({block:'center'});r.focus()}},50)}
+function dshAbrirAud(id){if(window.BASE_RO)return;ABERTAS.add(id);irPara('auditorias');render();setTimeout(()=>{const r=document.querySelector(`#tb tr.lin[data-id="${id}"]`);if(r){r.scrollIntoView({block:'center'});r.focus()}},50)}
 /* ===== PAINT do ano: dados de cada PAINT (números, gráficos, objetivos e elaboração do PAINT seguinte).
    Ficam só na base do Drive, em DADOS.paints[ano] = {..., em}; nada disso fica no código da página. ===== */
 const PT_COLS={
@@ -2358,7 +2466,7 @@ const listaAspas=L=>L.length<2?'“'+L[0]+'”':L.slice(0,-1).map(x=>'“'+x+'�
 function raeCfgTela(){
  const C=raeCfg(),sel=raeMarcos(),mon=raeMonit();
  $('racM').innerHTML=DOCS.map(d=>`<label><input type="checkbox" value="${d.k}" ${sel.includes(d.k)?'checked':''}> ${esc(d.nome)}</label>`).join('');
- const sits=[...new Set(((DADOS.listasAch||{}).situacoes||[]).concat((DADOS.achados||[]).map(x=>x.situacao).filter(Boolean)))];
+ const sits=[...new Set((typeof listas==='function'?listas().situacoes:((DADOS.listasAch||{}).situacoes||[])).concat((DADOS.achados||[]).map(x=>x.situacao).filter(Boolean)))];
  $('racS').innerHTML=sits.map(s=>`<label><input type="checkbox" value="${esc(s)}" ${mon.includes(s)?'checked':''}> ${esc(s)}</label>`).join('')||'<p class="sub">Nenhuma situação cadastrada.</p>';
 }
 (()=>{
@@ -2384,11 +2492,10 @@ function raeCfgTela(){
    a.alterado=em;n++});
   raeCfgSet({ecguMapa:mapa});Store.touch();E.close();renderRae();$('raeMsg').textContent='e-CGU atualizado em '+n+' auditoria(s).';$('raeMsg').hidden=false};
  /* configurações */
- const C=$('rac');C.querySelectorAll('[data-fecha]').forEach(b=>b.onclick=()=>C.close());
- $('raeCfgB').onclick=()=>{raeCfgTela();C.showModal()};
  $('racPadrao').onclick=()=>{$('racM').querySelectorAll('input').forEach(i=>i.checked=RAE_MARCOS_PADRAO().includes(i.value))};
- $('racF2').onsubmit=e=>{e.preventDefault();const v=id=>[...$(id).querySelectorAll('input:checked')].map(i=>i.value);
-  raeCfgSet({marcos:v('racM'),monit:v('racS')});Store.touch();C.close();renderRae()};
+ /* agora na engrenagem do cabeçalho (Configurações › RAE); grava junto com o Salvar das Configurações */
+ window.raeCfgGrava=()=>{const v=id=>[...$(id).querySelectorAll('input:checked')].map(i=>i.value),m=v('racM'),s=v('racS');
+  if(m.join()!==raeMarcos().join()||s.join()!==raeMonit().join())raeCfgSet({marcos:m,monit:s})};
  /* gerar */
  $('raeGera').onclick=async()=>{const b=$('raeGera');const L=raeAuds(RAE_ANO).filter(a=>!(a.rae||{}).fora);if(!L.length)return;
   b.disabled=true;const t0=b.textContent;b.textContent='Gerando…';
@@ -2420,7 +2527,7 @@ try{const p=sessionStorage.getItem('app_pg');if(p&&document.querySelector(`main[
 const Store=(()=>{
  const KEY='app_dados_'+APP.id+'_v5';
  const local={name:'neste navegador',async load(){const s=localStorage.getItem(KEY);return s?JSON.parse(s):null},async save(d){localStorage.setItem(KEY,JSON.stringify(d))}};
- let ad=local,ready=false,tm=0,last='';
+ let ad=local,ready=false,tm=0,last='',ocup=false,outra=false;  /* ocup: gravação ou sincronização em andamento */
  const msg=(t,err)=>{const e=$('stMsg');e.textContent=t;e.className=err?'st-err':''};
  const hhmm=()=>new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
  const valid=d=>d&&d.v===1&&d.app===APP.id&&d.dados&&typeof d.dados==='object';
@@ -2436,11 +2543,21 @@ const Store=(()=>{
    if(ad.needsPush){try{const m=await ad.save(collect());if(m&&m.dados){apply(m);last=JSON.stringify({...collect(),saved:0})}}catch(e){msg(e.partial?e.message:'Não foi possível salvar.',true);return}}
    msg('Dados '+ad.name);
   },
-  touch(){if(!ready)return;clearTimeout(tm);msg('Salvando…');tm=setTimeout(S.flush,600)},
+  touch(){if(!ready)return;if(window.BASE_RO){msg('Somente leitura: alterações não são gravadas');return}clearTimeout(tm);msg('Salvando…');tm=setTimeout(S.flush,600)},
   async flush(){
-   if(!ready)return;clearTimeout(tm);tm=0;
-   const c=collect(),j=JSON.stringify({...c,saved:0});if(j===last){msg('Salvo '+ad.name+' às '+hhmm());return}
-   try{const m=await ad.save(c);if(m&&m.dados){apply(m);last=JSON.stringify({...collect(),saved:0});msg('Salvo '+ad.name+' às '+hhmm()+' (junto com alterações de outro usuário)')}else{last=j;window.BASE_EM=c.saved;window.pintaBaseEm&&pintaBaseEm();msg('Salvo '+ad.name+' às '+hhmm())}}catch(e){msg(e&&e.partial?e.message:'Não foi possível salvar automaticamente. Exporte um backup.',true)}
+   if(!ready||window.BASE_RO)return;clearTimeout(tm);tm=0;
+   /* já há uma gravação/sincronização em andamento: guarda neste aparelho agora e grava de novo quando ela terminar */
+   if(ocup){outra=true;if(ad.guardaLocal)ad.guardaLocal(collect());return}
+   const c=JSON.parse(JSON.stringify(collect())),j=JSON.stringify({...c,saved:0});if(j===last){msg('Salvo '+ad.name+' às '+hhmm());return}
+   ocup=true;
+   try{const m=await ad.save(c);
+    if(m&&m.dados){const agora=JSON.stringify({...collect(),saved:0});
+     /* editou durante a gravação: junta o que mudou aqui desde o início da gravação com o resultado gravado e grava de novo */
+     if(agora!==j&&typeof mesclar==='function'){apply({...m,dados:mesclar(JSON.parse(agora).dados,m.dados,c.dados)});last='';outra=true}else{apply(m);last=JSON.stringify({...collect(),saved:0})}
+     msg('Salvo '+ad.name+' às '+hhmm()+' (junto com alterações de outro usuário)')}
+    else{last=j;window.BASE_EM=c.saved;window.pintaBaseEm&&pintaBaseEm();msg('Salvo '+ad.name+' às '+hhmm())}}
+   catch(e){msg(e&&e.partial?e.message:'Não foi possível salvar automaticamente. Exporte um backup.',true)}
+   finally{ocup=false;if(outra){outra=false;if(JSON.stringify({...collect(),saved:0})!==last)S.flush()}}
   },
   exportar(){
    const d=new Date(),p=n=>String(n).padStart(2,'0'),nome=APP.arquivo.replace(/\.json$/,'')+`-${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}.json`;
@@ -2448,8 +2565,13 @@ const Store=(()=>{
   },
   /* traz alterações feitas por outros usuários na base compartilhada */
   async sync(){
-   if(!ready||!ad.pull||tm||document.querySelector('dialog[open]'))return;
-   try{const m=await ad.pull(collect());if(m&&m.dados){apply(m);last=JSON.stringify({...collect(),saved:0});msg('Atualizado com alterações de outros usuários às '+hhmm())}}catch(e){}
+   if(!ready||!ad.pull||tm||ocup||document.querySelector('dialog[open]'))return;
+   ocup=true;const c=JSON.parse(JSON.stringify(collect())),j=JSON.stringify({...c,saved:0});
+   try{const m=await ad.pull(c);if(m&&m.dados){const agora=JSON.stringify({...collect(),saved:0});
+     /* editou enquanto buscava: não descarta a edição — junta e grava */
+     if(agora!==j&&typeof mesclar==='function'){apply({...m,dados:mesclar(JSON.parse(agora).dados,m.dados,c.dados)});last='';outra=true}else{apply(m);last=JSON.stringify({...collect(),saved:0})}
+     msg('Atualizado com alterações de outros usuários às '+hhmm())}}catch(e){}
+   finally{ocup=false;if(outra||tm){outra=false;clearTimeout(tm);tm=0;if(JSON.stringify({...collect(),saved:0})!==last)S.flush()}}
   },
   async importar(f){
    try{const d=JSON.parse(await f.text());
@@ -2482,14 +2604,14 @@ $('stFile').onchange=e=>{const f=e.target.files[0];e.target.value='';if(f)Store.
   </div>
   <div id="lgBase" hidden>
    <p><b id="lgOla">Escolha a base de dados</b></p>
-   <p class="lg-txt" id="lgBaseTxt">Todos os usuários trabalham numa <b>única base</b>, que fica no Drive do e-mail principal e é compartilhada como <b>Editor</b> com os demais. Isso só é pedido na primeira vez.</p>
+   <p class="lg-txt" id="lgBaseTxt">Todos os usuários trabalham numa <b>única base</b>, que fica no Drive do e-mail principal e é compartilhada com os demais como <b>Editor</b> ou <b>Leitor</b> (somente leitura). Isso só é pedido na primeira vez.</p>
    <button type="button" class="lg-btn" id="lgAbrir">Abrir a base compartilhada comigo</button>
    <button type="button" class="lg-btn" id="lgCriar" style="margin-top:10px" hidden>Criar a base no meu Drive (sou o e-mail principal)</button>
    <button type="button" class="lg-lk" id="lgSair2">Entrar com outra conta</button>
   </div>
   <div id="lgCriada" hidden>
    <p><b>Base criada no seu Google Drive.</b></p>
-   <p class="lg-txt">Para os colegas usarem a mesma base, abra o arquivo no Drive e <b>compartilhe como Editor</b> com o Gmail de cada um. Depois, cada um entra no controle e escolhe "Abrir a base compartilhada comigo".</p>
+   <p class="lg-txt">Para os colegas usarem a mesma base, abra o arquivo no Drive e <b>compartilhe</b> com o Gmail de cada um (ou use Configurações › Acessos, dentro do controle). Depois, cada um entra no controle e escolhe "Abrir a base compartilhada comigo".</p>
    <a class="lg-btn" id="lgDrive" href="#" target="_blank" rel="noopener noreferrer">Abrir o arquivo no Drive para compartilhar</a>
    <button type="button" class="lg-btn" id="lgSeguir" style="margin-top:10px">Continuar para o controle</button>
   </div>
@@ -2505,6 +2627,8 @@ const CID=(CFG.googleClientId||'').trim(),KEY=(CFG.googleApiKey||'').trim(),APPI
 /* Uma única base: a do e-mail principal (config.js). Só ele cria a base; os demais apenas abrem a que ele compartilhou. */
 const PRINC=String(CFG.emailPrincipal||'').trim().toLowerCase();
 const ehPrincipal=()=>!!(user&&PRINC&&String(user.email||'').toLowerCase()===PRINC);
+/* Configurações só para o e-mail principal (pedido do usuário 07/11); sem login (modo local) = o próprio dono */
+window.souPrincipal=()=>!user||!PRINC||ehPrincipal();
 const daPrincipal=f=>!PRINC||((f.owners||[]).some(o=>String(o.emailAddress||'').toLowerCase()===PRINC));
 const SCOPE='https://www.googleapis.com/auth/drive.file openid email profile';
 const FILE=APP.arquivo,H='app_hint_'+APP.id,SS='app_sess_'+APP.id;
@@ -2566,27 +2690,34 @@ function sharedAdapter(u){
  const ck=()=>'app_dados_'+APP.id+'_'+u.sub+'_'+base.id;
  const cacheGet=()=>{try{const s=localStorage.getItem(ck());return s?JSON.parse(s):null}catch(e){return null}};
  const cachePut=txt=>{try{localStorage.setItem(ck(),txt);return true}catch(e){return false}};
- let ver=null;
+ let ver=null,baseD=null;  /* baseD = última versão da base lida ou gravada por este aparelho (para a junção campo a campo) */
+ const clone=o=>o==null?o:JSON.parse(JSON.stringify(o));
  const empacota=dados=>({v:1,app:APP.id,saved:new Date().toISOString(),dados});
- async function sobe(obj){const txt=JSON.stringify(obj);const j=await(await api(UPL+'/'+base.id+'?uploadType=media&fields=version&supportsAllDrives=true',{method:'PATCH',headers:{'Content-Type':'application/json'},body:txt})).json();ver=j.version;cachePut(txt)}
+ async function sobe(obj){const txt=JSON.stringify(obj);const j=await(await api(UPL+'/'+base.id+'?uploadType=media&fields=version&supportsAllDrives=true',{method:'PATCH',headers:{'Content-Type':'application/json'},body:txt})).json();const antes=Number(ver);ver=j.version;cachePut(txt);return Number(j.version)===antes+1}
  const ad={name:'na base principal',needsPush:false,
   async load(){
    const cache=cacheGet();
-   try{const {m,d}=await lerBase(base.id);ver=m.version;base.podeEditar=deMeta(m).podeEditar;
-    if(cache&&d&&cache.dados&&d.dados&&ad.pendente(cache)){ad.needsPush=true;return empacota(mesclar(cache.dados,d.dados))}
+   try{const {m,d}=await lerBase(base.id);ver=m.version;base.podeEditar=deMeta(m).podeEditar;modoLeitura();
+    baseD=d&&d.dados?clone(d.dados):null;
+    if(base.podeEditar!==false&&cache&&d&&cache.dados&&d.dados&&ad.pendente(cache)){ad.needsPush=true;return empacota(mesclar(cache.dados,d.dados,cache.base||null))}
     if(d)cachePut(JSON.stringify(d));return d}
    catch(e){if(cache){ad.needsPush=true;return cache}throw e}
   },
   pendente(cache){try{return localStorage.getItem(ck()+'_pend')==='1'}catch(e){return false}},
+  /* guarda neste aparelho, marcado como pendente, sem esperar a rede (ao fechar a página no meio de uma gravação) */
+  guardaLocal(obj){try{localStorage.setItem(ck()+'_pend','1')}catch(e){}cachePut(JSON.stringify(Object.assign({},obj,{base:baseD})))},
   async save(obj){
-   try{localStorage.setItem(ck()+'_pend','1')}catch(e){}
-   cachePut(JSON.stringify(obj));
+   ad.guardaLocal(obj);
    try{
     if(base.podeEditar===false){const e=new Error('sem permissão');e.status=403;throw e}
     const m=await(await api(DRV+base.id+'?fields=version&supportsAllDrives=true')).json();
     let out=obj,mudou=false;
-    if(ver&&m.version!==ver){const {d}=await lerBase(base.id);if(d&&d.dados){out=empacota(mesclar(obj.dados,d.dados));mudou=true}}
-    await sobe(out);
+    let lido=null;
+    if(ver&&m.version!==ver){const {m:mm,d}=await lerBase(base.id);if(d&&d.dados){out=empacota(mesclar(obj.dados,d.dados,baseD));mudou=true;lido=d.dados;ver=mm.version}}
+    else ver=m.version;
+    /* a base de comparação é sempre a última versão LIDA da base (nunca a própria gravação): se outra pessoa gravar
+       ao mesmo tempo por cima, o que foi alterado aqui continua contando como alteração e volta na próxima junção */
+    await sobe(out);if(lido)baseD=clone(lido);
     try{localStorage.removeItem(ck()+'_pend')}catch(e){}
     ad.needsPush=false;$('stRe').hidden=true;
     return mudou?out:null;
@@ -2598,13 +2729,29 @@ function sharedAdapter(u){
   async pull(obj){
    const m=await(await api(DRV+base.id+'?fields=version&supportsAllDrives=true')).json();
    if(!ver||m.version===ver)return null;
-   const {m:mm,d}=await lerBase(base.id);ver=mm.version;if(!d||!d.dados)return null;
-   const junto=empacota(mesclar(obj.dados,d.dados));
-   if(JSON.stringify(junto.dados)!==JSON.stringify(d.dados)&&base.podeEditar!==false)await sobe(junto);else cachePut(JSON.stringify(d));
+   const {m:mm,d}=await lerBase(base.id);ver=mm.version;base.podeEditar=deMeta(mm).podeEditar;modoLeitura();if(!d||!d.dados)return null;
+   const junto=empacota(mesclar(obj.dados,d.dados,baseD));
+   baseD=clone(d.dados);if(JSON.stringify(junto.dados)!==JSON.stringify(d.dados)&&base.podeEditar!==false)await sobe(junto);else cachePut(JSON.stringify(d))
    return junto;
   }};
  return ad;
 }
+/* Somente leitura (pedido do usuário 06/11): quem recebeu a base como Leitor no Drive vê tudo, mas não edita.
+   O Drive recusa qualquer gravação; a página só esconde os botões de edição e não tenta salvar. */
+function modoLeitura(){const ro=!!(base&&base.podeEditar===false);window.BASE_RO=ro;document.documentElement.classList.toggle('ro',ro);
+ let t=document.getElementById('roTag');if(ro&&!t){t=document.createElement('span');t.id='roTag';t.textContent='Somente leitura';t.title='Seu acesso a esta base é de leitura. Para editar, peça ao e-mail principal acesso de Editor.';const b=document.getElementById('stBar');if(b)b.insertBefore(t,b.firstChild)}if(t)t.hidden=!ro;
+ if(typeof window.aoMudarAcesso==='function')window.aoMudarAcesso()}
+/* Acessos (pedido do usuário 06/11): o e-mail principal libera Gmails como Leitor ou Editor de dentro do site,
+   pelo compartilhamento do próprio arquivo da base (API de permissões do Drive; o app criou o arquivo). */
+const PERM=()=>DRV+base.id+'/permissions';
+window.Acessos={
+ pode:()=>!!(user&&base&&ehPrincipal()),
+ async listar(){const j=await(await api(PERM()+'?fields=permissions(id,type,role,emailAddress,displayName)&supportsAllDrives=true')).json();return j.permissions||[]},
+ async dar(email,role){const msg='Você recebeu acesso ao '+APP.nome+' ('+(role==='reader'?'somente leitura':'edição')+'). Entre em '+location.origin+location.pathname+' com este Gmail e clique em "Abrir a base compartilhada comigo".';
+  return(await api(PERM()+'?sendNotificationEmail=true&emailMessage='+encodeURIComponent(msg)+'&supportsAllDrives=true',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'user',role,emailAddress:email})})).json()},
+ async mudar(id,role){return(await api(PERM()+'/'+encodeURIComponent(id)+'?supportsAllDrives=true',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({role})})).json()},
+ async tirar(id){await api(PERM()+'/'+encodeURIComponent(id)+'?supportsAllDrives=true',{method:'DELETE'})}
+};
 function usarBase(meta){base=deMeta(meta);guardaSessao();enter(sharedAdapter(user))}
 async function escolherBaseAuto(){
  const L=(await procurarBases()).filter(daPrincipal);
@@ -2612,7 +2759,7 @@ async function escolherBaseAuto(){
  if(ehPrincipal()){await criarBase();return}
  tela('lgBase');carregaScript('https://apis.google.com/js/api.js',()=>window.gapi&&gapi.load).catch(()=>{});$('lgOla').textContent='Olá, '+(String(user.name||'').split(/\s+/)[0]||'')+'!';
  $('lgCriar').hidden=!!PRINC;
- if(PRINC)$('lgBaseTxt').innerHTML='A base do controle fica no Drive de <b>'+esc(PRINC)+'</b>. Se ele já compartilhou o arquivo com você como <b>Editor</b>, clique abaixo e escolha o arquivo <b>'+esc(FILE)+'</b>. Isso só é pedido na primeira vez.';
+ if(PRINC)$('lgBaseTxt').innerHTML='A base do controle fica no Drive de <b>'+esc(PRINC)+'</b>. Se ele já liberou o seu acesso (como Editor ou Leitor), clique abaixo e escolha o arquivo <b>'+esc(FILE)+'</b>. Isso só é pedido na primeira vez.';
 }
 async function signIn(hint){
  errMsg('');$('lgGo').disabled=true;$('lgGoT').textContent='Conectando…';
