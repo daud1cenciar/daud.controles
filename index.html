@@ -434,6 +434,14 @@ html.ro .pg-tabs [data-page="auditorias"],html.ro .pg-tabs [data-page="achados"]
 .cfg-sub button[aria-selected="true"]{background:var(--gs);border-color:var(--g);color:var(--g)}
 #ct .ed-h .cfg-so{margin-left:12px;margin-right:auto;font-size:12.5px}
 #ct .ed-c{min-height:min(62vh,640px)}
+/* Recorrência expansível (v8.1) */
+.hm tr.rlin{cursor:pointer}.hm tr.rlin:hover td:first-child{color:var(--g)}
+.hm .rcv{display:inline-block;width:16px;color:var(--mu);font-size:12px}
+.hm tr.rlin.aberta .rcv{color:var(--g)}
+.hm tr.rdet>td{background:var(--sf);padding:6px 10px 12px 26px}
+.tl-rec{width:100%;font-size:13.5px}.tl-rec th{font-size:12px}.tl-rec tbody tr{cursor:pointer}.tl-rec tbody tr:hover td{background:var(--gs)}
+.tl-rec td.sin{max-width:560px}.tl-rec td.au{white-space:nowrap;font-weight:600}
+#pgAch span.mon{color:#8a5a00;font-weight:600}:root[data-theme="dark"] #pgAch span.mon{color:#e0b46a}
 @media print{#siteNav,#stBar{display:none!important}body{padding:0}}
 </style>
 </head>
@@ -468,9 +476,9 @@ html.ro .pg-tabs [data-page="auditorias"],html.ro .pg-tabs [data-page="achados"]
  <div class="chips" id="chips"></div>
  <p class="cnt" id="cnt"></p>
  <div class="card" id="lista"><table id="tbl"><thead>
-  <tr><th class="cv"></th><th data-ord="ano">Ano</th><th data-ord="titulo">Auditoria</th><th data-ord="proximo">Próximo documento</th><th data-ord="prevista">Data prevista</th><th data-ord="atraso">Status</th><th data-ord="situacao">Etapa</th><th data-ord="link" class="c">Link</th></tr>
+  <tr><th class="cv"></th><th data-ord="ano">Ano</th><th data-ord="titulo">Auditoria</th><th data-ord="proximo">Próxima tarefa</th><th data-ord="prevista">Data prevista</th><th data-ord="atraso">Status</th><th data-ord="situacao">Etapa</th><th data-ord="link" class="c">Link</th></tr>
  </thead><tbody id="tb"></tbody></table></div>
- <p class="nota">Clique nos quadros de etapa para filtrar e nos títulos das colunas para ordenar. Próximo documento é o primeiro ainda sem data realizada. Status compara a data prevista com hoje (ou com a data realizada, quando já saiu).</p>
+ <p class="nota">Clique nos quadros de etapa para filtrar e nos títulos das colunas para ordenar. Próxima tarefa é a mais atrasada entre as que ainda não têm data realizada (mesmo que alguma posterior já tenha sido feita); sem atraso, a primeira depois da última realizada. Status compara a data prevista com hoje (ou com a data realizada, quando já saiu).</p>
 </main>
 
 <main id="pgAch" data-pg="achados" hidden>
@@ -553,11 +561,6 @@ html.ro .pg-tabs [data-page="auditorias"],html.ro .pg-tabs [data-page="achados"]
     <label class="s3">Link do ofício de validação<span class="lkf"><input class="in" type="url" inputmode="url" data-a="ofValLink" placeholder="https://…"><a class="lk" data-tl="a" target="_blank" rel="noopener noreferrer" title="Testar o link" aria-label="Testar o link" hidden></a></span></label>
     <label>Data do ofício resposta<input class="in" data-a="ofResp" type="date"></label>
     <label class="s3">Link do ofício resposta<span class="lkf"><input class="in" type="url" inputmode="url" data-a="ofRespLink" placeholder="https://…"><a class="lk" data-tl="a" target="_blank" rel="noopener noreferrer" title="Testar o link" aria-label="Testar o link" hidden></a></span></label>
-   </div></fieldset>
-   <fieldset><legend>Comunicação à unidade</legend><div class="gr">
-    <label class="s2">Link do documento<span class="lkf"><input class="in" type="url" inputmode="url" data-a="link" placeholder="https://…"><a class="lk" data-tl="a" target="_blank" rel="noopener noreferrer" title="Testar o link" aria-label="Testar o link" hidden></a></span></label>
-    <label>Prazo de resposta<input class="in" data-a="prazoResp" type="date"></label>
-    <label class="s2">Documento de resposta<input class="in" data-a="docResp"></label>
    </div></fieldset>
    <fieldset><legend>Observações gerais</legend><div class="gr">
     <label class="s4"><span class="vh">Observações gerais</span><textarea class="in" data-a="obs" rows="3"></textarea></label>
@@ -791,15 +794,15 @@ const XL= {
 
 
 /* ===== Identidade do app ===== */
-const APP={id:'controle-auditorias',nome:'Divisão de Auditoria - Controles',arquivo:'controle-auditorias.json',versao:'Versão 8.0 - 09/11/2026'};
+const APP={id:'controle-auditorias',nome:'Divisão de Auditoria - Controles',arquivo:'controle-auditorias.json',versao:'Versão 8.1 - 10/11/2026'};
 document.title=APP.nome;document.getElementById('appNome').textContent=APP.nome;document.getElementById('stVer').textContent=APP.versao;
 
 /* ===== Regras dos avisos por e-mail (o mesmo código roda na página e no Google Apps Script) =====
    Versão 4.0 (decisão do usuário, 05/11): para o E-MAIL o atraso é contado sobre a DATA ESPERADA (a "previsão" que aparece
    em itálico na página = data realizada, ou esperada, do documento-base + prazo), e não sobre a data prevista do planejamento.
    A página continua medindo o atraso pela data prevista; só o e-mail usa a esperada.
-   Para cada auditoria não cancelada e não concluída, olha SÓ A PRÓXIMA tarefa pendente entre as marcadas para gerar aviso,
-   depois da última tarefa com data realizada:
+   Para cada auditoria não cancelada e não concluída, olha UMA tarefa entre as marcadas para gerar aviso: a mais atrasada
+   (mesmo antes da última realizada — v8.1) ou, sem atraso, a próxima depois da última tarefa com data realizada:
    - ATRASADO: a data esperada já passou;
    - VENCENDO: faltam até `antecedencia` dias para a data esperada (inclui hoje), MAS só se o prazo do documento for de pelo
      menos `antecedencia` dias; documento com prazo menor só entra quando atrasar.
@@ -853,7 +856,9 @@ function AV_resumo(a, DOCSL, hoje) {
    corresponde a cada uma (correlação definida pelo usuário). Situação do e-CGU = última importação do "Minhas tarefas"
    na aba RAE (a.ecguT.tar = {tarefa: estado}). "Deveria estar finalizada" = documento correspondente com data realizada
    (ou superado: sem data, mas antes da última data realizada — mesma regra da página). Sem importação: null. */
-var AV_ECGU = [['Análise Preliminar', 'analise'], ['Matriz de Planejamento', 'def_campo'], ['Escopo da Auditoria', 'prog_trab'],
+/* correlação e-CGU ↔ Datas e Prazos; v8.1 (pedido do usuário 10/11): Análise Preliminar ↔ Definição dos Trabalhos de Campo;
+   Matriz de Planejamento e Escopo ↔ Envio do Programa de Trabalho */
+var AV_ECGU = [['Análise Preliminar', 'def_campo'], ['Matriz de Planejamento', 'prog_trab'], ['Escopo da Auditoria', 'prog_trab'],
   ['Análise da Auditoria', 'fim_campo'], ['Relatório Preliminar de Auditoria', 'rp_envio'], ['Relatório Final de Auditoria', 'rf_envio'], ['Achados de Auditoria', 'mon_fim']];
 function AV_ecgu(a, DOCSL) {
   const E = a.ecguT;
@@ -895,16 +900,25 @@ function calcularAvisos(D, DOCSL, hoje, antecedencia, papeis) {
     if (a.cancelada) return;
     const docs = a.docs || {};
     if (DOCSL.every(function (d) { return (docs[d.k] || {}).exec; })) return;
-    /* só a PRÓXIMA tarefa (entre as que geram aviso) ainda pendente */
+    /* só UMA tarefa por auditoria (entre as que geram aviso): a MAIS ATRASADA pela data esperada, mesmo que alguma depois dela
+       já tenha data realizada (v8.1, pedido do usuário 10/11); sem nenhuma atrasada, a próxima depois da última realizada */
     let ultimo = -1, alvo = -1;
+    const ESP = AV_esperadas(a, DOCSL), hj = hoje;
     DOCSL.forEach(function (d, i) { if ((docs[d.k] || {}).exec) ultimo = i; });
-    for (let i = ultimo + 1; i < DOCSL.length; i++) {
+    let pior = -1, piorD = 0;
+    if (ultimo < DOCSL.length - 1) DOCSL.forEach(function (d, i) {
+      if ((docs[d.k] || {}).exec || (marcadas && marcadas.indexOf(d.k) < 0)) return;
+      const e = (ESP[d.k] || {}).d; if (!e) return;
+      const dd = AV_dias(hj, e); if (dd > 0 && dd > piorD) { pior = i; piorD = dd; }
+    });
+    if (pior >= 0) alvo = pior;
+    else for (let i = ultimo + 1; i < DOCSL.length; i++) {
       if (marcadas && marcadas.indexOf(DOCSL[i].k) < 0) continue;
       alvo = i; break;
     }
     let item = null;
     if (alvo >= 0) {
-      const d = DOCSL[alvo], x = docs[d.k] || {}, esp = (AV_esperadas(a, DOCSL)[d.k] || {}).d;
+      const d = DOCSL[alvo], x = docs[d.k] || {}, esp = (ESP[d.k] || {}).d;
       if (esp) {
         const dd = AV_dias(hoje, esp);
         if (dd > 0) item = { doc: d.nome, plan: x.plan || '', esp: esp, dias: dd, tipo: 'atrasado' };
@@ -1049,14 +1063,15 @@ const DOCS=[
  {k:'pub_bca',nome:'Publicação da Portaria em BCA',fase:AP,padrao:0,doc:true,base:'portaria'},
  {k:'reuniao',nome:'Reunião com Coordenador',fase:AP,padrao:0,base:'portaria'},
  {k:'of_ap',nome:'Ofício de Análise Preliminar à Auditada',fase:AP,padrao:0,doc:true},
- {k:'brief_daud1',nome:'Briefing da Fase Preparatória',fase:AP,padrao:7},
+ {k:'resp_ap',nome:'Resposta da UA sobre AP',fase:AP,padrao:21,doc:true,base:'of_ap'},  /* v8.1 (pedido do usuário 10/11): 21 dias após o Ofício de AP */
+ {k:'brief_daud1',nome:'Briefing da Fase Preparatória',fase:AP,padrao:7,base:'of_ap'},  /* base explícita: a Resposta da UA não desloca os seguintes */
  {k:'analise',nome:'Análise Preliminar',fase:AP,padrao:2,doc:true},
  {k:'def_campo',nome:'Definição dos Trabalhos de Campo',fase:PL,padrao:3},
  {k:'apoio_gab',nome:'Solicitação de Apoio ao Gabinete',fase:PL,padrao:7,doc:true},
  {k:'of_om',nome:'Ofícios para OM auditadas',fase:PL,padrao:17,doc:true,base:'def_campo'},
  {k:'brief_chefe',nome:'Briefing Planejamento Chefe SCAIG / Chefe CENCIAR',fase:PL,padrao:27},
  {k:'prog_trab',nome:'Envio do Programa de Trabalho',fase:PL,padrao:0,doc:true},
- {k:'termo_anu',nome:'Envio do Termo de Anuência',fase:PL,padrao:0,doc:true},
+ {k:'termo_anu',nome:'Recebimento do Termo de Anuência',fase:PL,padrao:0,doc:true},
  {k:'ini_campo',nome:'Início dos trabalhos de campo',fase:EX,padrao:11},
  {k:'fim_campo',nome:'Término dos trabalhos de campo',fase:EX,padrao:5},
  {k:'debrief',nome:'Debriefing Chefe SCAIG / Chefe CENCIAR',fase:EX,padrao:7},
@@ -1228,6 +1243,8 @@ function recalcular(a){
   if(!Number.isFinite(DC.busca_sol.prazo)&&DC.rp_envio.plan)DC.busca_sol.prazo=padrao('busca_sol')}
  if(!Number.isFinite(DC.fim_campo.prazo)&&T&&Number.isFinite(DC.ini_campo.prazo)){const fc=fimCampoObs(a),ip=somaDias(T,DC.ini_campo.prazo),db=(DC.debrief||{}).plan;
   if(fc&&db){DC.fim_campo.prazo=dias(fc,ip);DC.debrief.prazo=dias(db,fc)}else DC.fim_campo.prazo=0}
+ /* v8.1: Resposta da UA sobre AP entra com o prazo padrão (é um ramo: nenhuma outra data muda) */
+ if(!Number.isFinite(DC.resp_ap.prazo))DC.resp_ap.prazo=padrao('resp_ap');
  delete a.docs[D0].prazo;
  const pr={};DOCS.forEach((d,i)=>{if(!i)return;const x=a.docs[d.k];if(!Number.isFinite(x.prazo))x.prazo=DOCS.slice(i+1).some(e=>Number.isFinite((a.docs[e.k]||{}).prazo))?0:padrao(d.k);pr[d.k]=x.prazo});
  const p=prever(a.docs[D0].plan,pr);DOCS.forEach(d=>{a.docs[d.k].plan=p[d.k]});
@@ -1302,10 +1319,14 @@ function hhHtml(a){
  return`<table class="dtab ctab hhtab">${HH_CAB}<tbody>${lin}
 <tr class="tot"><td></td><td>Total</td><td></td><td></td><td class="n">${fmtH(tp)}</td><td class="hhsep"></td><td></td><td class="n">${fmtH(tr)}</td></tr></tbody></table>${a.tipo?'':'<p class="sub">Sem tipo definido: as tarefas de Planejamento e de Trabalho de campo não aparecem.</p>'}`;
 }
-/* Resumo da linha: próximo documento pendente, sua data prevista e o atraso */
+/* Próxima tarefa da linha-resumo (v8.1, pedido do usuário 10/11): a MAIS ATRASADA entre as que não têm data realizada,
+   mesmo que alguma depois dela já tenha sido realizada; sem nenhuma atrasada, a próxima depois da última realizada (como antes).
+   A Etapa continua pela regra antiga (fase da primeira pendente depois da última realizada). */
+const proxTarefa=a=>{if(pendente(a)<0)return -1;/* concluída (último documento realizado): nada pendente */const h=hoje();let m=-1,mp='';DOCS.forEach((d,i)=>{const x=doc(a,d.k);if(!x.exec&&x.plan&&x.plan<h&&(m<0||x.plan<mp)){m=i;mp=x.plan}});return m>=0?m:pendente(a)};
+/* Resumo da linha: próxima tarefa, sua data prevista e o atraso */
 function resumo(a){
  if(a.cancelada)return{nome:'',plan:'',t:{t:'—',c:'sub'},canc:true,dias:null,ordem:99};
- const i=pendente(a);
+ const i=proxTarefa(a);
  if(i>=0){const d=DOCS[i],x=doc(a,d.k);return{nome:d.nome,plan:x.plan,t:atraso(x),dias:x.plan?dias(hoje(),x.plan):null,ordem:i}}
  const x=doc(a,DOCS[DOCS.length-1].k),t=atraso(x);return{nome:'',plan:'',t,dias:x.plan&&x.exec?dias(x.exec,x.plan):null,ordem:98};
 }
@@ -1529,7 +1550,12 @@ function abrirSlides(forcar){guardaPacote();const assinatura=JSON.stringify(Obje
 let PN_ESPERA=null;
 function pnOcupado(){try{const d=$('pnF').contentDocument;if(!d||!d.body)return false;const s=d.querySelector('.show'),b=d.getElementById('btn-pptx');return!!(s&&!s.hidden)||!!(b&&b.disabled)||!!document.fullscreenElement}catch(e){return false}}
 function slidesNaTela(){if($('pgSlides').hidden)return;if(!$('pnF').getAttribute('src')){abrirSlides();return}
+ /* v8.1: apresentando (ou com o painel já carregado), manda os dados novos sem recarregar — o painel refaz as telas sem sair da apresentação */
+ if(pnApresentando()){guardaPacote();PN_EM=JSON.stringify(Object.assign({},PN_PAC,{hora:''}));try{$('pnF').contentWindow.postMessage({tipo:'painel-base',pacote:PN_PAC},'*')}catch(e){}return}
  if(pnOcupado()){clearTimeout(PN_ESPERA);PN_ESPERA=setTimeout(slidesNaTela,5000);return}abrirSlides()}
+function pnApresentando(){try{const d=$('pnF').contentDocument,s=d&&d.getElementById('show');return!!(s&&!s.hidden)}catch(e){return false}}
+/* v8.1: depois de cada conferência da base (mesmo sem novidade), atualiza a "posição em … às hh:mm" dos slides (aba Slides e nova aba) */
+window.posicaoConferida=()=>{try{guardaPacote();if(!$('pgSlides').hidden&&$('pnF').getAttribute('src'))$('pnF').contentWindow.postMessage({tipo:'painel-base',pacote:PN_PAC},'*')}catch(e){}};
 document.querySelectorAll('.pg-tabs [data-page]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.page==='slides')setTimeout(()=>abrirSlides(),0)}));
 $('pnNova').onclick=()=>{guardaPacote();window.open('painel.html#base','_blank','noopener')};
 addEventListener('message',e=>{if(e.data&&e.data.tipo==='painel-pronto'&&e.source===$('pnF').contentWindow&&PN_PAC)e.source.postMessage({tipo:'painel-base',pacote:PN_PAC},'*')});
@@ -1591,7 +1617,7 @@ $('acTb').addEventListener('click',async e=>{const b=e.target.closest('[data-acx
 (()=>{const ED=['ed','ach','ct','cfa','mat','ptd','raee','rac'],sm=HTMLDialogElement.prototype.showModal;
  HTMLDialogElement.prototype.showModal=function(){if(window.BASE_RO&&ED.includes(this.id))return;return sm.call(this)}})();
 /* Leitor vê só Dashboard, Slides e RAE (pedido do usuário 06/11): Datas e Prazos e Catalogação somem e não abrem */
-const RO_FORA=['auditorias','achados'];
+const RO_FORA=['auditorias','achados','analise'];
 (()=>{const ir=irPara;irPara=function(p){if(window.BASE_RO&&RO_FORA.includes(p))p='dashboard';return ir(p)}})();
 window.aoMudarAcesso=()=>{pintaCtBtn();if(!window.BASE_RO)return;document.querySelectorAll('dialog[open]').forEach(d=>{if(['ed','ach','ct','cfa','mat','ptd','raee','rac'].includes(d.id))d.close()});
  const at=document.querySelector('main[data-pg]:not([hidden])');if(!at||RO_FORA.includes(at.dataset.pg))setTimeout(()=>{const b=document.querySelector('.pg-tabs [data-page="dashboard"]');if(b)b.click()},0)};
@@ -1659,17 +1685,23 @@ const curto=a=>{if(!a)return'(auditoria excluída)';if(a.sigla&&String(a.sigla).
    Finalizado Preliminar → Ofício de validação de benefícios: 90 dias após o Envio do Relatório Preliminar (realizada, senão prevista)
    Monitoramento         → Ofício de validação de benefícios: 90 dias após o Término do monitoramento (realizada, senão prevista)
    Ofício de validação enviado → 30 dias para avaliar a resposta
-   Recomendação implementada / parcialmente / não implementada → Concluído */
+   Recomendação implementada / parcialmente / não implementada → Ofício de validação de benefícios (90 dias após o Término do monitoramento),
+     depois 30 dias para a resposta; Concluído quando o Ofício resposta à validação é preenchido (v8.1, pedido do usuário 10/11; antes: Concluído direto)
+   Monitoramento: status "Em monitoramento" até a data realizada do Término do monitoramento; depois Ofício de validação (90 dias) e resposta (30 dias) (v8.1) */
 const SIT_FIXAS=['Relatório Preliminar','Finalizado Preliminar','Monitoramento','Recomendação implementada','Recomendação implementada parcialmente','Recomendação não implementada'];
 const sitTipo=s=>{const n=norm(s||'');return/implementad/.test(n)?'fim':/monitor/.test(n)?'mon':/finaliz/.test(n)?'fprel':/preliminar/.test(n)?'rp':''};
 const sitPadrao=()=>listas().situacoes.find(s=>sitTipo(s)==='rp')||'Relatório Preliminar';
 const dAud=(a,k)=>{const d=a&&a.docs&&a.docs[k]||{};return d.exec||d.plan||''};
 function statusAch(x){
  const a=audDe(x.aud),t=sitTipo(x.situacao);
- if(t==='fim')return{passo:'Concluído',prazo:'',c:'ok',txt:'Concluído',ord:1e6};
+ if(t==='fim'&&x.ofResp)return{passo:'Concluído',prazo:'',c:'ok',txt:'Concluído',ord:1e6};
  let passo='',prazo='',nota='';
- if(x.ofVal){passo=x.ofResp?'Avaliar a resposta à validação':'Aguardar e avaliar a resposta à validação';prazo=somaDias(x.ofVal,30);nota='30 dias após o Ofício de validação'}
- else if(t==='mon'){passo='Ofício de validação de benefícios';const b=dAud(a,'mon_fim');prazo=b?somaDias(b,90):'';nota='90 dias após o Término do monitoramento'+(a&&a.docs&&a.docs.mon_fim&&!a.docs.mon_fim.exec?' (previsto)':'')}
+ if(x.ofVal&&t==='fim'){passo='Aguardar a resposta à validação';prazo=somaDias(x.ofVal,30);nota='30 dias após o Ofício de validação; conclui ao preencher o Ofício resposta à validação'}
+ else if(x.ofVal){passo=x.ofResp?'Avaliar a resposta à validação':'Aguardar e avaliar a resposta à validação';prazo=somaDias(x.ofVal,30);nota='30 dias após o Ofício de validação'}
+ else if(t==='mon'&&!(a&&a.docs&&a.docs.mon_fim&&a.docs.mon_fim.exec)){
+  /* v8.1 (correção do usuário 10/11): fica "Em monitoramento" até a data REALIZADA do Término do monitoramento em Datas e Prazos */
+  const pm=a&&a.docs&&a.docs.mon_fim&&a.docs.mon_fim.plan||'';return{passo:'Aguardar o Término do monitoramento',prazo:pm,nota:'depois: Ofício de validação de benefícios em até 90 dias'+(pm?' (término previsto para '+dt(pm)+')':''),c:'mon',txt:'Em monitoramento',ord:1e5-1}}
+ else if(t==='mon'||t==='fim'){passo='Ofício de validação de benefícios';const b=dAud(a,'mon_fim');prazo=b?somaDias(b,90):'';nota='90 dias após o Término do monitoramento'+(a&&a.docs&&a.docs.mon_fim&&!a.docs.mon_fim.exec?' (previsto)':'')}
  else if(t==='fprel'){passo='Ofício de validação de benefícios';const b=dAud(a,'rp_envio');prazo=b?somaDias(b,90):'';nota='90 dias após o Envio do Relatório Preliminar'+(a&&a.docs&&a.docs.rp_envio&&!a.docs.rp_envio.exec?' (previsto)':'')}
  else if(t==='rp'){const d=a&&a.docs&&a.docs.rf_envio||{},b=d.exec||d.plan||'';passo='Avaliar o Relatório Final';prazo=b?somaDias(b,7):'';nota='7 dias após o Envio do Relatório Final'+(b&&!d.exec?' (previsto)':'')}
  else return{passo:'',prazo:'',c:'sub',txt:'—',ord:1e6+1};
@@ -1742,8 +1774,15 @@ function renderAch(){
  const mx=Math.max(1,...porA.flatMap(a=>[...a.c.values()]));
  const rec=porA.filter(a=>a.no>=lim);
  $('rCnt').textContent=objs.length?`${porA.length} assuntos em ${pl(objs.length,'auditoria','auditorias')}. `+(rec.length?`${rec.length} aparecem em ${lim} ou mais auditorias; o mais disseminado é “${rec[0].s}”.`:`Nenhum assunto aparece em ${lim} ou mais auditorias.`):'Sem achados para mostrar.';
- $('rTbl').innerHTML=objs.length?`<thead><tr><th>Assunto</th>${objs.map(o=>`<th class="n" title="${esc(o.titulo)}">${esc(curto(o))}</th>`).join('')}<th class="n">Total</th><th class="n">Auditorias</th></tr></thead><tbody>`+porA.map(a=>`<tr${a.no>=lim?' class="rec"':''}><td>${esc(a.s||'(sem assunto)')}</td>${objs.map(o=>{const v=a.c.get(o.id);if(!v)return'<td class="cel"></td>';const k=14+76*v/mx;return`<td class="cel" style="background:color-mix(in srgb,#0B3D91 ${k}%,#fff)${k>52?';color:#fff':''}">${v}</td>`}).join('')}<td class="tot">${a.tot}</td><td class="n">${pillN(a.no,objs.length,a.no>=lim)}</td></tr>`).join('')+'</tbody>':'';
+ $('rTbl').innerHTML=objs.length?`<thead><tr><th>Assunto</th>${objs.map(o=>`<th class="n" title="${esc(o.titulo)}">${esc(curto(o))}</th>`).join('')}<th class="n">Total</th><th class="n">Auditorias</th></tr></thead><tbody>`+porA.map(a=>{const ab=REC_AB.has(a.s||'');return`<tr class="rlin${a.no>=lim?' rec':''}${ab?' aberta':''}" data-ras="${esc(a.s||'')}" tabindex="0" title="Clique para ver os achados deste assunto"><td><span class="rcv">${ab?'▾':'▸'}</span>${esc(a.s||'(sem assunto)')}</td>${objs.map(o=>{const v=a.c.get(o.id);if(!v)return'<td class="cel"></td>';const k=14+76*v/mx;return`<td class="cel" style="background:color-mix(in srgb,#0B3D91 ${k}%,#fff)${k>52?';color:#fff':''}">${v}</td>`}).join('')}<td class="tot">${a.tot}</td><td class="n">${pillN(a.no,objs.length,a.no>=lim)}</td></tr>`+(ab?recDet(R.filter(x=>(x.assunto||'')===(a.s||'')),objs.length+3):'')}).join('')+'</tbody>':'';
 }
+/* Recorrência: cada assunto abre a lista dos seus achados (pedido do usuário 10/11, v8.1) */
+const REC_AB=new Set();
+function recDet(L,cols){L=L.slice().sort((x,y)=>curto(audDe(x.aud)).localeCompare(curto(audDe(y.aud)),'pt-BR')||(parseInt(x.n,10)||0)-(parseInt(y.n,10)||0));
+ return`<tr class="rdet"><td colspan="${cols}"><table class="tl tl-rec"><thead><tr><th>Auditoria</th><th class="n">Nº</th><th>Sistema</th><th>Síntese do achado</th><th>Situação</th></tr></thead><tbody>${L.map(x=>`<tr data-irach="${x.id}" title="Abrir o achado na lista"><td class="au">${esc(curto(audDe(x.aud)))}</td><td class="n">${esc(x.n)}</td><td>${esc(x.sistema||'—')}</td><td class="sin">${esc(x.sintese||'')}</td><td>${pillSit(x.situacao)}</td></tr>`).join('')}</tbody></table></td></tr>`}
+$('rTbl').onclick=e=>{const ir=e.target.closest('[data-irach]');if(ir){const x=(DADOS.achados||[]).find(z=>z.id==ir.dataset.irach);if(!x)return;AUD_AB.add(x.aud);ABERTOS.add(x.id);AFIL.vis='lista';guardaAF();renderAch();setTimeout(()=>{const r=document.querySelector(`#aTb tr[data-ach="${x.id}"]`);if(r)r.scrollIntoView({block:'center'})},50);return}
+ const r=e.target.closest('tr.rlin');if(!r)return;const k=r.dataset.ras;REC_AB.has(k)?REC_AB.delete(k):REC_AB.add(k);renderAch()};
+$('rTbl').onkeydown=e=>{const r=e.target.closest('tr.rlin');if(r&&(e.key==='Enter'||e.key===' ')){e.preventDefault();r.click()}};
 const pillN=(n,t,on)=>`<span class="pill" style="--pc:${on?'#b26a00':'#5b6761'}">${n} de ${t}</span>`;
 function detAch(x){
  const c=(l,v,cl)=>`<div${cl?` class="${cl}"`:''}><dt>${l}</dt><dd>${v||'<span class="sub">—</span>'}</dd></div>`;
@@ -1751,7 +1790,7 @@ function detAch(x){
 ${c('Benefício esperado',esc(x.beneficio),'w3')}
 ${(S=>c('Próximo passo',esc(S.passo)+(S.prazo?` — prazo ${dt(S.prazo)}`:'')+(S.nota?`<br><span class="sub">${esc(S.nota)}</span>`:''),'w2')+c('Status',stHtml(S)))(statusAch(x))}
 ${c('Ofício de validação de benefícios',x.ofVal||x.ofValLink?(dt(x.ofVal)||'')+' '+lnk(x.ofValLink,'Abrir o ofício de validação'):'')}${c('Ofício resposta à validação',x.ofResp||x.ofRespLink?(dt(x.ofResp)||'')+' '+lnk(x.ofRespLink,'Abrir o ofício resposta'):'')}
-${c('Link do achado',x.linkAch?lnk(x.linkAch,'Abrir o achado'):'')}${c('Link do documento',x.link?lnk(x.link,'Abrir o documento'):'')}${c('Prazo de resposta',dt(x.prazoResp))}${c('Documento de resposta',esc(x.docResp),'w2')}
+${c('Link do achado',x.linkAch?lnk(x.linkAch,'Abrir o achado'):'','w2')}
 ${c('Observações gerais',esc(x.obs||'').replace(/\n/g,'<br>'),'w4')}
 <div class="acoes"><button type="button" class="btn pri btn-p" data-each="${x.id}">Editar</button></div></dl>`;
 }
@@ -1766,7 +1805,7 @@ let achEd=null;
 const fA=k=>$('achF').querySelector(`[data-a="${k}"]`);
 function calcAch(){const x={aud:+fA('aud').value||null,situacao:fA('situacao').value,ofVal:fA('ofVal').value,ofResp:fA('ofResp').value},S=statusAch(x);
  $('achCalc').innerHTML=S.passo?`Próximo passo: <b>${esc(S.passo)}</b>${S.prazo?` — prazo <b>${dt(S.prazo)}</b>`:''} · ${stHtml(S)}${S.nota?` <span class="sub">(${esc(S.nota)})</span>`:''}`:'Escolha a auditoria e a situação para ver o próximo passo.'}
-const ACH_CAMPOS=['n','sistema','sintese','criterio','linkAch','beneficio','ofVal','ofValLink','ofResp','ofRespLink','link','prazoResp','docResp','obs'];
+const ACH_CAMPOS=['n','sistema','sintese','criterio','linkAch','beneficio','ofVal','ofValLink','ofResp','ofRespLink','obs'];  /* v8.1: saiu "Comunicação à unidade" (link, prazoResp, docResp ficam guardados) */
 function proxN(aud){return Math.max(0,...(DADOS.achados||[]).filter(x=>x.aud===aud&&x.id!==achEd).map(x=>+x.n||0))+1}
 function abrirAch(id,audPadrao){
  const x=id?(DADOS.achados||[]).find(a=>a.id===id):null;achEd=x?x.id:null;const L=listas();
@@ -1786,7 +1825,7 @@ $('achF').onsubmit=e=>{e.preventDefault();
  const aud=+fA('aud').value,n=parseInt(fA('n').value,10);
  if((DADOS.achados||[]).some(x=>x.aud===aud&&+x.n===n&&x.id!==achEd)){const i=fA('n');i.focus();i.setCustomValidity('Já existe o achado nº '+n+' nesta auditoria.');i.reportValidity();i.setCustomValidity('');return}
  /* campos que saíram da tela (data limite, última manifestação, nº do documento) continuam guardados no achado */
- const ant=achEd?(DADOS.achados||[]).find(x=>x.id===achEd)||{}:{},o={};['limite','manifest','doc'].forEach(k=>{if(ant[k]!=null)o[k]=ant[k]});o.aud=aud;o.n=n;
+ const ant=achEd?(DADOS.achados||[]).find(x=>x.id===achEd)||{}:{},o={};['limite','manifest','doc','link','prazoResp','docResp'].forEach(k=>{if(ant[k]!=null)o[k]=ant[k]});o.aud=aud;o.n=n;
  ['assunto','situacao'].concat(ACH_CAMPOS.filter(k=>k!=='n')).forEach(k=>{let v=String(fA(k).value).trim();if(/link/i.test(k)&&v)v=safeUrl(v)||v;if(v)o[k]=v});
  DADOS.achados=DADOS.achados||[];const agora=new Date().toISOString();
  if(achEd){const i=DADOS.achados.findIndex(x=>x.id===achEd);o.id=achEd;o.criado=DADOS.achados[i].criado;DADOS.achados[i]=o}else{o.id=Date.now()*100+Math.floor(Math.random()*100);o.criado=agora;DADOS.achados.push(o);ABERTOS.add(o.id);AUD_AB.add(o.aud)}
@@ -2580,7 +2619,8 @@ const Store=(()=>{
    try{const m=await ad.pull(c);if(m&&m.dados){const agora=JSON.stringify({...collect(),saved:0});
      /* editou enquanto buscava: não descarta a edição — junta e grava */
      if(agora!==j&&typeof mesclar==='function'){apply({...m,dados:mesclar(JSON.parse(agora).dados,m.dados,c.dados)});last='';outra=true}else{apply(m);last=JSON.stringify({...collect(),saved:0})}
-     msg('Atualizado com alterações de outros usuários às '+hhmm())}}catch(e){}
+     msg('Atualizado com alterações de outros usuários às '+hhmm())}
+     /* v8.1: conferiu a base (com ou sem novidade): atualiza a posição dos slides */ if(window.posicaoConferida)posicaoConferida()}catch(e){}
    finally{ocup=false;if(outra||tm){outra=false;clearTimeout(tm);tm=0;if(JSON.stringify({...collect(),saved:0})!==last)S.flush()}}
   },
   async importar(f){

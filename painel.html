@@ -2014,19 +2014,26 @@ function iniciarBase() {
   const sub = document.querySelector('#s-hh .s-sub'); if (sub) sub.textContent = 'Homem-hora das auditorias cadastradas no controle e o modelo de homem-hora por auditoria definido no PAINT.';
   const sg = document.querySelector('#s-gantt .s-sub'); if (sg) sg.innerHTML = 'Barra fina: da primeira à última data prevista da fase. Barra cheia: da primeira à última data realizada (aberta até hoje se a fase não terminou). Linha vertical: hoje (<span class="x-hoje"></span>).';
   const sp = document.querySelector('#s-pipe .s-sub'); if (sp) sp.textContent = 'Cada cartão é uma auditoria na etapa atual, com os dias até a data prevista da próxima tarefa (negativo = vencido).';
-  addEventListener('message', (e) => { if (e.data && e.data.tipo === 'painel-base' && (e.source === parent || e.origin === location.origin)) usarBase(e.data.pacote); });
   let L = null; try { L = JSON.parse(localStorage.getItem('painel-base') || 'null'); } catch (e) { /* */ }
-  if (L) usarBase(L);
-  /* aberto em nova aba: refaz os slides quando a página do controle grava dados novos (alteração de outro usuário ou sua);
-     espera terminar a apresentação, a tela cheia ou a geração do PowerPoint (pedido do usuário 06/11) */
-  if (parent === window) {
-    const sig = (p) => JSON.stringify(Object.assign({}, p, { hora: '' }));
-    let atual = L ? sig(L) : '', esperando = null;
-    const ocupado = () => { const sh = document.querySelector('.show'), b = document.getElementById('btn-pptx'); return !!(sh && !sh.hidden) || !!(b && b.disabled) || !!document.fullscreenElement; };
-    const aplicar = () => { let P = null; try { P = JSON.parse(localStorage.getItem('painel-base') || 'null'); } catch (e) { /* */ } if (!P || sig(P) === atual) return;
-      if (ocupado()) { clearTimeout(esperando); esperando = setTimeout(aplicar, 5000); return; } atual = sig(P); usarBase(P); };
-    addEventListener('storage', (e) => { if (e.key === 'painel-base') aplicar(); });
-  }
+  /* Atualização automática (06/11; v8.1 em 10/11: também DURANTE a apresentação — pedido do usuário):
+     - dados novos: refaz as telas por baixo e, se estiver apresentando, mostra de novo a tela atual (sem sair da apresentação);
+     - só a hora mudou (a página do controle conferiu a base e não havia nada novo): atualiza só a "posição em … às hh:mm";
+     - espera apenas durante a geração do PowerPoint. Vale para a aba Slides (mensagem) e para a nova aba (localStorage). */
+  const sig = (p) => JSON.stringify(Object.assign({}, p, { hora: '' }));
+  let atual = '', esperando = null;
+  const gerandoPptx = () => { const b = document.getElementById('btn-pptx'); const dk = document.getElementById('deck'); return !!(b && b.disabled && dk && !dk.hidden); };
+  const apresentando = () => { const sh = document.getElementById('show'); return !!(sh && !sh.hidden); };
+  const reShow = () => { try { if (apresentando() && typeof mostrar === 'function' && typeof SHOW !== 'undefined') mostrar(SHOW.i); } catch (e) { /* */ } };
+  const soHora = (P) => { if (!APP.info) return; APP.info.hora = P.hora || ''; try { document.querySelectorAll('.x-ref').forEach((n) => { n.textContent = PT.fd(APP.info.ref) + (APP.info.hora ? ' às ' + APP.info.hora : ''); });
+    document.querySelectorAll('.x-hoje').forEach((n) => { n.textContent = PT.fd(APP.info.ref) + (APP.info.hora ? ' às ' + APP.info.hora : ''); });
+    if (typeof rodapes === 'function') rodapes(); const ai = $('#app-info'); if (ai) ai.textContent = ai.textContent.replace(/posição em (\d\d\/\d\d\/\d{4})( às \d\d:\d\d)?/, 'posição em $1' + (APP.info.hora ? ' às ' + APP.info.hora : '')); } catch (e) { /* */ } reShow(); };
+  const aplicar = (P) => { if (!P) { try { P = JSON.parse(localStorage.getItem('painel-base') || 'null'); } catch (e) { /* */ } } if (!P || !Array.isArray(P.auditorias)) return;
+    if (gerandoPptx()) { clearTimeout(esperando); esperando = setTimeout(() => aplicar(P), 5000); return; }
+    if (sig(P) === atual) { if ((P.hora || '') !== ((APP.info || {}).hora || '')) soHora(P); return; }
+    atual = sig(P); usarBase(P); reShow(); };
+  addEventListener('message', (e) => { if (e.data && e.data.tipo === 'painel-base' && (e.source === parent || e.origin === location.origin)) aplicar(e.data.pacote); });
+  if (L) aplicar(L);
+  if (parent === window) addEventListener('storage', (e) => { if (e.key === 'painel-base') aplicar(); });
   if (parent !== window) parent.postMessage({ tipo: 'painel-pronto' }, '*');
 }
 
