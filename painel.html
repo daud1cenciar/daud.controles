@@ -405,7 +405,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   <div class="app-brand-row">
     <img class="x-logo-sm" alt="Brasão do CENCIAR">
     <div class="app-brand">
-      <b>Painel PAINT · Divisão de Auditoria · CENCIAR</b>
+      <b>Painel PAINT · Subchefia de Auditoria Interna Governamental · CENCIAR</b>
       <span class="app-info" id="app-info" aria-live="polite">Nenhuma planilha aberta.</span>
       <span class="app-info" id="ach-info" aria-live="polite">Achados: nenhuma planilha aberta</span>
     </div>
@@ -467,7 +467,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     <div class="cover-kpis">
       <div class="pt-kpi"><span class="pt-kpi-l">Auditorias no plano</span><span class="pt-kpi-v" data-source="resumo" data-field="total" data-row="0">—</span><span class="pt-kpi-s"><span data-source="resumo" data-field="ativas" data-row="0">—</span> em andamento</span></div>
       <div class="pt-kpi" style="--k: var(--color-bad)"><span class="pt-kpi-l">Atrasadas</span><span class="pt-kpi-v" style="color:var(--color-bad)" data-source="resumo" data-field="atrasadas" data-row="0">—</span><span class="pt-kpi-s"><span data-source="resumo" data-field="pct_atrasadas" data-row="0">—</span> das em andamento</span></div>
-      <div class="pt-kpi" style="--k: var(--color-warn)"><span class="pt-kpi-l">A vencer</span><span class="pt-kpi-v" data-source="resumo" data-field="a_vencer" data-row="0">—</span><span class="pt-kpi-s">próximo marco em até 5 dias</span></div>
+      <div class="pt-kpi" style="--k: var(--color-warn)"><span class="pt-kpi-l">Prazo próximo</span><span class="pt-kpi-v" data-source="resumo" data-field="a_vencer" data-row="0">—</span><span class="pt-kpi-s">próximo marco em até 5 dias</span></div>
       <div class="pt-kpi" style="--k: var(--color-ok)"><span class="pt-kpi-l">Em dia</span><span class="pt-kpi-v" data-source="resumo" data-field="em_dia" data-row="0">—</span><span class="pt-kpi-s"><span data-source="resumo" data-field="concluidas" data-row="0">—</span> concluída · <span data-source="resumo" data-field="canceladas" data-row="0">—</span> cancelada</span></div>
       <div class="pt-kpi"><span class="pt-kpi-l">Com prazo prorrogado</span><span class="pt-kpi-v" data-source="resumo" data-field="prorrogadas" data-row="0">—</span><span class="pt-kpi-s">em ao menos uma fase</span></div>
       <div class="pt-kpi"><span class="pt-kpi-l">Diárias + passagens executadas</span><span class="pt-kpi-v" data-source="resumo" data-field="custo_realizado" data-row="0">—</span><span class="pt-kpi-s">de <span data-source="resumo" data-field="custo_previsto" data-row="0">—</span> previstos</span></div>
@@ -649,7 +649,7 @@ const FASES = [
   ['PLANEJAMENTO DAUD1', 'Planejamento DAUD1'], ['PLANEJAMENTO', 'Planejamento'], ['EXECUÇÃO', 'Execução'],
   ['COMUNICAÇÃO', 'Comunicação'], ['MONITORAMENTO', 'Monitoramento'], ['CONCLUÍDA', 'Concluída'], ['CANCELADA', 'Cancelada']];
 const STATUS = [
-  ['ATRASADA', 'Atrasada', 'var(--color-bad)'], ['A VENCER', 'A vencer', 'var(--color-warn)'], ['EM DIA', 'Em dia', 'var(--color-ok)'],
+  ['ATRASADA', 'Atrasada', 'var(--color-bad)'], ['A VENCER', 'Prazo próximo', 'var(--color-warn)'], ['EM DIA', 'Em dia', 'var(--color-ok)'],
   ['CONCLUÍDA', 'Concluída', null], ['CANCELADA', 'Cancelada', 'var(--cds-chart-muted)']];
 Object.defineProperty(PT, 'REF', { get: () => window.__REF || REF }); PT.FASES = FASES; PT.STATUS = STATUS;
 PT.stColor = (s) => { const x = STATUS.find((d) => d[0] === s); return x ? (x[2] || dash.colors[0]) : 'var(--cds-chart-muted)'; };
@@ -1643,7 +1643,7 @@ function montarExtras(modo) {
   const dem = A.filter((a) => a.status !== 'ATRASADA').sort((a, b) => (ordS[a.status] ?? 9) - (ordS[b.status] ?? 9) || porPrazo(a, b));
   const parte = (lista, n) => { const out = []; for (let i = 0; i < lista.length; i += n) out.push(lista.slice(i, i + n)); return out; };
   parte(atr, 13).forEach((p, i, all) => slide('Carteira detalhada', `Auditorias atrasadas (${atr.length})${all.length > 1 ? ` · ${i + 1}/${all.length}` : ''}`, 'Ordenadas pelo maior atraso no marco atual.').f.append(tabela(p)));
-  parte(dem, 14).forEach((p, i, all) => slide('Carteira detalhada', `Demais auditorias (${dem.length})${all.length > 1 ? ` · ${i + 1}/${all.length}` : ''}`, 'A vencer, em dia, concluídas e canceladas.').f.append(tabela(p)));
+  parte(dem, 14).forEach((p, i, all) => slide('Carteira detalhada', `Demais auditorias (${dem.length})${all.length > 1 ? ` · ${i + 1}/${all.length}` : ''}`, 'Prazo próximo, em dia, concluídas e canceladas.').f.append(tabela(p)));
 
   const fichas = modo === 'todas' ? atr.concat(dem) : modo === 'atrasadas' ? atr : [];
   fichas.forEach((a, i) => {
@@ -1712,7 +1712,7 @@ function rodapes() {
     }
     const idr = s.querySelector('.s-id-r'); if (idr) idr.textContent = `PAINT ${APP.info.ano} · posição em ${PT.fd(APP.info.ref)}${APP.info.hora ? ' às ' + APP.info.hora : ''}`;
     const foot = document.createElement('div'); foot.className = 's-foot';
-    const l = document.createElement('span'); l.textContent = `CENCIAR · Divisão de Auditoria · PAINT ${APP.info.ano} · ${window.__BASE ? 'Posição da base em' : 'Posição da planilha em'} ${PT.fd(APP.info.ref)}${APP.info.hora ? ' às ' + APP.info.hora : ''}`;
+    const l = document.createElement('span'); l.textContent = `CENCIAR · Subchefia de Auditoria Interna Governamental · PAINT ${APP.info.ano} · ${window.__BASE ? 'Posição da base em' : 'Posição da planilha em'} ${PT.fd(APP.info.ref)}${APP.info.hora ? ' às ' + APP.info.hora : ''}`;
     const r = document.createElement('span'); r.textContent = `${i + 1} / ${all.length}`;
     foot.append(l, r); s.append(foot);
     const body = s.querySelector('.s-body'), fit = body.querySelector('.s-fit') || body.firstElementChild;
