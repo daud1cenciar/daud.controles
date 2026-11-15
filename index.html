@@ -508,7 +508,7 @@ select.in.pb{max-width:330px;font-size:13px;padding:4px 6px}select.in.pb.alt{bor
  <div class="aud-cab"><div class="aud-cab-t">
  <p class="kl" id="hello">Olá</p>
  <h1>Auditorias</h1>
- <p class="lead">Clique em uma auditoria para ver todos os documentos e datas.</p>
+ <p class="lead">Clique em uma auditoria para ver todas as tarefas e datas.</p>
  </div>
  <div class="nc-q"><div class="nc-anos" id="audNcAno" role="group" aria-label="Filtrar os nomes por ano"></div><div class="nc" id="audNc" role="group" aria-label="Auditorias pelo nome curto"></div></div>
  </div>
@@ -732,8 +732,8 @@ select.in.pb{max-width:330px;font-size:13px;padding:4px 6px}select.in.pb.alt{bor
   <div class="ed-c">
    <div data-pane="pz" hidden>
     <p class="pz-qual" id="pzQual"></p>
-    <p class="aviso">Quantos dias depois da data prevista do documento indicado vem cada documento (pode ser 0 ou negativo). Estes prazos são usados nas <b>auditorias novas</b>; as já cadastradas mantêm os prazos que têm. Em <b>Conta a partir de</b> dá para trocar a tarefa de referência (só tarefas anteriores na lista); nas auditorias já cadastradas as datas previstas não mudam — o prazo delas é ajustado à nova referência e fica marcado como alterado.</p>
-    <table class="dtab"><thead><tr><th>Documento</th><th>Conta a partir de</th><th>Prazo padrão (dias)</th><th class="c">Ações</th></tr></thead><tbody id="ppTb"></tbody></table>
+    <p class="aviso">Quantos dias depois da data prevista da tarefa indicada vem cada tarefa (pode ser 0 ou negativo). Estes prazos são usados nas <b>auditorias novas</b>; as já cadastradas mantêm os prazos que têm. Em <b>Conta a partir de</b> dá para trocar a tarefa de referência (só tarefas anteriores na lista); nas auditorias já cadastradas as datas previstas não mudam — o prazo delas é ajustado à nova referência e fica marcado como alterado.</p>
+    <table class="dtab"><thead><tr><th>Tarefa</th><th>Conta a partir de</th><th>Prazo padrão (dias)</th><th class="c">Ações</th></tr></thead><tbody id="ppTb"></tbody></table>
     <div class="tf-add"><b id="tfTit">Incluir tarefa</b><input class="in" id="tfNome" placeholder="Nome da tarefa" maxlength="120"><label>Depois de <select class="in" id="tfApos"></select></label><label>Fase <select class="in" id="tfFase"></select></label><label>Prazo (dias) <input class="in pp" id="tfPz" type="number" min="-999" max="3650" inputmode="numeric"></label><button type="button" class="btn" id="tfAdd">Incluir</button><button type="button" class="btn" id="tfCan" hidden>Cancelar</button></div>
     <p class="sub">A tarefa incluída conta a partir da tarefa que vem antes dela (dá para trocar em <b>Conta a partir de</b>). Nas auditorias já cadastradas ela entra com o prazo padrão e nenhuma outra data prevista muda. Ao excluir uma tarefa, quem contava a partir dela passa a contar da tarefa de referência dela, sem mudar as datas previstas já existentes. No ✎ dá para trocar o nome, a fase e a posição (Depois de) de qualquer tarefa, menos o <span id="tfInicio">Início da auditoria</span>. Tudo só vale ao <b>Salvar</b>.</p>
     <div id="tfExc"></div>
@@ -946,7 +946,7 @@ function AV_ecguHtml(c) {
   let h = '<table cellpadding="6" cellspacing="0" style="border-collapse:collapse;width:100%;background:#fdecea;border:1px solid #e3a59f;border-left:4px solid #c0392e"><tr><td style="font-size:12px;line-height:1.4;color:#14203a">' +
     '<span style="font-size:13px;font-weight:bold;color:#c0392e">⚠ Diferença com o e-CGU: ' + c.ecgu + ' de ' + c.total + ' tarefas finalizadas; pelo controle deveriam ser ' + c.deveria + '.</span>' + pos;
   if (c.faltam.length) h += '<br>Finalizar no e-CGU: ' + lista(c.faltam) + '.';
-  if (c.alem.length) h += '<br>Finalizadas no e-CGU sem o documento realizado no controle (informe a data respondendo a este e-mail): ' + lista(c.alem) + '.';
+  if (c.alem.length) h += '<br>Finalizadas no e-CGU sem a tarefa realizada no controle (informe a data respondendo a este e-mail): ' + lista(c.alem) + '.';
   return h + '</td></tr></table>';
 }
 function calcularAvisos(D, DOCSL, hoje, antecedencia, papeis) {
@@ -1471,7 +1471,7 @@ function detalhe(a){
   +`<tr class="tot"><td>Total</td><td class="n">${vcel(tot('Prev'))}</td><td class="n">${vcel(tot('Real'))}</td><td class="n">${dif(tot('Prev'),tot('Real'))}</td></tr>`;
  return`<div class="det-g">
 <section class="infs"><div class="inf-h"><h3>Informações</h3><button type="button" class="btn pri btn-p" data-ed="${a.id}">Editar</button></div><dl class="inf">${inf}</dl>${a.cancelada?`<p class="late">${ehCons(a)?'Consultoria cancelada.':'Auditoria cancelada.'}</p>`:''}${a.obs?`<div class="obsb"><dt>Observações gerais</dt><p class="obs">${esc(a.obs)}</p></div>`:''}</section>
-${ehSimples(a)?`<section><h3>Execução</h3>${consHtml(a)}</section>`:`<section><h3>Documentos</h3><table class="dtab"><thead><tr><th>Documento</th><th class="n">Prazo</th><th>Prevista</th><th>Realizada</th><th>Status</th><th>Observações</th><th class="c">Link</th></tr></thead><tbody>${docs}</tbody></table></section>`}
+${ehSimples(a)?`<section><h3>Execução</h3>${consHtml(a)}</section>`:`<section><h3>Tarefas</h3><table class="dtab"><thead><tr><th>Tarefa</th><th class="n">Prazo</th><th>Prevista</th><th>Realizada</th><th>Status</th><th>Observações</th><th class="c">Link</th></tr></thead><tbody>${docs}</tbody></table></section>`}
 <section><h3>Custos</h3><table class="dtab ctab"><thead><tr><th>Item</th><th class="n">Previsto</th><th class="n">Realizado</th><th class="n">Diferença</th></tr></thead><tbody>${custos}</tbody></table></section>
 <section><h3>Homem-hora</h3>${hhHtml(a)}</section>
 </div>`;
@@ -1576,8 +1576,8 @@ function edTrocaKind(){const k=edKind();edSecoes();if(k===EDK_L)return;EDK_L=k;m
 /* v9.0: a tabela de tarefas do formulário é montada ao abrir (lista da Avaliação ou do Assessoramento; antes era montada uma vez só) */
 let EDK_L='av';const edL=()=>usaLista(EDK_L);
 function montaEdDocs(){if(EDK_L==='cs'){$('edDocs').innerHTML='';return}edL();let fase='';
-$('edDocs').innerHTML=`<fieldset class="ini"><legend>Documentos e datas</legend><p class="aviso">Preencha a <b>data prevista de qualquer documento</b> (normalmente a do ${esc(DOCS[0].nome)}) e as outras são calculadas pelos prazos, em dias corridos, cada um contado a partir da data prevista do documento indicado no prazo (normalmente o anterior; quando é outro, ele aparece embaixo do prazo). Os prazos vêm com o <b>prazo padrão</b> e podem ser alterados só nesta auditoria (<span class="alt">laranja</span> = diferente do padrão; ↺ volta ao padrão). Enquanto a <b>data realizada</b> está vazia aparece uma previsão.</p>
-<table class="etab"><thead><tr><th>Documento</th><th class="n">Prazo (dias)</th><th>Data prevista</th><th>Data realizada</th><th>Observações</th><th>Link</th></tr></thead><tbody>`+DOCS.map((d,i)=>{const cab=d.fase!==fase?`<tr class="fsr"><td colspan="6">${esc(d.fase)}</td></tr>`:'';fase=d.fase;
+$('edDocs').innerHTML=`<fieldset class="ini"><legend>Tarefas e datas</legend><p class="aviso">Preencha a <b>data prevista de qualquer tarefa</b> (normalmente a do ${esc(DOCS[0].nome)}) e as outras são calculadas pelos prazos, em dias corridos, cada um contado a partir da data prevista da tarefa indicada no prazo (normalmente o anterior; quando é outro, ele aparece embaixo do prazo). Os prazos vêm com o <b>prazo padrão</b> e podem ser alterados só nesta auditoria (<span class="alt">laranja</span> = diferente do padrão; ↺ volta ao padrão). Enquanto a <b>data realizada</b> está vazia aparece uma previsão.</p>
+<table class="etab"><thead><tr><th>Tarefa</th><th class="n">Prazo (dias)</th><th>Data prevista</th><th>Data realizada</th><th>Observações</th><th>Link</th></tr></thead><tbody>`+DOCS.map((d,i)=>{const cab=d.fase!==fase?`<tr class="fsr"><td colspan="6">${esc(d.fase)}</td></tr>`:'';fase=d.fase;
  return cab+`<tr><td class="dn">${i+1}. ${esc(d.nome)}</td>
 <td class="n">${i?`<span class="pz"><input class="in" type="number" min="-999" max="3650" step="1" inputmode="numeric" data-doc="${d.k}" data-df="prazo" title="Dias após a data prevista de ${esc(DOCS[baseI(i)].nome)}"><button type="button" class="volta" data-volta="${d.k}" title="" hidden>↺</button></span>${d.base!==(DOCS[i-1]||{}).k?`<div class="dica">após ${esc(DOCS[baseI(i)].nome)}</div>`:''}`:'<span class="sub">inicial</span>'}</td>
 <td><input class="in" type="date" data-doc="${d.k}" data-df="plan" title="Se você digitar aqui, as outras datas previstas são recalculadas."></td>
@@ -1707,7 +1707,7 @@ $('edF').onsubmit=e=>{
   const n=cp.value===''?0:parseInt(cp.value,10);if(!(n>=0&&n<=100)){erroE(cp,'Informe um percentual de 0 a 100.');return}}
  for(const f of ['hhPrev','hhReal']){const i=$('edC').querySelector(`[data-f="${f}"]`);if(cons&&i.value!==''&&!(numH(i.value)>=0)){erroE(i,'Informe as horas (0 ou mais).');return}}
  if(kv!=='cs'){edL();
- const ini=valEd(D0,'plan');if(!ini.value){ini.focus();ini.setCustomValidity('Informe a data prevista de pelo menos um documento (o Início é calculado).');ini.reportValidity();ini.setCustomValidity('');return}
+ const ini=valEd(D0,'plan');if(!ini.value){ini.focus();ini.setCustomValidity('Informe a data prevista de pelo menos uma tarefa (o Início é calculado).');ini.reportValidity();ini.setCustomValidity('');return}
  for(const d of DOCS.slice(1)){const i=valEd(d.k,'prazo');if(i.value===''||!Number.isFinite(parseInt(i.value,10))){i.focus();i.setCustomValidity('Informe o prazo em dias.');i.reportValidity();i.setCustomValidity('');return}}}
  const o={};
  campos().forEach(i=>{if(i.type==='checkbox'){if(i.checked)o[i.dataset.f]=true;return}let x=i.value.trim();if(i.dataset.f==='link'&&x)x=safeUrl(x)||x;if(i.dataset.f==='ano')x=y;if(x!=='')o[i.dataset.f]=x});
@@ -1804,7 +1804,7 @@ function previaCT(){usaLista('av');
  $('ctPrevInfo').textContent=(pap?'Hoje é dia de envio aos '+(pap.coord?'coordenadores':'auxiliares técnicos')+(compl?' (resumo completo, com cronograma). ':' (só pendências). '):'Hoje não é dia de envio; a prévia mostra as pendências que sairiam para coordenadores e auxiliares com as datas de hoje. ')+(nomes.length?nomes.length+(nomes.length===1?' pessoa receberia':' pessoas receberiam')+' e-mail hoje.':'Ninguém receberia e-mail hoje.')+' No e-mail, o atraso é contado sobre a data esperada (em itálico).'+(pap&&pap.coord&&!pap.coordCompleto?(()=>{const c=AV_COPIAS.map(n=>AV_emailDe(CT,n)).filter(Boolean);return c.length?' E-mail consolidado com os alertas dos coordenadores para: '+c.join(', ')+'.':' SCAIG e DAUD sem e-mail: não recebem o consolidado.'})():'');
  $('ctPrev').innerHTML=nomes.map(n=>{const e=AV_emailDe(CT,n),L=por[n],q=L.length,pend=L.filter(r=>r.itens.length).length;
   return`<details class="ctp"><summary><b>${esc(n)}</b> ${e?`<span class="sub">&lt;${esc(e)}&gt;</span>`:'<span class="late">sem e-mail — não receberá</span>'} · ${q} ${q===1?'auditoria':'auditorias'}${compl?` (${pend} com pendência)`:''}</summary>
-  ${L.map(r=>`<div class="ctp-a"><b>${esc(r.titulo)}</b><ul>${r.itens.map(it=>`<li>${esc(it.doc)} — prevista ${dt(it.plan)}, esperada <i>${dt(it.esp)}</i> — <span class="${it.tipo==='atrasado'?'late':'warn'}">${AV_textoItem(it)}</span></li>`).join('')}${AV_textoFim(r.resumo)?`<li class="sub">${AV_textoFim(r.resumo)}</li>`:''}${r.ecgu?`<li class="${r.ecgu.faltam.length||r.ecgu.alem.length?'late':'sub'}">e-CGU: ${r.ecgu.ecgu} de ${r.ecgu.total} finalizadas; pelo controle deveriam ser ${r.ecgu.deveria}${r.ecgu.faltam.length?' — finalizar: '+esc(r.ecgu.faltam.map(l=>l.tarefa).join(', ')):''}${r.ecgu.alem.length?' — finalizadas sem o documento no controle: '+esc(r.ecgu.alem.map(l=>l.tarefa).join(', ')):''}</li>`:''}</ul></div>`).join('')}</details>`}).join('');
+  ${L.map(r=>`<div class="ctp-a"><b>${esc(r.titulo)}</b><ul>${r.itens.map(it=>`<li>${esc(it.doc)} — prevista ${dt(it.plan)}, esperada <i>${dt(it.esp)}</i> — <span class="${it.tipo==='atrasado'?'late':'warn'}">${AV_textoItem(it)}</span></li>`).join('')}${AV_textoFim(r.resumo)?`<li class="sub">${AV_textoFim(r.resumo)}</li>`:''}${r.ecgu?`<li class="${r.ecgu.faltam.length||r.ecgu.alem.length?'late':'sub'}">e-CGU: ${r.ecgu.ecgu} de ${r.ecgu.total} finalizadas; pelo controle deveriam ser ${r.ecgu.deveria}${r.ecgu.faltam.length?' — finalizar: '+esc(r.ecgu.faltam.map(l=>l.tarefa).join(', ')):''}${r.ecgu.alem.length?' — finalizadas sem a tarefa realizada no controle: '+esc(r.ecgu.alem.map(l=>l.tarefa).join(', ')):''}</li>`:''}</ul></div>`).join('')}</details>`}).join('');
 }
 function docsCT(){usaLista('av');let f='';$('ctDocs').innerHTML=DOCS.map(d=>{const c=d.fase!==f?`<div class="ct-f">${esc(d.fase)}</div>`:'';f=d.fase;return c+`<label class="chk"><input type="checkbox" data-avd="${d.k}"${AVD.includes(d.k)?' checked':''}> ${esc(d.nome)}</label>`}).join('')}
 /* ===== Acessos (só o e-mail principal): libera Gmails como Leitor ou Editor pelo compartilhamento do arquivo da base ===== */
@@ -2335,18 +2335,18 @@ function renderDash(forcar){
  const sum=(f)=>R.reduce((s,r)=>s+(f(r)||0),0);
  const kp=(rot,v,sub,st)=>`<button type="button" class="ds-k${st?' ds-cl':''}${st&&DSH.status===st?' ds-sel':''}"${st?` data-f="status" data-v="${st}" style="--k:${DSH_COR[st]}"`:''}><span class="ds-kl">${rot}</span><b>${v}</b><span class="ds-ks">${sub||'&nbsp;'}</span></button>`;
  const cp=sum(r=>r.cPrev),cr=sum(r=>r.cReal),hp=sum(r=>r.hhPrev),hr=sum(r=>r.hhReal);
- h+=`<div class="ds-ks-row">${kp('Auditorias',R.length,and+' em andamento')}${kp('Atrasadas',cnt('ATRASADA'),and?Math.round(cnt('ATRASADA')/and*100)+'% das em andamento':'','ATRASADA')}${kp('Prazo próximo',cnt('A VENCER'),'próximo documento em até 5 dias','A VENCER')}${kp('Em dia',cnt('EM DIA'),'','EM DIA')}${kp('Concluídas',cnt('CONCLUÍDA'),'','CONCLUÍDA')}${kp('Canceladas',cnt('CANCELADA'),'','CANCELADA')}`
+ h+=`<div class="ds-ks-row">${kp('Auditorias',R.length,and+' em andamento')}${kp('Atrasadas',cnt('ATRASADA'),and?Math.round(cnt('ATRASADA')/and*100)+'% das em andamento':'','ATRASADA')}${kp('Prazo próximo',cnt('A VENCER'),'próxima tarefa em até 5 dias','A VENCER')}${kp('Em dia',cnt('EM DIA'),'','EM DIA')}${kp('Concluídas',cnt('CONCLUÍDA'),'','CONCLUÍDA')}${kp('Canceladas',cnt('CANCELADA'),'','CANCELADA')}`
   +kp('Diárias e passagens',dshK(cr),'realizado de '+dshK(cp)+' previsto')+kp('Homem-hora',dshK(hr),'realizado de '+dshK(hp)+' previsto')+kp('Achados catalogados',A.length,new Set(A.map(x=>x.aud)).size+' auditorias')+`</div>`;
 
  /* 2. onde está cada auditoria (etapa × status) */
  const et=DSH_ETAPAS.filter(e=>R.some(r=>r.etapa===e)).map(e=>{const rs=R.filter(r=>r.etapa===e);
   return{rot:e,sel:DSH.etapa===e,f:['etapa',e],tip:`${e}: ${rs.length} auditoria(s)\n`+rs.map(r=>'• '+r.sg+' — '+DSH_NOME[r.status]).join('\n'),txt:rs.length,
    segs:DSH_ST.map(s=>({v:rs.filter(r=>r.status===s[0]).length,cor:s[2],f:['status',s[0]]})),exp:e,subs:dshSubs(rs)}});
- const g1=dshPainel('dsEt','Onde está cada auditoria','Quantidade por etapa, colorida pelo status do próximo documento. Clique para filtrar; no › para ver as auditorias ali mesmo.',dshBarras(et,{w:W,lab:196,aria:'Auditorias por etapa',exp:'et'}),dshLegSt(new Set(R.map(r=>r.status))));
+ const g1=dshPainel('dsEt','Onde está cada auditoria','Quantidade por etapa, colorida pelo status da próxima tarefa. Clique para filtrar; no › para ver as auditorias ali mesmo.',dshBarras(et,{w:W,lab:196,aria:'Auditorias por etapa',exp:'et'}),dshLegSt(new Set(R.map(r=>r.status))));
 
  /* 3. dias até o prazo */
  const pz=R.filter(r=>r.prazo!=null).sort((a,b)=>a.prazo-b.prazo);
- const g2=dshPainel('dsPz','Dias até o prazo','Próximo documento de cada auditoria em andamento: negativo = atrasado.',dshPrazo(pz,W),dshLegSt(new Set(['ATRASADA','A VENCER','EM DIA'])));
+ const g2=dshPainel('dsPz','Dias até o prazo','Próxima tarefa de cada auditoria em andamento: negativo = atrasado.',dshPrazo(pz,W),dshLegSt(new Set(['ATRASADA','A VENCER','EM DIA'])));
 
  /* 4. carga por coordenador */
  const cs=[...new Set(R.map(r=>r.coord||'(sem coordenador)'))].map(c=>{const rs=R.filter(r=>(r.coord||'(sem coordenador)')===c);
@@ -2384,7 +2384,7 @@ function renderDash(forcar){
 
  /* 10. tabela */
  const tb=R.slice().sort((a,b)=>(a.prazo==null?1e9:a.prazo)-(b.prazo==null?1e9:b.prazo)||a.sg.localeCompare(b.sg,'pt'));
- const g10=dshPainel('dsTb','Auditorias filtradas','Clique numa linha para abrir a auditoria em Datas e Prazos.',tb.length?`<div class="ds-tw"><table class="ds-t"><thead><tr><th>Auditoria</th><th>Coordenador</th><th>Etapa</th><th>Próximo documento</th><th>Prevista</th><th>Status</th></tr></thead><tbody>`
+ const g10=dshPainel('dsTb','Auditorias filtradas','Clique numa linha para abrir a auditoria em Datas e Prazos.',tb.length?`<div class="ds-tw"><table class="ds-t"><thead><tr><th>Auditoria</th><th>Coordenador</th><th>Etapa</th><th>Próxima tarefa</th><th>Prevista</th><th>Status</th></tr></thead><tbody>`
   +tb.map(r=>`<tr data-ir="${r.id}" tabindex="0"><td><b>${esc(r.sg)}</b><span>${esc(r.titulo)}</span></td><td>${esc(r.coord||'—')}</td><td>${esc(r.etapa)}</td><td>${esc(r.prox&&!['CONCLUÍDA','CANCELADA'].includes(r.status)?r.prox.nome:'—')}</td><td>${r.prox&&r.prazo!=null?dt(r.prox.plan):'—'}</td>`
    +`<td><span class="ds-st" style="--k:${DSH_COR[r.status]}">${DSH_NOME[r.status]}${r.prazo!=null?` · ${r.prazo<0?Math.abs(r.prazo)+' d de atraso':r.prazo===0?'vence hoje':'faltam '+r.prazo+' d'}`:''}</span></td></tr>`).join('')+'</tbody></table></div>':dshVazio());
 
