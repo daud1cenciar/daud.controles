@@ -506,7 +506,6 @@ select.in.pb{max-width:330px;font-size:13px;padding:4px 6px}select.in.pb.alt{bor
 <main id="pgAP" data-pg="analise" hidden></main>
 <main id="pgAud" data-pg="auditorias">
  <div class="aud-cab"><div class="aud-cab-t">
- <p class="kl" id="hello">Olá</p>
  <h1>Auditorias</h1>
  <p class="lead">Clique em uma auditoria para ver todas as tarefas e datas.</p>
  </div>
@@ -3008,7 +3007,7 @@ const initials=n=>(String(n||'').trim().split(/\s+/).filter(Boolean).map(x=>x[0]
 const readHint=()=>{try{return JSON.parse(localStorage.getItem(H)||'null')}catch(e){return null}};
 function paintUser(){
  const av=document.querySelector('.nv-av');
- if(user){av.textContent=initials(user.name||user.email);av.title=user.email||'';$('stUser').textContent=user.email||'';$('hello').textContent='Olá, '+(String(user.name||'').split(/\s+/)[0]||'bem-vindo');
+ if(user){av.textContent=initials(user.name||user.email);av.title=user.email||'';$('stUser').textContent=user.email||'';if($('hello'))$('hello').textContent='Olá, '+(String(user.name||'').split(/\s+/)[0]||'bem-vindo');
   if(user.picture){const im=new Image();im.alt='';im.referrerPolicy='no-referrer';im.style.cssText='width:100%;height:100%;object-fit:cover';im.onload=()=>{av.textContent='';av.appendChild(im)};im.src=user.picture}}
  else{$('stUser').textContent='Modo local';$('stOut').hidden=true}
 }
